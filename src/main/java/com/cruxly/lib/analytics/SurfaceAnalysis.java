@@ -17,6 +17,7 @@ import com.cruxly.lib.analytics.FiniteStateMachine.FSMResult;
 import com.cruxly.lib.analytics.TextSegment.SentenceEndSegment;
 import com.cruxly.lib.analytics.TextSegment.SentenceStartSegment;
 import com.cruxly.lib.model.EmailMessage;
+import com.cruxly.lib.model.Kips;
 import com.cruxly.lib.model.TextSegmentEx;
 import com.cruxly.lib.utils.Utils;
 

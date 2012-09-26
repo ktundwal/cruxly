@@ -1,11 +1,22 @@
-package com.cruxly.lib.analytics;
+package com.cruxly.lib.model;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
+@XmlRootElement(name="intent")
 public class IntentRule {
+	
+	@XmlElement(nillable=true, required=false)
 	public String intent;
+	
+	@XmlElement(nillable=true, required=false)
 	public String rule;
+	
+	public IntentRule() {}
+	
 	public IntentRule(String intent, String rule) {
 		super();
 		this.intent = intent;

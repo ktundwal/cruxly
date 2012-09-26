@@ -17,9 +17,9 @@ import org.junit.Before;
 import com.cruxly.lib.analytics.FiniteStateMachine;
 import com.cruxly.lib.analytics.IntentDetector;
 import com.cruxly.lib.analytics.IntentDetectorException;
-import com.cruxly.lib.analytics.IntentRule;
-import com.cruxly.lib.analytics.Kips;
 import com.cruxly.lib.analytics.SurfaceAnalysis;
+import com.cruxly.lib.model.IntentRule;
+import com.cruxly.lib.model.Kips;
 import com.cruxly.lib.model.TextSegmentEx;
 import com.cruxly.lib.utils.SingleLineLogFormatter;
 

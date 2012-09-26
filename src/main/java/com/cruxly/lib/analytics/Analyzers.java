@@ -4,6 +4,8 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Logger;
 
+import com.cruxly.lib.model.Kips;
+
 
 public class Analyzers {
 	

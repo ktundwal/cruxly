@@ -6,7 +6,7 @@ import java.util.logging.Level;
 
 import org.junit.Test;
 
-import com.cruxly.lib.analytics.Kips;
+import com.cruxly.lib.model.Kips;
 
 public class TestLikeDetector extends TestDetector {
 

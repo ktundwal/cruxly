@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import com.cruxly.lib.analytics.Kips;
+import com.cruxly.lib.model.Kips;
 
 public class TestBuyDetector extends TestDetector {
 	

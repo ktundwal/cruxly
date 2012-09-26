@@ -10,6 +10,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import com.cruxly.lib.model.IntentRule;
+import com.cruxly.lib.model.Kips;
 import com.cruxly.lib.model.TextSegmentEx;
 import com.cruxly.nlp.OpenNLPUtils;
 
