@@ -1,0 +1,306 @@
+## Purchase Intent (PI) Grammar 
+## vers 2.1
+
+## Purchase Intent (PI) Grammar 
+
+# Suffixes/prefixes:
+#  _X - reference members of alias named X
+#  X* - X repeated zero or more times
+#  X+ - X repeated one or more times
+#  X? - X repeated zero or once
+#  X^ - anything EXCEPT X
+
+# 1st person aliases
+:IWeSimple=i|we
+:MeUs=me|us
+:IWeFuture=i'll|we'll
+:IWeWould=i'd|we'd
+:IWeCont=i'm|we're|im
+:IWe=i|we|i'd|we'd|i'm|im|we're|i'll|we'll|i'm|we're
+:IvWv=i've|ive|we have|i have|we've
+:MyOur=my|our
+:MyOurSelf=myself|ourself|ourselves
+:Will=will|shall|would|should|could|must
+
+
+:PreVerbs=about to|also|at least|certainly|currently|definitely|finally|finna|haha|hopefully|I guess|immediately|just|kindly|likely|maybe|must say|ok|okay|probably|promptly|quickly|really|so happy|soon|stick around|still|then|truly|urgently|verily|very
+:Adverbs=also|immediately|kindly|quickly|promptly|definitely|probably|quickly|really|truly|truely|urgently|maybe|just|very|finna|finally|verily|likely|certainly|hopefully|currently
+
+:SentStartOptional=ok|then|so|hopefully|probably|really
+:Adject=desperate|dire|great
+
+# Adding 'is' for bad 1st person grammar
+:AmAre=am|are|is
+
+# It
+:It=it|this|they|those|that
+:Ready=ready|available|finished
+:Articles=a|an|the
+
+
+# synonyms for offers 
+:offers=offer|bid|proposal|contract|proposition|recommendation|tender|terms|special|deal|bargain|promotion|engagement|clearance|closeout|proposal|proffer|deal|order
+
+# synonyms for account 
+:account=basket|account|tab|shopping cart|bill
+
+:toBuy=acquire|bid|buy|purchase|cop|earn|corral|collect|catch|finance|garner|gather|get|go get|go pick|go buy|grab|have|obtain|pay|pick|procure|secure|rack up|rebuy|repurchase|win|sign off|employ|hire|contract|engage|enroll|register|order|rent|scoop up|shop|snag|snap up
+
+#PIVerbs - consolidated with initial :PIVerbs, :PIForVerbs for entity, PIOfferVerbs for :offers
+:PIVerbs=accept|acclaim|accumulate|acquire|act on|activate|admire|adore|advocate|afford|amass|analyse|analyze|anticipate|applaud|appraise|appreciate|appropriate|approve|assess|attached to|attest|attracted to|authorize|avail of|await|awe of|back|bag|bandy about|bankroll|bargain|barter|believe in|benefit from|bid|bless|boast|book|booked|brag|brood about|brood on|brood over|browse|build up on|buy|care for|cash|cast my vote for|catch this|celebrate with|charter|check out|cheer|cheers to|cherish|chew on|chew over|choose|clamor for|clinch|collect|commission|committed to|consume|contract|cop|corral|cotton|could do with|covet|crave|crazy about|crazy for|cultivate|decide on|deliberate on|delight|delight in|delighted with|demand|deserve|desiderate|desire|devoted to|devour|dicker about|dicker over|die|dig|dip into|discovering|dish|dish up|disposed to|dote|double|drawn towards|dream|drink|eat|embrace|employ|enamored with|endorse|engage|enjoy|enlist|enquire|enroll|evaluate|exalt|examine|exchange for|explore|familiarize with|fancy|fantasize|fascinated with|favor|favour|fawn|feast|feed|feel like a|feel a need for|ferret|fetch|finance|find|fish|fix on|flip over|flip through|flirt|flock|focus on|follow|fond of|forage|freak out on|frolic with|fuel|fulfil|fulfill|fund|garner|gather|get|gimme|glorify|go ape over|gorge|gotta get|got to get|gotta have|got to have|got to get|gotta stop by|got to stop by|gotta stop for|got to stop for|grab|gravitate towards|graze|grok|groove|haggle|hail|hanker|have a ball with|have a yen for|hire|hoard|hooked on|horse-trade|hooked|hunger|hunt|imagine|impatient for|indulge|ingest|initiate|ink|inquire|inquiring|inspect|install|interested|investigate|jump for|kick around|land|leaf|learn|lease|like|liked|load up on|lobby|locate|long|look at|look into|love|loved|lunch|lust|luv|luxuriate|marvel|meditate on|monitor|mull|munch|muse on|nab|need|negotiate|nibble|nip into|nominate|notice|nourish on|obsess with|off to|obtain|opt for|order|outfit|parlay|partake|partial to|patronize|pay|perk|perpend|peruse|pick|picture myself in|pile|pine|pleased with|plow back into|plumb|plunge into|pocket|polish off|ponder|pore|possess|prefer|prescribe|preview|price|prize|procure|purchase|pursue|quench|query|queue|rally|rave|read about|read up on|recommend|refill|reflect on|reflect upon|refuel|regard|register for|registered|reinvest|rejoice|rejuvenate with|relax with|relish|remodel|rent|replenish|repurchase|request|require|research|reserve|revel|revere|review|riff through|riffle through|rock with|rubber stamp|ruminate on|rummage for|salivate|sample|sanction|savor|scan|scoop up|scour|scout|screen|scrounge|scrutinize|search|secure|seek|select|serve|settle on|settle upon|shop|side with|sign|signed up for|sing the praises of|single out|sip|size up for|skim|snag|snap up|spend|stake out|stand in line at|stand in line for|stoke|stop by|stop for|stop at|survey|swallow|switch to|take|take advantage of|take joy in|tap into|taste|test|think of|think about|thirst|thrive|thumb through|tout|track|trade|treasure|triple|try|tuck into|unwind with|upgrade|use|value|venerate|vote|vouch|wait for|wanna|want|wild abou|wild for|win|wish for|wish for|worship|yearn|zero in on
+
+#PIVerbsGerunds - consolidated with initial :PIVerbsGerunds,  :PIForGerunds= + :<entity> + PIForGerunds  + :offers, added 'hooked', 'sold'
+:PIVerbsGerunds=accepting|acclaiming|accumulating|acquiring|acting on|addicted to|admiring|adoring|advocating|affording|amassing|analysing|analyzing|anticipating|applauding|appraising|appreciating|appropriating|approving|assessing|attesting|authorizing|availing of|awaiting|backing|bagging|bandying about|bankrolling|bargaining|bartering|believing in|benefitting from|bidding|blessing|boasting|booking|bragging|brooding about|brooding on|brooding over|browsing|building up on|buying|caring for|cashing in|casting my vote for|catching this|celebrating with|chartering|checked in|checking out|cheering|cherishing|chewing on|choosing|clamor for|clinching|collecting|commissioning|consuming|contracting|copping|corralling|cottoning|could do with|could go for|coveting|crave|craving|cultivating|deciding on|deliberating on|delighting in|demanding|deserving|desiderating|desiring|devoting to|devouring|dickering about|dickering over|digging|dipping into|discovering|dishing up|doting|doubling|dreaming|drinking|dying|dieing|eating|embracing|employing|endorsing|engaging|enjoying|enlisting|enquiring|enrolling|evaluating|exalting|examining|exchanging for|exploring|fancying|fancy a|fantasizing|favoring|favouring|fawning|feasting|feeding|feeling a need for|feeling some|feelin' some|ferreting|fetching|financing|finding|fishing|fixing on|flipping over|flipping through|flirting|flocking|focusing on|following|foraging|frolicing with|fueling|fulfiling|fulfilling|funding|garnering|gathering|getting|glorifying|go pick|go get|going ape over|going to|gimme|gotta get|got me some|got to get|gotta have|got to have|got to get|gotta stop by|got to stop by|gotta stop for|got to stop for|gorging|grabbing|gravitating towards|grazing|grokking|grooving|haggling|hailing|hankering|having|keep having|having a yen for|hiring|hoarding|hook me up|hooked|horse trading|hungering|hunting|in the hunt for|imagining|in line at|in line for|indulging|ingesting|initiating|inking|inquiring|inspecting|installing|investigating|jumping for|kicking around|landing|leafing|learning|leasing|liking|loading up on|lobbying|locating|longing|looking forward to|looking into|looking at|looking for|loving|lunching|lusting|luxuriating|marveling|meditating on|monitoring|mulling|munching|musing on|nabbing|need|needs|neeed|neeeed|needing|in need of|in the need of|negotiating|nibbling|nipping into|nominating|noticing|nourishing on|obsessed with|obtaining|off to|on my way to|omw to|opting for|ordering|outfitting|parlaying|partaking|patronizing|paying|perking|perpending|perusing|picking|picturing myself in|piling on|pining|plowing back into|plumbing|plunging into|pocketing|polishing off|pondering|poring|possessing|preferring|prescribing|previewing|pricing|prizing|procuring|purchasing|pursuing|quenching|querying|queueing|rallying|raving|reading about|reading up on|recommending|recruiting|refilling|reflecting on|reflecting upon|refueling|regarding|registering for|reinvesting|rejoicing|rejuvenating with|relaxing with|relishing|remodeling|renting|replenishing|repurchasing|requesting|requiring|researching|reserving|reveling|revering|reviewing|riffing|riffling|rocking with|rubber stamping|ruminating on|rummaging for|salivating|sampling|sanctioning|savoring|scanning|scooping|scouring|scouting|screening|scrounging|scrutinizing|searching|in search of|securing|seeking|selecting|serving|settling on|settling upon|shopping|siding with|signing|singing the praises of|singling out|sipping|sizing up for|skimming|snagging|snapping up|snap up|sold on|spending|staking out|standing in line at|standing in line for|stoking|studying|surveying|swallowing|switching|taking|taking advantage of|taking joy in|tapping into|tasting|testing|thinking of|thinking about|thirsting|thriving|touting|tracking|trading|treasuring|tripling|trying out|tucking into|unwinding with|upgrading|using|valuing|venerating|voting|vouching|waiting for|wanting|wannaing|winning|wish I had|wishing for|worshipping|yearning|zeroing in on
+
+# PItoVerbs + to + :toBuy  / added: ready, going /
+:PItoVerbs=ache|addicted|agree|aim|aspire|assent|attached|attempt|attracted|authorize|click|commit|consider|contemplate|determine|elect|encouraged|endeavor|endeavour|expect|go|going|head to|head over to|hope|hurry|hustle|impatient|inclined|inspire|intend|itch|jump|leap|look|manage|march|migrate|motivate|motivated|need|nudge|opt|plan|pledge|plot|pop over|predisposed|promise|promised|propose|push|ready|rush|start|swear|thrilled|travel|try|vow|walk|want
+
+# PItoGerunds + to + :toBuy  
+:PItoGerunds=aching|agreeing|aiming|aspiring|assenting|attempting|clicking|committing|electing|endeavoring|endeavouring|expecting|going|heading|heading over|head over|hoping|hurrying|hitting up|hitting up that|hustling|intending|itching|jumping|leaping|looking|managing|marching|motivate|nudging|opting|planning|pledging|plotting|popping over|promising|proposing|pushing|rushing|starting|swearing|traveling|trying|vowing|walking|wanting
+
+# PIforVerbs + for + :offers 
+:PIforVerbs=ache|affection|ask|beg|care|cast|clamor|cast our vote|cast my vote|crazy|deal|exchange|fall|feel a need|feeling a need|head|itch|look|pant|preference|push|register|sigh|spring
+
+# PIforGerunds + for + :offers 
+:PIforGerunds=aching|asking|begging|casting|clamoring|dealing|dying|dieing|exchanging|falling|feel a need|feeling a need|feel like a|feeling some| feelin' some|feeling like a|have a yen|having a yen|heading|itching|looking|panting|pushing|registering|sighing|springing|stand in line|standing in line
+
+# PIbyVerbs  + by (+ entity)
+:PIbyVerbs=amazed|astonished|astounded|awed|captivated|dazzled|delighted|enchanted|fascinated
+
+# PITreatMyself + myself/ourselves + with 
+:PITreatMyself=acquaint|adorn|amuse|familiarize|forify|lavish|reward|spoil|treat
+
+# PITreatMyselfGerund + myself/ourselves + with 
+:PITreatMyselfGerunds=acquainting|adorning|amusing|familiarizing|forifying|lavishing|rewarding|spoiling|gonna treat|going to treat|treating
+
+# PIMyOur phrases that use my/our
+:PIMyOur=laying|lay|sink|sinking
+
+# PISpecialPhrases - any occurrence -- check n-grams working or not
+:PISpecialPhrases=cheers to|close the deal|closing the deal|exceeds my expectation|exceeding my expectation|exceeds our expectation|had my fix|had our fix|having my fix|having our fix|have my fix|my kind of|our kind of|strike a bargain|striking a bargain|thumbs up|whet my appetite|whet our appetite|whetting my appetite|whetting our appetite|whoop it up|whooping it up|with my name on it|has my name on it|wild about|with our name on it|has our name on it|would be awesome
+
+
+# love/like it
+# add -ve rule for it's like that, feeling miserable
+:Feeling=feelin|feeling|feelin'
+:LoveLike=love|like|<3|want
+:YouThey=you|y'all|she|he|they|it
+:Bad=miserable|bad|awful|tired|anxious|angry|negative|sad|like crap|crappy|like shit|shitty
+:ItsThats=it's|its|that's|thats|it is|that is|looks|look|dont|don't|do not|will not|wont|won't
+-_ItsThats like 
+# added Phrase Start for 'I am in Love/Like with'
++_IWe? _AmAre? in? _LoveLike with? 
+-_YouThey _LoveLike *
+-_IWe? _AmAre? _Feeling _PreVerbs? _Bad
+
+
+# I/we can/will 
+# +~PHRASE_START _IWeSimple _Will? _PreVerbs* _PIVerbs * -- replaced by next
+# modify rules to ensure either _IWe or _AmAre are present pre- PIVerbs / ensure phrase start of IWe? or Will?
+# add neg rule for having difficulties
+# add I've/we've been PIVerbsGerunds
+:Having=have a|having|getting|facing|noticing 
+:Difficulties=difficulty|difficulties|failure|failures|problems|problems|issue|issues|pain|pains|hassles|bad luck|crisis|crises|trouble|troubles|mess|hitch|emergency
++~PHRASE_START _IWe _Will? only? _PreVerbs* _Adverbs* _PIVerbs 
++~PHRASE_START _IWe? _Will _PreVerbs* _Adverbs* _PIVerbs 
++~PHRASE_START _IWe _Will? _PIVerbs _Articles 
++~PHRASE_START _IWe _PreVerbs* _PIVerbs 
++~PHRASE_START _IWe? _AmAre? _PreVerbs* _Adverbs* _PIVerbsGerunds 
++~SENT_START _IWe? _AmAre? _PreVerbs* _PIVerbsGerunds
++~SENT_START _PreVerbs* _AmAre? _PIVerbsGerunds _Articles?
+-~PHRASE_START _IWe? _AmAre? _PreVerbs* _Adverbs* _Having _Articles? _Difficulties 
++~PHRASE_START _IvWv been _PreVerbs* _Adverbs* _PIVerbsGerunds
+
+# Iwe willwould PI_Verbs
+# modify rules to ensure either _IWe or _AmAre are present pre- PIVerbs
+# do we add constraint of phrase start only for these rules? better ensure 1st person not optional
++_IWe _Will _PreVerbs* _PIVerbs 
++_IWe _Will? _PreVerbs* _PIVerbs
++_IWe _AmAre? _Adverbs* _PIVerbs 
++_IWe _AmAre? _Adverbs* _PIVerbsGerunds *
++_IWe _Will? _PIVerbs _Articles 
++~PHRASE_START _IWe _PreVerbs* _PIVerbs 
+
+# I/we dont/wont mind PIVerbsGerunds
+# extend rule for cant wait to/for/until/waiting for
+:WontDont=wont|dont|would not|wouldnt|wouldn't
+:Cant=cant|can't|cannot
+:Wait=be waiting|wait
+:ToForUntil=to|for|until
++~PHRASE_START _IWe? _WontDont mind _PIVerbsGerunds *
+#+~PHRASE_START _IWe? cant _WontDont wait for _Articles? * -- to be deleted?
++~PHRASE_START _IWe? _PreVerbs? _Cant _Wait _ToForUntil *
+
+# added :PIVerbs to next rule and look_forward
+# added optional "some"
++~PHRASE_START _IWeSimple can _PreVerbs? _PIVerbs
++~PHRASE_START _IWeSimple? plan to _PreVerbs* _PIVerbs
++~PHRASE_START _IWeSimple? look forward to some? _Articles 
++~PHRASE_START _IWeSimple? look forward to _PIVerbsGerunds? 
++~PHRASE_START _IWeSimple? looking forward to some? _Articles 
++~PHRASE_START _IWeSimple? looking forward to _PIVerbsGerunds? 
+
+:AmAre=am|are
+# replaced _IWeSimple with _IWe
++~PHRASE_START _IWe? _AmAre? _Adverbs? _PreVerbs* _PIVerbsGerunds *
++~PHRASE_START _IWe? _Adverbs? _PreVerbs* _PIVerbsGerunds *
+
+:AboutOf=about|of
+:ForIntoAt=for|into|at
+# add sp rule for looking /thinking look / think / in need of
++~PHRASE_START _IWe? _AmAre? _Adverbs* thinking _AboutOf
++~PHRASE_START _IWe? _AmAre? _Adverbs* looking _ForIntoAt
++~PHRASE_START _IWe? _Will? _PreVerbs* think _AboutOf 
++~PHRASE_START _IWe? _Will? _PreVerbs* look _ForIntoAt 
++~PHRASE_START _IWe? _AmAre? _Adverbs* in _Adject? need of
+
++_IWeSimple _Will _Adverbs? _PIVerbs
++_IWeFuture _Adverbs? _PIVerbs
++_IWeWould _Adverbs? _PIVerbs
+
+# Going to
++~PHRASE_START _IWe? going to _PIVerbs
++~PHRASE_START _IWe? gonna go? _PIVerbs
++~PHRASE_START _IWe? wanna _PIVerbs
++~PHRASE_START _IWe? want to _PIVerbs
++~PHRASE_START _IWe? want _Articles?
+
++~PHRASE_START _IWe? am? _Adverbs? _PIVerbsGerunds 
++~PHRASE_START _Adverbs? _PIVerbsGerunds _Articles? 
+
+# starting day/morning with / <> in the morning
+:Starting=starting|kicking off|beginning|toasting|greeting
+:Daytime=morning|day|afternoon|evening|night|daytime
++_IWe? _AmAre? _Starting _MyOur? _Articles? _Daytime with
++ time for _MyOur? _Articles? *
+
+# PItoVerbs + toBuyverbs
+:to=to|2
++~PHRASE_START _IWeSimple? _PItoVerbs to _toBuy
++~SENT_START PreVerbs? _PItoVerbs _to _toBuy
++~SENT_START _PItoGerunds _to _toBuy
++~PHRASE_START _IWeSimple? _Will _PItoVerbs _to _toBuy
++~PHRASE_START _IWe? have _to _toBuy
++~PHRASE_START _IWeSimple? _AmAre? _PItoGerunds _to _toBuy
+
+# Making way /heading over + to
+:HeadingTo=heading|heading over|heading oout|making my way|making our way|walking over|driving|speeding|running|jogging|zipping|zipping over
++~PHRASE_START _IWe? AmAre? _Adverbs? _HeadingTo *
+
+# PIforVerbs + for + :offers 
+# added optional "some"
++~PHRASE_START _SentStartOptional? _IWeSimple? _PIforVerbs for some? _offers
++~PHRASE_START _SentStartOptional? _IWeSimple? _Will _PIforVerbs for some? _offers
++~PHRASE_START _SentStartOptional? _AmAre? _PIforGerunds for some? _offers
+
+# PIbyVerbs  + by (+ entity)
++~PHRASE_START _SentStartOptional? _IWeSimple? _AmAre? _PIbyVerbs by
+
+# PITreatMyself + myself/ourselves + with / to
++~PHRASE_START _SentStartOptional? _IWeSimple? _Will? _PITreatMyself _MyOurSelf with
++~PHRASE_START _SentStartOptional? _IWeSimple? _Will? _PITreatMyself _MyOurSelf to
+
+# PITreatMyselfGerunds + myself/ourselves + with / to
++~PHRASE_START _SentStartOptional? _IWe? _AmAre? _PITreatMyselfGerunds _MyOurSelf with
++~PHRASE_START _SentStartOptional? _IWe? _AmAre? _PITreatMyselfGerunds _MyOurSelf to
+
+# passive form of like: 3rd party fetch/bring/get/buy
+:Gets=get|gets|fetch|fetches|bring|brings|order|orders|buy|buys
+:TakeTook=take|took
+:IfCan=if|can
+:Somebody=someone|somebody
++_Somebody? _Gets _MeUs *
++~PHRASE_START * _IfCan? _Somebody? _TakeTook _MeUs
+
+# PISpecialPhrases - any occurrence
+:HasHad=has|have|had
+:IsWould=is|would
+:Wouldnt=wouldn't|shouldn't|can't|cant|cannot|musn't|couldn't
+:GoFor=do with|go for
+:CanCould=can|could
+:So=so|soo|sooo|soooo|sooooo
+:Cool=cool|neat|great|amazing|awesome|good|delicious|wonderful|lovely|nice
+:Mind=mind|refuse|be upset|complain|object to|object if you|turn down|reject
+:Think=think|say|vote|declare
+:Hurray=hurrah|hurray|hooray|huzzah|hip-hip|hip hip|yipee
+:Buying=buying|getting|ordering|acquiring|bidding|purchasing|obtaining|picking|procuring|employing|hiring|renting
+:Meals=breakfast|lunch|dinner|snack|drink|treat|dessert|feast|muchies|brunch|chow|luncheon|picnic|spread|refreshment|beverage|repast|tea|supper|banquet|grub|din-din
+:Yes=yes|affirmative|amen|yea|yeah|yep|surely|alright|sure thing|great|aye|all right|by all means|positively|precisely|undoubtedly|indubitably|unquestionably 
+:IsGoes=is|goes|sounds|sound|smells|tastes|taste|looks|would|would be
++_IWeSimple _Will _PISpecialPhrases
++_IWe _CanCould _Adverbs? _GoFor
++_IWeFuture _PISpecialPhrases
+
++_IWe? _Will be _Buying
++_IWe? _Will? _HasHad? _MyOur fix
++~PHRASE_START _SentStartOptional? _PreVerbs? _Cool
+# removed phrase start for allowing 'would be nice' 
++_IsGoes _So? _Adverbs* _Cool
+
+# added explicit rule for 'wish I had'
++_IWe? wish _IWe had *
+
+# added explicit rule for 'would be nice'  
++_It? would be nice 
+
+
++cheers to *
+
++_IWe _AmAre? up for
++_Hurray for
+
+:ThereIs=there's|there is
++~PHRASE_START next stop
++~PHRASE_START _ThereIs? nothing like 
++~PHRASE_START everything _IsGoes better with
+
++_IsWould be? awesome
++could _So? _PreVerbs? _GoFor
++ with _MyOur name on it
++_Buying _MeUs *
++here _IWe come
++for _MyOur? _Meals
++_IWe _Will not _Mind _PIVerbsGerunds
++_IWe _Wouldnt _Mind _PIVerbsGerunds
++_IWe _Think _Yes
+
+# wish-hope
+:Wish=wish|hope|dream|fancy|imagine
++_IWeSimple _Wish _IWeSimple
++_IWeSimple _Wish for?  
+
+# PIMyOur phrases that use my/our
+:TeethHands=teeth|hand\hands
+:IntoOn=into|on
++_IWeSimple _Will be? _PIMyOur _MyOur _TeethHands _IntoOn
+
+:Punc=,|!|;|.|?|-|(|)|:
+:SentEndPunc=.|!|?|eom|/ 
+:MidSentPunc=-|,|;|:|)|(
+
+:StrongMustVerbs=must|should|needs|need|require|requires
++this *? _StrongMustVerbs
++these *? _StrongMustVerbs
++this *? has to
++these *? have to
+
++_IWe plan to *? _PIVerbs
++_IWe _PIVerbsGerunds
++i am _PIVerbsGerunds
++and i are _PIVerbsGerunds
++we all? are all? _PIVerbsGerunds
+
++~PHRASE_START still _PIVerbsGerunds
+
+# sent-start gerunds
++~PHRASE_START _PIVerbsGerunds
++~PHRASE_START let me just _PIVerbs
+
+:Future=tomorrow|later|monday|tuesday|wednesday|thursday|friday|saturday|sunday|mon|tue|wed|thu|fri|sat|sun|week|month
++~PHRASE_START _PIVerbs _Future
+
+# GRQn 81
+# neg rule if the sentence/phrase is conditional: if, whether, in case, assuming, supposing, provided 
+:Conditional=if|whether|in case|assuming|supposing|provided
+-~PHRASE_START _Conditional
+-~SENT_START _Conditional

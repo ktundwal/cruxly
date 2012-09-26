@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  
+  <!-- ========================================================== --> 
+  <!-- General --> 
+  <!-- ========================================================== --> 
+  
+  <display-name>api</display-name>
+  <description>Cruxly Analytics API</description> 
+  
+  <!-- Set timeout to 120 minutes --> 
+  <session-config> 
+  	<session-timeout>120</session-timeout> 
+  </session-config> 
+  
+  <!-- ========================================================== --> 
+  <!-- Custom Tag Libraries --> 
+  <!-- ========================================================== --> 
+  
+  <!-- ========================================================== --> 
+  <!-- JSP Configuration --> 
+  <!-- ========================================================== --> 
+  
+  <!-- ========================================================== --> 
+  <!-- Context Parameters --> 
+  <!-- ========================================================== --> 
+
+  <context-param> 
+          <description>Enable debugging for the application</description> 
+          <param-name>debug</param-name> 
+          <param-value>true</param-value> 
+  </context-param> 
+  <context-param> 
+          <description>The email address of the administrator, used to send error reports.</description> 
+          <param-name>webmaster</param-name> 
+          <param-value>ktundwal@gmail.com</param-value> 
+  </context-param> 
+  
+  <!-- ========================================================== --> 
+  <!-- Servlets --> 
+  <!-- ========================================================== --> 
+  <!-- http://www.vogella.com/articles/REST/article.html -->
+  <servlet>
+    <servlet-name>Jersey REST Service</servlet-name>
+    <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>
+    <init-param>
+      <param-name>com.sun.jersey.config.property.packages</param-name>
+      
+      <!-- call this using http://localhost:8080/beanstalk/rest/info -->
+      <param-value>com.cruxly.api</param-value>
+      
+    </init-param>
+    <!-- make Jersey support JSON/object mapping. -->
+    <init-param>
+		<param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
+		<param-value>true</param-value>
+	</init-param>
+	
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Jersey REST Service</servlet-name>
+    <url-pattern>/rest/*</url-pattern>
+  </servlet-mapping>
+  
+  <!-- ========================================================== --> 
+  <!-- Filters --> 
+  <!-- ========================================================== --> 
+  
+  <!-- ========================================================== --> 
+  <!-- Welcome Files --> 
+  <!-- ========================================================== --> 
+
+  <!-- Define, in order of preference, which file to show when no filename is defined in the path --> 
+  <!-- eg: when user goes to http://yoursite.com/ or http://yoursite.com/somefolder --> 
+  <!-- Defaults are provided in the server-wide web.xml file, such as index.jsp, index.htm --> 
+  <!-- Note: using this tag overrides the defaults, so don't forget to add them here --> 
+  <welcome-file-list>
+    <welcome-file>healthcheck.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

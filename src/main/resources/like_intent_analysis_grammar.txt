@@ -1,0 +1,389 @@
+# Like Intent (Like)
+# vers 1.5
+# Author: A. Guha
+
+# Suffixes/prefixes:
+# _X - reference members of alias named X
+# X* - X repeated zero or more times
+# X+ - X repeated one or more times
+# X? - X repeated zero or once
+# X^ - anything EXCEPT X
+
+# GR mP: refers to mth positive grammar rule
+# GR mN: refers to mth negative grammar rule
+# Initial scores are based on KIP not being identified as the object NP
+
+# 1st person aliases
+:IWeSimple=i|we
+:MeUs=me|us
+:IWeFuture=i'll|we'll
+:IWeWould=i'd|we'd|i would|we would
+:IWeCont=i'm|we're|im
+# Like I/We will not have conditional like - removing i'd|we'd|i would|we would
+:IWe=i|we|i'm|im|we're|i'll|we'll|i'm|we're
+:IvWv=i've|ive|we have|i have|we've
+:MyOur=my|our
+:MyOurSelf=myself|ourself|ourselves
+:Will=will|shall|would|should|could|must
+
+# added demonstrably. only, actually in Adverbs, remo truly from PreVerbs and move to Adverbs
+:PreVerbs=meanwhile|about to|also|at least|certainly|currently|definitely|finally|finna|haha|hopefully|I guess|guess|immediately|just|kindly|likely|maybe|must say|ok|okay|probably|promptly|quickly|really|so happy|soon|stick around|still|then|urgently|verily|very
+:Adverbs=only|so|also|actually|demonstrably|seriously|immediately|kindly|quickly|promptly|definitely|probably|quickly|really|truly|truely|urgently|maybe|just|very|finna|finally|verily|likely|certainly|hopefully|currently
+
+:SentStartOptional=ok|then|so|hopefully|probably|really|speaking of|speaking of which
+:Adject=desperate|dire|great
+
+# Adding 'is' for bad 1st person grammar
+:AmAre=am|are|is
+
+# It
+:It=it|this|they|those|that
+:Ready=ready|available|finished
+:Articles=a|an|the
+
+# added miss to like verbs
+# removed hooked, imagine, boast, deserve, recommend| crave, want, wanna, groove, grok. gimme, got me some. replace vote with vote for, wait for, gimme, gotta have, got to have (in BI)
+# remove/separate Like on its own class, left Liked; replace rally with rally for, rally around
+:LikeVerbs=miss|acclaim|advocate|admire|adore|applaud|appreciate|approve|attached to|attest|attracted to|awe of|back|believe in|benefit from|bless|brag|care for|cast my vote for|celebrate with|cheer|cheers to|cherish|clamor for|committed to|covet|crazy about|crazy for|delight|delight in|delighted with|desiderate|desire|devoted to|die|dig|dip into|disposed to|dote|drawn towards|dream|embrace|enamored with|endorse|enjoy|fancy|fantasize|fascinated with|favor|favour|fawn|feast|feel like a|feel a need for|fix on|fond of|freak out on|frolic with|glorify|go ape over|gravitate towards|hail|hanker|have a ball with|have a yen for|hooked on|hunger|impatient for|indulge|jump for|liked|lobby|long|look forward to|love|lust|luv|luxuriate|marvel|nominate|obsess with|obsess over|opt for|partial to|perk|picture myself in|pine|pleased with|plunge into|prefer|prescribe|prize|rally for|rally around|rave|regard for|rejoice|rejuvenate with|relish|revel|revere|rock with|rubber stamp|salivate|sanction|savor|side with|sing the praises of|stoke|take joy in|thirst|thrive|tout|treasure|tuck into|unwind with|value|venerate|vote for|vouch|wild for|wild about|wish for|worship|yearn
+
+# non Like verbs = PIVerbs - Like Verbs / added hearing, listening, talking to nonlikegerunds
+:NonLikeVerbs=accept|accumulate|acquire|act on|activate|afford|amass|analyse|analyze|anticipate|appraise|appropriate|assess|authorize|avail of|await|bag|be|bandy about|bankroll|bargain|barter|bid|book|booked|brood about|brood on|brood over|browse|build up on|buy|cash|catch this|charter|check out|chew on|chew over|choose|clinch|collect|commission|consume|contract|cop|corral|cotton|could do with|cultivate|decide on|deliberate on|demand|devour|dicker about|dicker over|discovering|dish|dish up|double|drink|eat|employ|engage|enlist|enquire|enroll|evaluate|exalt|examine|exchange for|explore|familiarize with|feed|ferret|fetch|finance|find|fish|flip over|flip through|flirt|flock|focus on|follow|forage|fuel|fulfil|fulfill|fund|garner|gather|get|gimme|gorge|gotta get|got to get|gotta have|got to have|got to get|gotta stop by|got to stop by|gotta stop for|got to stop for|grab|graze|grok|groove|haggle|hire|hoard|horse-trade|hunt|ingest|initiate|ink|inquire|inquiring|inspect|install|interested|investigate|kick around|land|leaf|learn|lease|load up on|locate|look at|look into|lunch|meditate on|monitor|mull|munch|muse on|nab|need|negotiate|nibble|nip into|notice|nourish on|off to|obtain|order|outfit|parlay|partake|patronize|pay|perpend|peruse|pick|pile|plow back into|plumb|pocket|polish off|ponder|pore|possess|preview|price|procure|purchase|pursue|quench|query|queue|read about|read up on|refill|reflect on|reflect upon|refuel|register for|registered|reinvest|remodel|rent|replenish|repurchase|request|require|research|reserve|review|riff through|riffle through|ruminate on|rummage for|sample|scan|scoop up|scour|scout|screen|scrounge|scrutinize|search|secure|seek|select|serve|settle on|settle upon|shop|sign|signed up for|single out|sip|size up for|skim|snag|snap up|spend|stake out|stand in line at|stand in line for|stop by|stop for|stop at|survey|swallow|switch to|take|take advantage of|tap into|taste|test|think of|think about|thumb through|track|trade|triple|try|upgrade|use|wait for|wanna|want|win|wish for|zero in on
+# add knowing, playing, seeing, hearing
+:NonLikeVerbsGerunds=accepting|accumulating|acquiring|acting on|activating|affording|amassing|analysing|analyzing|anticipating|appraising|appropriating|assessing|authorizing|availing of|awaiting|bagging|bandying about|bankrolling|bargaining|bartering|bidding|booking|brooding about|brooding on|brooding over|browsing|building up on|buying|cashing|catching this|chartering|checking out|chewing on|chewing over|choosing|clinching|collecting|commissioning|consuming|contracting|coping|corraling|cottoning|cultivating|deciding on|deliberating on|demanding|devouring|dickering about|dickering over|dishing|dishing up|doubling|drinking|eating|employing|engaging|enlisting|enquiring|enrolling|evaluating|exalting|examining|exchanging for|exploring|familiarizing with|feeding|ferreting|fetching|financing|finding|fishing|flipping over|flipping through|flirting|flocking|focusing on|following|foraging|fueling|fulfiling|fulfilling|funding|garnering|gathering|getting|gorging|grabbing|grazing|grokking|grooving|haggling|hearing|hiring|hoarding|horse-trading|hunting|ingesting|initiating|inking|inquiring|inspecting|installing|investigating|kicking around|knowing|landing|leafing|learning|leasing|listening|loading up on|locating|looking at|looking into|lunching|meditating on|monitoring|mulling|munching|musing on|nabbing|needing|negotiating|nibbling|nipping into|noticing|nourishing on|obtaining|ordering|outfitting|parlaying|partaking|patronizing|paying|perpending|perusing|picking|piling|playing|plowing back into|plumbing|pocketing|polishing off|pondering|poring|possessing|previewing|pricing|procuring|purchasing|pursuing|quenching|querying|queuing|reading about|reading up on|refilling|reflecting on|reflecting upon|refueling|registering for|reinvesting|remodeling|renting|replenishing|repurchasing|requesting|requiring|researching|reserving|reviewing|riffing through|riffling through|ruminating on|rummaging for|sampling|scanning|scooping up|scouring|scouting|screening|scrounging|scrutinizing|searching|securing|seeing|seeking|selecting|serving|settling on|settling upon|shopping|signing|singling out|sipping|sizing up for|skimming|snagging|snapping up|spending|staking out|standing in line at|standing in line for|stopping by|stopping for|stopping at|surveying|swallowing|switching to|taking|taking advantage of|talking|tapping into|tasting|testing|thinking of|thinking about|thumbing through|tracking|trading|tripling|trying|upgrading|using|waiting for|wannaing|wanting|winning|wishing for|zeroing in on
+
+# removed imagining, boasting, deserving, crave, craving, wanting, wannaing, coveting, fixing on, grokking, grooving, prescribing, previewing, gotta have, got to have, gravitating towards; add my favorite/myfave
+# changes bragging to bragging about, perking up to perking up with; keeping Liking; raving to raving about; removed Winning (sp case) 
+:LikeVerbsGerunds=acclaiming|addicted to|admiring|adoring|advocating|applauding|appreciating|approving|attesting|backing|believing in|benefitting from|blessing|bragging about|caring for|casting my vote for|celebrating with|celebrating|cheering|cherishing|clamor for|clamoring for|could go for|delighting in|desiderating|desiring|devoting to|digging|dipping into|doting|dreaming of|dreaming about|dying for|dieing for|embracing|endorsing|enjoying|exalting|fancying|fancy a|fantasizing|favoring|favouring|fawning|feasting|feeling a need for|feelin' a need for|feeling some|feelin' some|flirting|flocking to|frolicing with|glorifying|gorging|going ape over|hailing|hankering|having a yen for|hook me up|hooked on|hungering|indulging|jumping for|liking|lobbying|longing|looking forward to|loving|lusting|luxuriating|luving|marveling|my favorite|myfav|myfave|nominating|obsessed with|obsessing|opting for|perking up with|picturing myself in|pining|plunging into|preferring|pricing|prizing|rallying for|raving about|recommending|rejoicing|rejuvenating with|relaxing with|relishing|reveling|revering|rocking with|rubber stamping|salivating|sanctioning|savoring|siding with|singing the praises of|sold on|stoking|taking joy in|thriving|touting|treasuring|tucking into|unwinding with|valuing|venerating|voting|vouching|waiting for|wish I had|wishing for|worshipping|yearning
+
+# PITreatMyself + myself/ourselves + with -- expression for buying; sp. fortify
+#:BITreatMyself=acquaint|adorn|amuse|familiarize|fortify|lavish|reward|spoil|treat
+
+# PITreatMyselfGerund + myself/ourselves + with -- expression for buying; sp. fortifying
+#:BITreatMyselfGerunds=acquainting|adorning|amusing|familiarizing|fortifying|lavishing|rewarding|spoiling|gonna treat|going to treat|treating
+
+:LikeSpecialPhrases=cheers to|exceeds my expectation|exceeding my expectation|exceeds our expectation|thumbs up|whoop it up|whooping it up|wild about|my kind of|our kind of
+
+# LikeMyOur phrases that use my/our
+:LikeMyOur=laying|lay|sink|sinking
+
+# love/like it
+# add -ve rule for it's like that, feeling miserable
+:Feeling=feelin|feeling|feelin'
+# added Crave. <3, lk to _LoveLike - duplication w/ PIVerbs for hi scoring
+# removed Like from LoveLike?
+:LoveLike=love|<3|lk
+:YouThey=you|u|y'all|she|he|they|it|my
+
+:Bad=miserable|bad|awful|tired|anxious|angry|negative|sad|like crap|crappy|like shit|shitty|upset
+:ItsThats=is|but|are|it's|its|that's|thats|it is|that is|almost|looks|look|dont|don't|do not|will not|was|wont|won't|use to|crazy|exactly|just|tastes|taste|looks|look|smells|smell|feels|sounds|sound
+
+# GRLike1N -- basic neg rule if question mark
+-?
+
+# GRLike - add neg rule if there is an URL to remove spam
+-http
+
+# negative start phrase - neg rule
+-not that
+
+# miss negative
+:Your=your|her|their|him|them|you|u|being|are|i
+-miss _Your
+-_LikeVerbs _Your
+
+# GRLike 2N -- negative
+-_ItsThats like
+# GRLike - pos emoticons
+:PosEmote=:)|:D|:]|:-)|:-D|:-]
++_PosEmote
+
+# added Phrase Start for 'I am in Love/Like with'
+# GRLike 1P 
+# modify rules to ensure either _IWe or _AmAre are present pre- LikeVerbs as with Buy
+#+_IWe? _AmAre? in? _LoveLike with?
++~SENT_START _AmAre? in? _LoveLike with?
++~PHRASE_START _AmAre? in? _LoveLike with?
++_IWe _AmAre? in? _LoveLike with?
++_AmAre in? _LoveLike with?
+
+# GRLike 3N -- negative on you/they/my love
+-_YouThey all? _Adverbs? _LoveLike
+# GRLike 4N -- negative
+-_IWe? _AmAre? _Feeling _PreVerbs? _Bad
+_~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
+
+#GRLike 5N
+# neg rule on like or love me/us
+:NotLike='|no|shit|crap|bad|how|what|where|when|how 
+-_LoveLike _MeUs ~SENT_END
+-_LoveLike _NotLike
+-like _NotLike
+
+# neg rule for FB likes, and like me/us
+:FBUs=me|us|our|my|this
+:LikeMeUs=me|us|your|yours|theirs|their|bad|on|now
+:FB=FB|Facebook}facebook
+-like _FBUs? _FB 
+-like _MyOur facebook
+-_LoveLike _LikeMeUs 
+
+#GRLike 6N
+## neg rule on like or live those/that/them/etc
+:That=that|them|tht|thm|those|thos|and|him|her|you|how|when|where|which|what|their
+-_LoveLike _That
+
+#GRLike 7N
+# neg rule with dont/not want/feel LoveLike
+:Dont=dont|do not|don't|not|no
+-_Dont feel _LoveLike
+-_Dont feel like
+
+# I/we can/will 
+# +~PHRASE_START _IWeSimple _Will? _PreVerbs* _PIVerbs * -- replaced by next
+# modify rules to ensure either _IWe or _AmAre are present pre- PIVerbs / ensure phrase start of IWe? or Will?
+# add neg rule for having difficulties
+# add I've/we've been PIVerbsGerunds
+:Having=have a|having|getting|facing|noticing 
+:Difficulties=difficulty|difficulties|failure|failures|problems|problems|issue|issues|pain|pains|really|hassles|bad luck|crisis|crises|trouble|troubles|mess|hitch|emergency|tired|frustrated|upset
+
+# explicit Like rules - use the 2nd general rule for like
+# +~PHRASE_START _IWe _Will? _PreVerbs* _Adverbs* like
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _PreVerbs* _Adverbs* like
++~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* like
+
+# neg rules with Liking/Liike
+:NeverNeither=never|neither|not|to|a
+-like _NeverNeither
+-~PHRASE_START _IWe? like _Your
+# special case of Winning
++~PHRASE_START winning _SentEndPunc
+
+# special case of my favorite thing - add Adverbs
++~PHRASE_START _MyOur _Adverbs* favorite thing ever? _IsAre 
+
+# make first person explicit for LikeVerbs/Gerunds
+# modify rules to ensure either _IWe or _AmAre are present pre- LikeVerbs as with Buy
+#GRLike 2P
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _PreVerbs* _Adverbs* _LikeVerbs
++~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* _LikeVerbs
+
+#GRLike 3P 
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Will _PreVerbs* _Adverbs* _LikeVerbs
+
+# GRBI -xN for Like verbs non-like Verbs/Gerunds - add Preverbs Adverbs before, rem only
+-~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _AmAre? _PreVerbs* _Adverbs* _LikeVerbs to _NonLikeVerbs
+-~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _AmAre? _PreVerbs* _Adverbs* _LikeVerbs _NonLikeVerbsGerunds
+-~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _LikeVerbsGerunds to _NonLikeVerbs
+-~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _LikeVerbsGerunds to _NonLikeVerbsGerunds
+
+#GRLike 4P
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _LikeVerbs _Articles
+
+#GRLike 5P
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _LikeVerbs
+
+#GRLike 6P make first person explicit for LikeVerbs/Gerunds
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _LikeVerbsGerunds
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre _PreVerbs* _Adverbs* _LikeVerbsGerunds
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _Adverbs? _PreVerbs* _LikeVerbsGerunds
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre _Adverbs? _PreVerbs* _LikeVerbsGerunds
+
+#GRLike 7P - not needed w/o explicit IWe/AmAre before 
+# will allow if KIP is detected
+#+~SENT_START _IWe? _AmAre? _PreVerbs* _LikeVerbsGerunds
+
+#GRLike 8P
+# modify rules to ensure either _IWe or _AmAre are present pre- LikeVerbs as with Buy - added _IWe
+# relaxing rule with articles
+# allow after gerunds w/o I/We Am/Are explicit
+:AfterGerunds=this|with|the|a|that|some
++~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _LikeVerbsGerunds _AfterGerunds
+ 
+#GRLike 8N -- negative for Like
+-~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _Having _Articles? _Difficulties
+:GettingAfterNeg=used|about|really|ahead|buzzed|well|over|by|to|back|in|out|even|off|larger|bigger|smaller|worse|mad|better|excited|high
+-getting _GettingAfterNeg
+
+#GRLike 9P
++~PHRASE_START _PreVerbs* _Adverbs* _IvWv been _PreVerbs* _Adverbs* _LikeVerbsGerunds
+
+# Iwe willwould PI_Verbs
+# modify rules to ensure either _IWe or _AmAre are present pre- PIVerbs
+# do we add constraint of phrase start only for these rules? better ensure 1st person not optional
+# GRLike 10P - add phrase start - redundant
+#+~PHRASE_START _IWe _Will? _PreVerbs* _LikeVerbs
+
+# GRLike 12P - add phrase start - redundant
+#+~PHRASE_START _IWe _AmAre? _Adverbs* _LikeVerbsGerunds
+
+# GRLike 13P - redundant
+#+~PHRASE_START _IWe _Will? _LikeVerbs _Articles
+
+
+# I/we dont/wont mind PIVerbsGerunds
+# extend rule for cant wait to/for/until/waiting for
+:WontDont=wont|dont|would not|wouldnt|wouldn't
+:Cant=cant|can't|cannot
+:Wait=be waiting|wait
+:ToForUntil=to|to be|to be in|for|until|till|til
+
+# GRLike 15P - cant wait to like verbs, removing LikeVerbs, LikeVerbGerunds
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _PreVerbs? _Cant _Wait _ToForUntil
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _PreVerbs? _Cant _Wait _ToForUntil
+
+# add neg rule on cannot wait to <do something> 
+-_Cant _Wait to
+
+# GRLike 16P for Like
++~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple? look forward to some? _Articles
+
+# GRLike 17P for Like -- needs to have KIP after 
++~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple? look forward to _LikeVerbsGerunds
+# GRLike 19P -- add looking forward to rules. change IWeSimple to IWe
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? looking forward to _LikeVerbsGerunds
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? looking forward to _AfterGerunds
+
+# GRLike 18P for Like - redundant with above rule
+#+~PHRASE_START _IWeSimple? looking forward to some? _Articles
+
+
+:AboutOf=about|of
+:ForIntoAt=for|into|at
+# add sp rule for looking /thinking look / think / in need of
+
+# GRLike 22P
++~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple _Will _Adverbs? _LikeVerbs
+
+# GRLike 23P
++~PHRASE_START _PreVerbs* _Adverbs* _IWeFuture _Adverbs? _LikeVerbs
+
+#GRLike 25P - redundant
+#+~PHRASE_START _IWe? am? _Adverbs? _LikeVerbsGerunds
+
+#GRLike 26P - too broad w/o _IWe
+#+~PHRASE_START _Adverbs? _LikeVerbsGerunds _Articles?
+
+# starting day/morning with / <> in the morning => committed BI
+:Starting=starting|kicking off|beginning|toasting|greeting
+:Daytime=morning|day|afternoon|evening|night|daytime
+
+# passive form of like: 3rd party fetch/bring/get/buy
+:Gets=get|gets|fetch|fetches|bring|brings|order|orders|buy|buys
+:TakeTook=take|took
+:IfCan=if|can
+:Somebody=someone|somebody
+
+:HasHad=has|have|had
+:IsWould=is|would
+:Wouldnt=wouldn't|shouldn't|can't|cant|cannot|musn't|couldn't
+:GoFor=do with|go for
+:CanCould=can|could
+:So=so|soo|sooo|soooo|sooooo
+:Cool=cool|neat|great|amazing|awesome|good|delicious|wonderful|lovely|nice
+:Mind=mind|refuse|be upset|complain|object to|object if you|turn down|reject
+:Think=think|say|vote|declare
+:Hurray=hurrah|hurray|hooray|huzzah|hip-hip|hip hip|yipee
+:Meals=breakfast|lunch|dinner|snack|drink|treat|dessert|feast|muchies|brunch|chow|luncheon|picnic|spread|refreshment|beverage|repast|tea|supper|banquet|grub|din-din
+:Yes=yes|affirmative|amen|yea|yeah|yep|surely|alright|sure thing|great|aye|all right|by all means|positively|precisely|undoubtedly|indubitably|unquestionably 
+:IsGoes=is|goes|sounds|sound|smells|tastes|taste|looks|would|would be
+
+#GRLike 27P- made IWeSimple optional
++_IWeSimple? _Will _LikeSpecialPhrases
+
+#GRLike 28P
++_IWeFuture _LikeSpecialPhrases
+
+# GR Like
+#+~PHRASE_START _PreVerbs* _Adverbs* thank god for *
+
+#GRLike 29P
++_IWe? _Will? _HasHad? _MyOur fix
+
+#GRLike 29P => Cool related GR for Like - removing, too broad
+#+~PHRASE_START _SentStartOptional? _PreVerbs? _Cool
+
+#GRLike 30P -- needs to be checked with KIP before this phrase 
++_IsGoes _So? _Adverbs* _Cool
+
+# added explicit rule for 'wish I had'
+#GRLike 31P - add phrase start
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Adverbs? _PreVerbs* wish _IWe had *
+
+# added explicit rule for 'would be nice', nothing like
+#GRLike 32P -- needs to be checked with KIP after this phrase 
++_It? would be nice
+#+nothing like a 
+
+#GRLike 33P -- needs to be checked with KIP after this phrase
++cheers to *
+
+#GRLike 34P -- needs to be checked with KIP after this phrase
++_Hurray for
+
+
+# GRLike -- needs to be checked with KIP before this phrase
+:IsAre= is|are
++_IsAre the best
+
+:ThereIs=there's|there is
+#GRLike 35P -- add KIP after these rules, add +nothing like a
++~PHRASE_START _PreVerbs* _Adverbs* _ThereIs? nothing like a?
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? rocking with
+
+#GRLike 36P
++~PHRASE_START everything _IsGoes better with
+
+#GRLike 37P -- needs to be checked with KIP before this phrase
++_IsWould be? awesome
++this made _MyOur day
+
+#GRLike 38P
++could _So? _PreVerbs? _GoFor
+
+#GRLike 39P - more buying intent
+#+with _MyOur name on it
+
+#GRLike 40PV-- too broad
+#+here _IWe come
+
+# wish => keeping it part of Like, removed hope
+:Wish=wish|dream|fancy|imagine
+#GRLike 41P - add had 
++_IWeSimple _Wish _IWeSimple had
+#GRLike 42P
+# make 'for' mandatory after wish
++_IWeSimple _Wish for
+
+# phrases like sinking my/our teeth
+:TeethHands=teeth|hand\hands
+:IntoOn=into|on
+#GRLike 43P
++_IWeSimple _Will be? _LikeMyOur _MyOur _TeethHands _IntoOn
+
+
+:Punc=,|!|;|.|?|-|(|)|:
+:SentEndPunc=.|!|?|eom|/ 
+:MidSentPunc=-|,|;|:|)|(
+
+#GRLike 44P - redundant
+#+_IWe _LikeVerbsGerunds
+#GRLike 45P - redundant
+#+i am _LikeVerbsGerunds
+
+#GRLike 46P
++we all? are all? _LikeVerbsGerunds
+
+#GRLike 47P
++~PHRASE_START _PreVerbs* _Adverbs* still _LikeVerbsGerunds
+
+#GRLike 48P
+# Needed to add IWe, AmAre explicit - done
+#+~PHRASE_START _LikeVerbsGerunds
+
+
+# GRLike 9N
+# neg rule if the sentence/phrase is conditional: if, whether, in case, assuming, supposing, provided 
+
+:Conditional=if|whether|in case|assuming|supposing|provided
+-~PHRASE_START _PreVerbs* _Adverbs* _Conditional
+#-~SENT_START _PreVerbs* _Adverbs* _Conditional

@@ -1,0 +1,562 @@
+# Questions and Request Intent for social media 
+# Derived from original ActionItems/Questions - split into Questions/Requests and Recommendations
+# vers 2.1
+# author: A. Guha
+
+# Notes
+# Qns: WhQuestions, WhQuestionsAp, YNQuestions, AuxVerbs, any with ?: +?, any _SentEndPunc*^ ?
+# Qns: Please, Remember to, Dont Forget, Let me Know: in Requests or Reco
+# Let's *, You MustVerbs, in Recos
+# Conditional qns can be both recommendations and qns based on verb types
+# tally: Qn 80 rules, includes -ve rules
+
+# Syntax:
+# There are three types of lines:
+# 1) Alias definitions (start with ":") e.g. 
+# :Pronouns=i|you
+# alias can subsequently be referenced with an underscore, e.g. _Pronouns
+# 2) Accept lines (start with -), e.g. "+you must" = <accept "you must">
+# 3) Do not accept lines (start with -), e.g. "-you must" = <reject "you must">
+#
+# For example, a rule like:
+# +any possibility * _YNQuestions _SentEndPunc*^ ?
+# Means recognize a string that consists of:
+# "any possibility" + <any word> + <a member from YNQuestions alias> + <any number of non-punctuations> + ?
+# for example "any possibility Kirill will call me?" will be matched
+#
+# Suffixes/prefixes:
+# _X - reference members of alias named X
+# X* - X repeated zero or more times
+# X+ - X repeated one or more times
+# X? - X repeated zero or once
+# X^ - anything EXCEPT X
+#
+# Other notes - longest possible matching pattern is chosen. If it is rejected (-) the pattern is not recognized
+# For example if you have the following rules.
+# +you can
+# -for example, you can
+#
+# a sentence "For example, you can create a file" will match both rules -> the longer (second one will be selected), 
+# but since it's a reject-rule, nothing will happen and the pattern will not be recognized
+
+:AuxVerbs=is|are|were|was|will|have|has|had|can|could|should|shall|must|can|would|may
+
+:Articles=a|an|the
+
+
+# added demonstrably. only, actually in Adverbs, remo truly from PreVerbs and move to Adverbs
+:PreVerbs=meanwhile|about to|also|at least|certainly|currently|definitely|finally|finna|haha|hopefully|I guess|guess|immediately|just|kindly|likely|maybe|must say|ok|okay|probably|promptly|quickly|really|so happy|soon|stick around|still|then|urgently|verily|very
+:Adverbs=only|so|also|actually|demonstrably|seriously|immediately|kindly|quickly|promptly|definitely|probably|quickly|really|truly|truely|urgently|maybe|just|very|finna|finally|verily|likely|certainly|hopefully|currently
+
+
+# Originial ActionsVerbs in infinitive form from earlier ActionItems or Questions
+#:ActionVerbs=abandon|abate|abbreviate|abdicate|abet|abide|abolish|abort|abridge|absent|absorb|abstain|abstract|abut|accede|accelerate|accent|accentuate|accept|access|accommodate|accomodate|accompany|accomplish|account|accrue|accumulate|accuse|accustom|achieve|acknowledge|acquaint|acquiesce|acquire|act|activate|actuate|adapt|add|address|adduct|adhere|adjourn|adjust|administer|admire|admit|admonish|adopt|adore|adorn|advance|advantage|advertise|advise|advocate|aerate|affect|affirm|afflict|afford|affront|aggravate|agitate|agree|aid|aim|air|airlift|airmail|alarm|alert|alienate|alight|align|alleviate|allocate|allot|allow|allude|ally|alter|alternate|amass|amaze|amble|ambush|ameliorate|amend|amplify|amuse|analyze|anchor|anger|annex|annihilate|announce|annoy|anoint|answer|antagonize|anticipate|apologize|appeal|appear|appease|applaud|apply|appoint|appraise|appreciate|apprehend|apprentice|approach|approve|arbitrate|arch|argue|arise|arm|arouse|arrange|array|arrest|arrive|articulate|ascend|ascertain|ascribe|ask|aspire|assassinate|assemble|assert|assess|assign|assimilate|assist|associate|assuage|assume|assure|astonish|astound|atone|atrophy|attach|attack|attain|attempt|attend|attest|attire|attract|attribute|audition|augment|authorize|autograph|automate|avail|avenge|average|avert|avoid|await|awaken|award|babysit|back|backfire|backspace|backtrack|badger|baffle|bag|bail|bait|bake|balance|bale|balk|ban|band|bandage|bandy|bang|banish|bankrupt|baptize|bar|bargain|bark|barter|base|bash|bask|baste|bathe|batten|batter|battle|bawl|be|beam|bear|beat|beautify|beckon|become|bedevil|beef|befall|beg|begin|begone|begrudge|behave|behold|believe|belittle|bell|belong|bend|benefit|beseech|bestow|bet|betray|better|beware|bid|bide|bike|bill|bind|birdy|bite|blacken|blackmail|blame|blast|blaze|bleed|blend|bless|blind|blindfold|blink|blister|block|blockade|bloom|blossom|blot|blow|blub|blubber|blunder|blunt|blur|blurt|blush|board|boast|bode|boil|bolster|bolt|bomb|bombard|boo|book|boom|boost|borrow|bother|bottle|bottom|bounce|bow|boycott|brace|brag|brake|branch|brave|bray|breach|break|breathe|breed|breeze|brew|bribe|bridge|bridle|brighten|bring|bristle|broadcast|broaden|broil|brood|brook|browse|brush|bubble|buck|buckle|bud|budge|buff|buffer|bug|build|bulge|bully|bum|bumble|bump|bundle|bunk|buoy|burble|burden|burn|burnish|burp|burrow|burst|bury|bush|buss|bust|busy|butter|buttonhole|buttress|buy|buzz|bypass|cackle|caint|calculate|calibrate|call|callous|calm|camouflage|camp|campaign|cancel|canter|canton|cap|caper|capitalize|capsize|capture|care|caress|caricature|carry|carve|cash|casserole|cast|castigate|catalogue|catalyze|catapult|catch|catchstitch|categorize|cater|cause|cauterize|caution|cave|cease|cede|celebrate|cement|censor|censure|centralize|centre|certify|chafe|chaff|chair|challenge|chamfer|change|channel|chant|chap|chaperone|char|characterize|charge|charm|chart|charter|chase|chastise|chat|chatter|cheat|check|cheer|cherish|chew|chide|chill|chime|chink|chirp|chisel|choke|choose|chop|christianize|chronicle|chuckle|chum|churn|chuse|cinch|cipher|circle|circulate|circumscribe|circumvent|cite|civilize|clack|claim|clam|clamber|clamor|clamp|clang|clank|clap|clarify|clash|clasp|classify|claw|clay|clean|cleanse|clear|cleave|clench|click|climb|clinch|cling|clip|clog|clop|close|clot|clothe|clout|clown|clue|clump|cluster|clutch|clutter|coach|coagulate|coast|coat|coax|cob|cock|cocker|code|coerce|coexist|cohere|coincide|collaborate|collapse|collect|collide|colonize|color|colour|comb|combat|combine|come|comfort|command|commemorate|commence|commend|comment|commit|commune|communicate|commute|compare|compass|compel|compensate|compete|compile|complain|complement|complete|complicate|compliment|comply|compose|compound|comprehend|compress|comprise|compromise|compute|concave|conceal|concede|conceive|concentrate|conceptualize|concern|conciliate|conclude|concur|condemn|condense|conduct|confer|confess|confide|confine|confirm|confiscate|conform|confound|confront|confuse|confute|congratulate|congregate|conjecture|conjugate|conjure|connect|conquer|consent|conserve|consider|consist|console|consolidate|consort|conspire|constitute|constrict|construct|consult|consume|consummate|contact|contain|contaminate|contemplate|contend|content|contest|continue|contour|contract|contradict|contrast|contribute|contrive|control|converge|converse|convert|convex|convey|convict|convince|cooey|cook|cooperate|coordinate|cope|copy|corner|corral|correct|correlate|correspond|corrode|corrupt|cost|cough|counsel|count|countenance|counter|counteract|counterattack|counterbalance|counterfeit|countersink|court|cover|covet|crack|cradle|craft|cram|cramp|crank|crash|crater|crawl|crayon|creak|crease|create|crest|crimp|cripple|crisscross|criticize|crochet|crop|cross|crouch|crow|crown|crumb|crumble|crumple|crush|cry|crystallize|cuddle|cuff|culminate|cultivate|curb|curdle|cure|curl|curse|curtail|curtsy|curve|cushion|cut|dab|dally|damage|damp|dampen|dance|dangle|dare|darken|darn|date|daunt|dawdle|daydream|dazzle|deal|debate|debit|decay|deceive|decentralize|decide|decipher|declaim|declare|decline|decode|decompose|decorate|decrease|dedicate|deduce|deduct|deed|deem|deepen|default|defeat|defecate|defend|defer|defile|define|deflate|deflect|deform|defraud|defray|defy|degenerate|degrade|dehydrate|deign|delay|delegate|delete|deliberate|delight|delineate|deliver|delude|delve|demagnetize|demand|demean|demolish|demonstrate|denote|denounce|dent|deny|depart|depend|depict|deplore|deploy|depose|deposit|depress|deprive|derive|dern|descend|describe|descry|desegregate|desert|deserve|design|designate|desire|desist|despatch|despise|despond|destroy|detach|detain|detect|deter|deteriorate|determine|detest|detour|detract|devalue|devastate|develop|deviate|devise|devolve|devote|devour|diagnose|dial|dialog|dictate|die|differ|differentiate|diffuse|dig|digest|digress|dilate|dilute|dim|diminish|din|dine|ding|dip|direct|dirty|disable|disaffirm|disagree|disappear|disappoint|disapprove|disarm|disassemble|disband|discard|discern|discharge|discipline|disclose|discolor|disconnect|discontinue|discord|discount|discourage|discover|discredit|discriminate|discuss|disdain|disembark|disenfranchise|disengage|disentangle|disgrace|disguise|dishonor|disillusion|disinfect|disintegrate|dislodge|dismantle|dismay|dismiss|dismount|disobey|disown|disparage|dispatch|dispel|dispense|disperse|displace|display|dispose|dispossess|disprove|dispute|disregard|disrupt|dissect|disseminate|dissipate|dissociate|dissolve|dissuade|distance|distinguish|distort|distract|distress|distribute|distrust|disturb|ditch|dither|dive|diverge|diversify|divert|divest|divide|divulge|do|dock|document|dodge|domesticate|dominate|donate|doodle|doom|double|doubt|douse|dovetail|downshift|doze|draft|drag|drain|dramatize|drape|drat|draw|dread|dream|dredge|dress|dribble|drift|drill|drink|drip|drive|drizzle|drone|droop|drop|drown|drum|dub|duck|dull|dump|duplicate|dust|dwarf|dwell|dwindle|dye|earn|ease|eat|eavesdrop|ebb|echo|economize|eddy|edge|edit|educate|efface|effect|eject|eke|elaborate|elect|elevate|elicit|eliminate|elongate|elucidate|elude|email|e-mail|emanate|emancipate|embark|embarrass|embellish|embody|embrace|emerge|emigrate|emit|empathize|emphasize|employ|empty|emulate|enable|enact|encircle|enclose|encode|encompass|encounter|encourage|encroach|end|endanger|endeavor|endeavour|endorse|endow|endure|enforce|engage|engender|engineer|engulf|enhance|enjoy|enlarge|enlighten|enlist|enliven|enquire|enrich|enroll|enslave|ensure|entail|entangle|enter|entertain|entice|entitle|entrap|entreat|enumerate|enunciate|envelop|envision|envy|equal|equalize|equate|equip|eradicate|erase|erect|erode|err|erupt|escalate|escape|escort|esquire|essay|establish|esteem|estimate|etch|eurystheus|evacuate|evade|evaluate|evaporate|evict|evoke|evolve|exaggerate|exalt|examine|excavate|exceed|exchange|excise|excite|exclaim|exclude|excrete|excuse|execute|exemplify|exempt|exercise|exert|exhale|exhaust|exhibit|exist|exit|expand|expect|expedite|expel|expend|experience|expire|explain|explicate|explode|exploit|explore|export|expose|expound|express|expropriate|extend|exterminate|extinguish|extract|extrapolate|exude|exult|fabricate|face|facilitate|factor|fade|fail|faint|fake|fall|falsify|falter|familiarize|fan|fancy|fare|farm|fascinate|fashion|fasten|fathom|fatigue|fatten|favor|favour|fawn|fax|fear|feast|feather|feature|feed|feel|fence|fend|ferment|ferret|ferry|fertilize|fetch|fiddle|fidget|field|fife|fig|fight|figure|file|fill|fillet|film|filter|finance|find|fine|finger|finish|finished|fire|firm|fish|fishes|fit|fix|fizz|flake|flame|flank|flap|flare|flash|flatten|flatter|flee|fleece|flex|flick|flicker|flinch|fling|flint|flip|flirt|float|flock|flood|flounder|flour|flourish|flow|flowchart|flower|fluctuate|fluff|flunk|fluoresce|flush|flutter|fly|foal|focus|fog|foil|fold|follow|foment|fondle|fool|foot|forage|forbear|forbid|force|forecast|forego|foresee|forestall|foretell|forfeit|forge|forget|forgive|forgo|fork|form|formulate|forsake|fortify|forward|foster|foul|fox|frame|fray|freak|free|freeze|freshen|fret|frighten|frisk|fritter|frizz|frizzle|frog|frolic|frost|froth|frown|frustrate|fry|fudge|fuel|fulfil|fulfill|fume|function|fund|funnel|fur|furnish|further|fuse|fuss|fuzz|gabble|gag|gain|gallop|gamble|gangrene|garden|gargle|garner|garnish|gasp|gather|gauge|gaze|gender|generalize|generate|genuflect|germinate|gesture|get|giggle|gimme|girdle|give|glance|glaze|gleam|glide|glimpse|glisten|glitter|gloat|glorify|gloss|glow|glower|glue|glut|gnaw|gnp|go|goad|gobble|goof|gore|gorge|gosub|gotta|gouge|govern|gown|grab|grace|grade|grant|grapple|grasp|grate|gratify|gravel|gravitate|graze|greet|grey|griddle|grieve|grimace|grin|grind|grip|grizzle|groan|grok|groom|grope|ground|group|grouse|grout|grow|growl|grub|grudge|grumble|grump|grunt|guarantee|guard|guess|guide|gull|gulp|gurgle|gush|gyrate|hack|hail|hale|hallo|halt|hammer|hamper|hand|handcuff|handicap|handle|handwrite|hang|happen|harass|harbor|harbour|harden|hark|harm|harmonize|harness|harpoon|harvest|hassle|hasten|hatch|hate|haul|haunt|hazard|haze|head|heal|heap|hear|hearken|heat|heave|hedge|heed|heighten|help|hemorrhage|herald|herd|hesitate|hew|hex|hibernate|hide|hie|highlight|hijack|hike|hinder|hinge|hint|hire|hiss|hit|hitch|hobble|hoe|hoist|hold|holden|holler|hone|honor|honour|hook|hoop|hop|hope|horrify|hose|host|house|hover|howl|huddle|huff|hug|hum|humble|humiliate|humour|hump|hunt|hurl|hurry|hurt|hush|hustle|hymn|hyphenate|hypothesize|idealize|identify|ignite|ignore|illuminate|illumine|illustrate|imagine|imitate|immerse|immobilize|immunize|impact|impair|impart|impeach|impede|impel|impersonate|impinge|implant|implement|implore|imply|import|impose|impress|imprint|imprison|improve|improvise|impute|inactivate|inch|incline|include|inconvenience|incorporate|increase|incriminate|incubate|incur|indent|indicate|individualize|induce|indulge|industrialize|infect|infer|infiltrate|inflame|inflate|inflict|influence|inform|infringe|infuse|ingest|inhabit|inhale|inherit|inhibit|initiate|inject|injure|inoculate|inquire|insert|insist|inspect|inspire|install|instill|institute|institutionalize|instruct|insulate|insult|insure|integrate|intend|intensify|interact|interbreed|intercede|intercept|interchange|interest|interfere|interlock|intern|internalize|interpolate|interpret|interrelate|interrogate|interrupt|intersect|intertwine|intervene|interview|intimate|intimidate|introduce|intrude|invade|invalidate|invent|invert|invest|investigate|invite|invoke|involve|involved|ionize|irrigate|irritate|isolate|issue|itch|itemize|jack|jam|jangle|jar|jeer|jeopardize|jerk|jiggle|jimmy|jingle|jinx|jockey|jog|join|jostle|jot|journalize|journey|joust|judge|juggle|jump|june|junk|justify|jut|keen|keep|ketchup|key|kick|kid|kidnap|kill|kindle|kiss|kitten|kneel|knit|knock|know|label|lace|lack|ladle|lag|land|lap|lash|latch|lathe|lather|laugh|launch|lavish|lay|leach|lead|leak|lean|leap|leapfrog|learn|lease|leave|lecture|legislate|lend|lengthen|lessen|let|levy|liberate|license|lie|lift|light|lighten|limit|limp|like|line|linger|link|liquefy|list|listen|live|liven|load|loan|lob|lobby|locate|lock|lodge|log|login|look|loop|loose|loosen|lose|lot|lower|lowercase|lubricate|lug|lull|lump|lunge|lure|lurk|magnetize|magnify|mail|maintain|make|manage|mandate|maneuver|mangle|manipulate|manufacture|map|mark|market|marry|marshal|marvel|mash|mask|masquerade|massage|mast|master|match|mate|materialize|matter|mature|maximize|mean|measure|meddle|mediate|meet|mellow|melt|memorize|mend|mention|merge|mesh|mess|metabolize|migrate|milk|mimic|mince|mind|mine|mingle|minimize|mire|mirror|misbehave|miscount|misfit|misinterpret|mislead|mispronounce|misread|misrepresent|miss|misspell|mistake|mistreat|misunderstand|misuse|mitigate|mix|moan|mob|mobilize|mock|model|moderate|modernize|modify|moisten|mold|molest|molt|monitor|monopolize|moonlight|moor|mop|mope|mortgage|mortise|motivate|motor|mount|mourn|move|mow|muddle|muddy|muff|muffle|mull|multiply|mumble|munch|murder|murmur|murther|muse|muss|muster|mute|mutter|nab|nag|nail|name|nap|narrate|narrow|navigate|necessitate|need|needle|negate|neglect|negotiate|nestle|neutralize|nibble|nick|nip|nix|nod|nominate|notch|note|notice|notify|nourish|nudge|nullify|numb|nurture|obey|object|obligate|oblige|obliterate|obscure|observe|obstruct|obtain|obviate|occasion|occupy|occur|offend|offer|officiate|offset|omit|open|operate|oppose|oppress|opt|optimize|orbit|ordain|order|organise|organize|orient|originate|oscillate|oust|outdo|outfight|outfit|outgrow|outlaw|outline|outlive|outnumber|outrun|outsmart|outstrip|outweigh|outwit|outwork|overbalance|overcome|overdo|overestimate|overhaul|overhear|overheat|overlap|overload|overlook|overpower|override|overrule|overrun|oversee|overshadow|oversimplify|overstate|overtake|overthrow|overturn|overuse|overwhelm|overwork|owe|own|pace|pacify|pack|package|paint|pair|paled|pan|panic|pant|paraphrase|parcel|pardon|pare|park|parry|part|partake|participate|partition|pass|paste|pat|patch|patrol|pause|pave|pay|peak|pedal|peddle|peek|peel|peg|pelt|penalize|penetrate|pep|perceive|perfect|perform|perish|permeate|permit|perpetuate|persevere|persist|perspire|persuade|pester|pestle|petition|phase|phone|photocopy|photograph|picture|piece|pile|pin|pinch|ping|pinpoint|pioneer|pipe|pit|pitch|pity|pivot|placate|place|plan|plant|play|plead|pledge|plod|plop|plot|pluck|plug|plummet|plunge|ply|pocket|point|poise|poison|poke|pole|police|polish|poll|pollinate|pollute|ponder|pool|pop|populate|pore|portray|pose|position|possess|postpone|postulate|pounce|pound|pour|practice|practise|praise|pray|preach|prearrange|precede|precipitate|preclude|predetermine|predicate|predict|predispose|predominate|preface|prefer|prejudge|prejudice|premise|prepare|prescribe|present|preserve|preside|press|pressure|presume|presuppose|pretend|prevail|prevent|preview|price|prick|pride|print|probe|proceed|process|proclaim|procure|prod|produce|profess|proffer|profit|program|progress|prohibit|prolong|promise|promote|prompt|pronounce|proofread|prop|propagate|propel|propose|prosecute|prosper|protect|protest|prove|provide|provoke|prune|pry|publicize|publish|pull|pump|punch|punctuate|puncture|punish|purchase|purge|purify|pursue|push|put|putter|puzzle|qualify|quantify|quarrel|quell|quench|question|queue|quibble|quicken|quiet|quit|quiver|quiz|quote|rabble|race|rack|radiate|raffle|rage|raid|rain|raise|rake|rally|ram|ramble|range|rank|rankle|ransom|rant|rasp|rate|ratify|ration|rationalize|rattle|rave|reabsorb|reach|react|read|readjust|reaffirm|realign|realise|realize|reap|reappear|rear|rearrange|reason|reassemble|reassert|reassure|rebound|rebuild|rebuke|recalculate|recall|recap|recapture|recede|receive|recharge|recheck|reciprocate|recite|reckon|reclaim|recline|recode|recognise|recognize|recoil|recollect|recombine|recommend|recompense|reconcile|reconnect|reconnoiter|reconsider|reconstruct|record|recount|recover|recreate|recruit|rectify|recuperate|recur|recycle|redeem|redesign|redirect|rediscover|redistribute|redo|redouble|redress|reduce|reed|reel|reelect|reenter|reestablish|reevaluate|reexamine|refer|refill|refine|reflect|reform|refract|refrain|refresh|refrigerate|refuel|refund|refuse|refute|regain|regard|regenerate|register|regret|regrow|regulate|rehabilitate|rehearse|reign|rein|reinforce|reinstate|reintroduce|reinvest|reject|rejoice|rejoin|rejuvenate|rekindle|relate|relax|relay|relearn|release|relegate|relied|relieve|reline|relinquish|relish|relive|reload|relocate|rely|remain|remake|remark|remedy|remember|remind|remit|remodel|remonstrate|remove|rename|rend|render|rendezvous|renew|renounce|rent|reoccupy|reopen|reorder|reorganize|repair|repay|repeal|repeat|repel|repent|rephrase|replace|replay|replenish|replicate|reply|report|repossess|represent|repress|reproach|reproduce|repudiate|repulse|request|require|reread|rescind|rescue|research|resell|resemble|resent|reserve|reset|resettle|reshape|reside|resign|resist|resolve|resonate|resort|resound|respect|respire|respond|restate|restore|restrain|restrict|result|resume|resurface|retail|retain|retaliate|retard|retell|rethink|retire|retouch|retrace|retract|retreat|retrieve|return|retype|reunite|reuse|reveal|revel|revenge|revere|reverse|revert|review|revile|revise|revive|revoke|revolutionize|revolve|reward|rework|rewrite|rhyme|rid|ride|ridicule|rime|ring|rinse|rip|ripen|rise|risk|rival|roam|roar|roast|rock|roll|root|rotate|round|rouse|rout|row|rub|rue|ruffle|ruin|rule|rummage|run|rupture|rush|sabotage|sacrifice|safeguard|sail|salute|salvage|sample|sanction|sand|sap|satisfy|saturate|saunter|savage|save|savor|saw|say|scald|scale|scallop|scalp|scamper|scan|scare|scatter|schedule|scold|scoop|scoot|scorch|score|scorn|scour|scout|scowl|scram|scrap|scrape|scratch|scrawl|scream|screech|screen|screw|scribble|scroll|scrounge|scrub|scrunch|scrutinize|scurry|scuttle|seal|sear|search|seat|secede|secrete|secure|see|seek|seep|seethe|segment|segregate|seize|select|sell|send|sense|separate|serenade|serve|service|set|settle|sever|sew|shade|shadow|shaft|shake|shame|shampoo|shape|share|sharpen|shatter|shave|shear|sheath|shed|shell|shellac|shelter|shelve|shew|shield|shift|shin|shine|ship|shirk|shit|shiver|shock|shoo|shoot|shop|shore|shorten|shoulder|shouldst|shout|shove|shovel|show|shower|shred|shriek|shrimp|shrink|shrivel|shrug|shudder|shuffle|shun|shunt|shush|shut|shy|sicken|side|sidestep|sidetrack|sift|sign|signal|signify|silence|silhouette|silk|simmer|simplify|simulate|sing|single|sink|sip|siphon|sire|sit|sizzle|skate|sketch|ski|skid|skim|skin|skip|slacken|slake|slam|slant|slap|slash|slaughter|slave|slay|sled|sleep|sleet|sleeve|slice|slick|slide|sling|slink|slip|slit|slither|slog|slope|slough|slow|sluice|slur|smash|smear|smell|smelt|smile|smite|smoke|smooth|smother|smudge|smuggle|snake|snap|snare|snarl|snatch|sneak|sneer|sneeze|sniff|snigger|snip|snitch|snoop|snooze|snore|snort|snow|snowshoe|snub|snuff|snug|snuggle|soak|soar|sob|sober|socialize|sock|soften|soil|solder|solicit|solidify|solve|soothe|sort|sound|sow|span|spank|spare|spark|sparkle|spawn|speak|spear|specialize|specify|speculate|speed|spell|spend|spew|spike|spill|spin|spit|spite|splash|splice|splinter|split|spoil|sponge|sponsor|spook|spoon|spot|spout|sprain|spray|spread|spring|sprinkle|sprout|spruce|spur|spurt|sputter|spy|squabble|squander|square|squash|squat|squawk|squeak|squeal|squeeze|squint|squirm|squirt|squish|stab|stabilize|stack|staff|stage|stagger|stain|stake|stalk|stall|stammer|stamp|stampede|stand|standardize|star|stare|start|startle|starve|stash|state|staunch|stave|stay|steady|steal|steer|stem|stencil|step|stereotype|sterilize|stew|stick|stiffen|stifle|stimulate|sting|stint|stipulate|stir|stitch|stock|stoke|stomach|stomp|stool|stoop|stop|store|stow|straddle|straggle|straighten|strain|strangle|strap|stray|streamline|strengthen|stress|stretch|stride|strike|string|strip|strive|stroke|stroll|structure|struggle|strum|strut|study|stuff|stumble|stun|stunt|sub|subdivide|subdue|subject|submerge|submit|subordinate|subpoena|subscribe|subside|subsidize|subsist|substantiate|substitute|subtract|succeed|succor|succumb|suck|sue|suffer|suffix|suffocate|suggest|suit|sulk|sum|summarize|summon|superheat|superintend|supervise|supplement|supply|support|suppose|suppress|surface|surge|surmise|surmount|surpass|surprise|surrender|surround|survey|survive|suspect|suspend|sustain|swallow|swap|sway|swear|sweat|sweep|sweeten|swerve|swill|swim|swing|swipe|swirl|swish|switch|swivel|swoop|symbolize|sympathize|synchronize|synthesize|systematize|tabulate|tackle|tag|tail|tailor|take|talk|tally|tame|tamper|tan|tap|tape|taper|target|tarnish|taste|tattoo|taunt|taw|tax|taxi|teach|team|tear|tease|telephone|tell|temper|tempt|tend|tender|tenderize|tenon|term|terminate|terrify|terrorize|test|testify|tether|thank|thatch|thaw|theorize|thicken|think|thrash|thread|threaten|thresh|thrill|thrive|throb|throttle|throw|thrust|thumb|thump|thwack|thwart|tick|tickle|tidy|tie|tighten|tilt|tingle|tinker|tint|tip|tiptoe|tire|toast|toboggan|toe|toggle|toil|tolerate|toot|topple|torment|torpedo|torture|toss|total|tote|totter|touch|toughen|tour|tout|tow|tower|trace|track|trade|trail|train|tramp|trample|transact|transcend|transcribe|transfer|transform|translate|transmit|transmute|transplant|transport|transpose|trap|trash|travel|traverse|tread|treat|trespass|trick|trickle|trifle|trim|triple|troll|trot|trouble|trudge|truss|try|tuck|tug|tumble|tune|turn|tutor|tweet|twill|twine|twinkle|twirl|twist|twitch|type|typeset|typify|umpire|unbalance|unbutton|uncover|uncurl|undercut|underestimate|undergo|underline|undermine|underscore|undersell|understand|undertake|underwrite|undo|undress|unfold|unfurl|unify|unionize|unite|unlearn|unleash|unload|unlock|unmask|unpack|unplug|unravel|unroll|unscrew|unseat|untangle|untie|unwind|unwrap|update|upgrade|uphold|uplift|upright|uproot|upset|urge|urinate|use|usher|utilize|utter|vacuum|validate|value|vanish|vanquish|vaporize|vary|vault|veer|veil|venerate|vent|ventilate|verbalize|verify|veto|vex|vibrate|videotape|vie|view|violate|visit|visualize|voice|void|volunteer|vote|vouch|vow|voyage|wad|waddle|wade|wag|wage|waggle|wail|wait|waive|wake|walk|wall|wallop|wallow|waltz|wander|wanna|want|war|ward|ware|warn|warp|warrant|wash|waste|watch|water|waterproof|wave|waver|wax|weaken|wear|weather|weave|wedge|weed|weigh|weight|welcome|weld|wend|wet|whack|wham|wheel|wheeze|whet|whine|whip|whir|whirl|whisk|whisper|whistle|whiten|whitewash|whittle|whoop|whore|widen|wield|wilt|win|wind|windmill|wink|wipe|wire|wish|withdraw|wither|withhold|withstand|witness|wobble|wonder|wont|woo|word|work|worry|worship|wound|wow|wrangle|wrap|wreak|wreck|wrench|wrest|wrestle|wriggle|wring|wrinkle|write|yank|yap|yawn|yearn|yell|yield|yowl|yuh|zap|zip|zoom
+
+# QuestionVerbs contains 258 verbs (~8% of ActionVerbs) deemed as requests or questions; move off abstain, aid, aim, applaud, wanna, want
+# added unsubscribe as Request verb, remove interview
+# remove spam verbs: enter, join, win, pick, back, generate, save
+# added buy, watch as QnVerbs - may be taken off if too many spam words 
+:QuestionVerbs=acknowledge|acquaint|activate|add|address|adhere|adjourn|adjust|adopt|advance|advertise|advise|affect|agree|alert|align|alternate|announce|answer|apologize|appeal|appear|apply|appoint|appraise|approach|approve|argue|arrange|arrive|ascend|assemble|assist|assume|attach|attend|audition|authorize|bag|ban|begin|beware|bill|block|board|book|boycott|brake|bring|buy|call|cease|censor|certify|close|cancel|confirm|contact|consult|contribute|convey|copy|correct|count|cover|create|cut|date|debit|declare|decline|deduct|define|delegate|delete|deliver|deposit|describe|detach|dial|do|draft|drain|drink|drop|eat|elaborate|email|e-mail|empty|enclose|enroll|erase|escalate|estimate|evaluate|exchange|execute|exit|expedite|explain|extend|feed|fetch|file|fill|finance|find|finish|fire|fix|follow|forward|fund|gather|get|gimme|give|go|halt|handwrite|head|help|highlight|hire|hit|hold|identify|implement|import|inactivate|include|incorporate|increase|indicate|inform|initiate|insert|inspect|install|instruct|intercept|invert|investigate|issue|itemize|keep|kill|label|lead|lease|leave|lend|license|limit|list|loan|locate|lock|login|mail|mark|memorize|mention|merge|migrate|mix|monitor|move|mute|navigate|nix|note|notice|notify|open|pay|phone|pick|process|put|raise|rank|rate|read|recalculate|recharge|reconsider|record|recruit|redo|refund|register|reinstate|reject|relay|reload|remit|remove|rendezvous|renew|rent|reopen|reorder|repair|repeal|repeat|replace|replenish|reply|report|reserve|reset|respond|restate|restore|resume|return|reverse|revise|rework|rewrite|ring|schedule|select|send|ship|shut|sign|specify|stop|submit|suggest|telephone|throw it out|trade|transact|transfer|transmit|undo|unsubscribe|update|validate|verify|veto|videotape|watch|waive|wire|withdraw|write
+
+# Wh- questions
+# added happened, wants to afterWhQuestions
+:WhQuestions=why|how|who|when|where|which|what|wat
+:WhQuestionsAp=why've|how've|who've|when've|where've|which've|what've|why's|how's|who's|when's|where's|which's|what's|why'll|how'll|who'll|when'll|where'll|which'll|what'll|why're|how're|who're|when're|where're|which're|what're
+:afterWhQuestions=about|are|can|come|could|did|didn't|do|does|don't|else|far|has|happened|have|is|it|long|many|might|much|not|old|or|should|time|the|then|there|was|were|will|would|wants
+
+
+# GRQn - add neg rule if there is an URL to remove spam
+-http: 
+
+# spam directive: Qn Verb + punc =:/~/.
+:SpamPunc=:|~|.|!
+-_QuestionVerbs _SpamPunc
+
+# list of Spam offers 
+:SpamOffers=offer|special|deal|bargain|promotion|clearance|giveaway|closeout|proposal|special offer|early bird|early bird pricing|special offer|fire sale|win|join|price wars|promo code
+-_SpamOffers now? _SpamPunc
+-_SpamOffers ,
+
+# add explicit neg rule for win
+-win _Articles
+
+# GRQn neg rule: verb+like
+-PHRASE_START -_QuestionVerbs like
+
+# GRQn 1
++_WhQuestions _SentEndPunc*^ ?
+
+# GRQn 2
++_WhQuestionsAp _afterYNQuestions? _SentEndPunc*^ ?
+
+:AmAre=am|are
+
+:IWe=i|we|i'd|we'd|i'm|we're|i'll|we'll
+:IWeSimple=i|we
+:YouUs=you|us|we|you'll|we'll|you're|we're
+:MeUs=me|us
+:Want=want|need|require|order|demand|request|ask|hope|expect|like|wonder|inquire|love|appreciate|recommend|suggest|welcome|encourage
+:IfWhether=if|whether|that
+# Yes/No questions
+# removed 'needs' from YNQuestions
+:YNQuestions=did|were|do|does|can|could|shall|will|would|should|is|are|has|have|need|might
+:afterYNQuestions=i|we|you|he|she|it|they|my|our|your|his|her|their|the|a|there|you|anyone|someone|everyone|this|that
+
+# GRQn 3
++_YNQuestions * _SentEndPunc*^ ?
+
+# GRQn 4
++maybe * _YNQuestions _SentEndPunc*^ ?
+
+# GRQn 5
++think * _YNQuestions _SentEndPunc*^ ?
+
+# GRQn 6
++anything *? * _YNQuestions _SentEndPunc*^ ?
+
+# GRQn 7
++want to _SentEndPunc*^ ?
+# GRQn 8
++wanna _SentEndPunc*^ ?
+# GRQn 9
++why don't you
+# GRQn 10P
++why dont you
+
+# GRQn 11 -- add question punc
++?
+
+# ag -- Do you have 
+# GRQn 12
++~SENT_START do you have
+
+:Articles=a|an|the
+
+# added 'when am/are we able/going to'
+:GoingAble=going|able
+
+# GRQn 13
+# made sentenfpunc optional for social media
++~SENT_START _WhQuestions _afterWhQuestions _SentEndPunc^* _SentEndPunc?
+# GRQn 14
++~SENT_START _YNQuestions _afterYNQuestions _SentEndPunc^* _SentEndPunc? 
+
+# GRQn 15 - avoid PHRASE_START?
++~PHRASE_START _WhQuestions _AmAre _IWe _GoingAble to
+
+# dont need NEWLINE in non-email case?
+# GRQn 16 avoid PHRASE_START?
+# NEWLINE should not be needed - delete
++~PHRASE_START _WhQuestions _afterWhQuestions _SentEndPunc^
+# GRQn 17 avoid PHRASE_START?
++~PHRASE_START _YNQuestions _afterYNQuestions _SentEndPunc^
+
+# ag -- added eom and /
+# added number alias, need to generalize any number beyond 1-11
+# '/' can be in _Punc vs SentEndPunc
+:Punc=,|!|;|.|?|-|(|)|:|/
+:SentEndPunc=.|!|?|eom
+:MidSentPunc=-|,|;|:|)|(
+:Number=1|2|3|4|5|6|7|8|9|10|11|one|two|three|four|five|six|seven|eight|nine|ten|eleven|twenty|thrity|forty|fifty|sixty|seventy|eighty|ninety
+
+# Any possibility ... ?
+# GRQn 18
++~SENT_START any _SentEndPunc*^ ?
+:AnySolicit=possibility|idea|ideas|chance|reason|way|thoughts|suggestions|clue|clues
+
+# GRQn 19
++~SENT_START any _AnySolicit _SentEndPunc^*
+
+:LetsWords=lets|let's
+
+:PreYou=as|if|since|while
+#-_PreYou you _ActionVerbs => conditional is both Qn and Reco
+# GRQn 20
+-_PreYou you _QuestionVerbs
+
+
+#-in case * _ActionVerbs => conditional is both Qn and Reco
+# GRQn 21
+-in case * _QuestionVerbs
+
+:Can=can|could
+
+#+if you _Can _ActionVerbs => conditional is both Qn and Reco
+# GRQn 22
++if you _Can _QuestionVerbs
+
+
+# Please <action> => Requests
+# moved 'just' to PreVerbs for SENT_START ActionVerbs
+:Please=please|pls|kindly|do
+:PreVerbs=also|immediately|kindly|quickly|promptly|definitely|just|at least|still
+:AfterPlease=also|immediately|kindly|quickly|,|promptly
+:Conj=and|,
+
+# GRQn 23
+#+_Please _AfterPlease* _ActionVerbs
++_Please _AfterPlease* _QuestionVerbs
+
+# GRQn 24
+#+_Please _AfterPlease* _ActionVerbs _Conj+ _ActionVerbs
++_Please _AfterPlease* _QuestionVerbs _Conj+ _QuestionVerbs
+
+# GRQn 25
+#+_Please _AfterPlease* _ActionVerbs _Conj+ _ActionVerbs _Conj+ _ActionVerbs
++_Please _AfterPlease* _QuestionVerbs _Conj+ _QuestionVerbs _Conj+ _QuestionVerbs
+
+#+_ActionVerbs _SentEndPunc*^ _Please _Punc => with Please = Request
+# GRQn 26
++_QuestionVerbs _SentEndPunc*^ _Please _Punc
+
+#+_ActionVerbs _SentEndPunc*^ _Please _Punc => with Please = Request
+# GRQn 27
++_QuestionVerbs _SentEndPunc*^ _Please _Punc
+
+# remember to, dont forget to: Requests
+#+remember to _AfterPlease* _ActionVerbs
+# GRQn 28
++remember to _AfterPlease* _QuestionVerbs
+
+#+don't forget to _AfterPlease* _ActionVerbs
+# GRQn 29
++don't forget to _AfterPlease* _QuestionVerbs
+
+# please let me/us know in Requests
+# GRQn 30
++_Please? _AfterPlease* let _MeUs know
+
+
+#+~SENT_START _PreVerbs? _ActionVerbs
+# GRQn 32
++~SENT_START _PreVerbs? _QuestionVerbs
+
+
+# let me know if that <verb> => Requests
+# GRQn 33
++~SENT_START let me know if that _AuxVerbs
+# GRQn 34
++~SENT_START let me know if that _QuestionVerbs
+
+
+:InfAuxVerbs=do|have|be|don't
+# Please be is included below w/ InfAuxVerbs - in Qns not Reco?
+# GRQn 35
++~PHRASE_START _Please _AfterPlease* _InfAuxVerbs not?
+
+
+#You get a chance with QuestionVerbs in Qns
+# GRQn 36 - reco vs a request?
++you get a chance ,? _Please? _QuestionVerbs
+
+
+:MustVerbs=must|have|has|may|will|would|should|need
+:StrongMustVerbs=must|should|needs|need|require|requires
+#+you _MustVerbs to? _AfterPlease? _ActionVerbs
+# GRQn 37
++~PHRASE_START you _MustVerbs to? _AfterPlease? _QuestionVerbs
+
+
+# make sure is a Request, not recommendations, e.g. make sure you check out, vs make sure to register
+# GRQn 38
++make sure you _AuxVerbs? *
+
+# someone/somebody pass me/us
+:Somebody=somebody|someone
++~PHRASE_START _Somebody _Please? _QuestionVerbs
+
+
+# be sure to w/ Question or Recommmend verbs
+#+be sure to _AfterPlease? _ActionVerbs
+# GRQn 39
++be sure to _AfterPlease? _QuestionVerbs
+
+
+# you are on deck to, and you should are Requests
+# GRQn 40
++you're on deck to
+# GRQn 41
++you are on deck to
+# GRQn 42 - add Qn Verbs
++you should _QuestionVerbs
+
+
+# This should, has to, have to in Qns
+# GRQn 43
++this *? _StrongMustVerbs
+# GRQn 44
++these *? _StrongMustVerbs
+# GRQn 45
++this *? has to
+# GRQn 46
++these *? have to
+
+
+# great if you can ...=> Request, and Qn based on verb type
+:GreatAdj=good|great|awesome|wonderful|amazing|terrific|sweet|nice|appreciated|happy
+
+#+_GreatAdj if you _AuxVerbs? _ActionVerbs
+# GRQn 47
++_GreatAdj if you _AuxVerbs? _QuestionVerbs
+
+# GRQn Neg
+:OnAt=on|at
++~PHRASE_START Follow _MeUs _OnAt
+
+
+# i want you to ...
+# neg rule on 'I wanna' => I want/need etc left as is, even if PI
+# neg rule as 'I want/need/like <keyword/name>' will be added later if keyword is detected as Obj NP 
+# -_IWeSimple _WantWanna * / where WantWanna includes want need, etc
+# :WantWanna=wanna|want
+:WantYou=want|like|need|request|require|order|demand|request|ask|expect|suggest|encourage
+
+:Objects=it|that|these|those|him|her|them|nothing|nobody|somebody|something|some|everybody|everyone|everything|you|either|any|all|anything|anyone
+# add 'I/We want for you to'/ 'I/We like you to' => Request/Qn
+
+# GRQn 48
+#+_IWe? _WantYou for? _YouUs to? _ActionVerbs^* _ActionVerbs
++_IWe? _WantYou for? _YouUs to? _QuestionVerbs^* _QuestionVerbs
+
+# GRQn 49
++_IWe? _WantYou _YouUs to *
+
+# GRQn 49
+#+_IWe? _WantYou + YouUs to _ActionVerbs => not included in Reco
++_IWe? _WantYou _YouUs to _QuestionVerbs
+# GRQn 50
+#+_IWe _Want it? _IfWhether _YouUs _ActionVerbs^* _ActionVerbs
++_IWe _Want it? _IfWhether _YouUs _QuestionVerbs^* _QuestionVerbs
+
+:WillWould=will|would
+
+# GRQn 51
+-~PHRASE_START _IWe _WillWould? Wanna *
+
+# GRQn 52
+#+~SENT_START _Want to _ActionVerbs
++~SENT_START _Want to _QuestionVerbs
+
+# removing love as it is in Like
+#-_IWeSimple love *
+
+# this Adverbs list for Questions is different from Want Adverbs
+# :Adverbs=definitely|urgently|just|really|truly|must say|verily
+# -_Adverbs* _WantWanna 
+
+# We can QuestionVerb is in Qns
+# GRQn 53
++~SENT_START _IWeSimple can _QuestionVerbs
+
+# remove from Wanted: liked, loved; changed wondered to wondered if - remove hoped
+:Wanted=wanted|needed|required|ordered|demanded|requested|asked|expected|wondered if|inquired|appreciated|recommended|suggested
+# GRQn 54
++_Wanted _Punc^* you
+
+# next rule is too broad between Qns and Reco verbs so removed
+#:WantS=wants|needs|requires|orders|demands|requests|asks|hopes|expects|likes|wonders|inquires|loves|appreciates|recommends|suggests
+#+_WantS _IfWhether? _YouUs _AuxVerbs? *
+
+# removing thankful, grateful, wondering, curious from WantGerund - for Qns
+:WantGerund=wanting|needing|requiring|ordering|demanding|requesting|asking|hoping|expecting|inquiring
+# GRQn 55
++_WantGerund _IfWhether? _YouUs _AuxVerbs? *
+
+# wonder if - in Request
+# GRQn 56
++~PHRASE_START wonder if _SentEndPunc^* _SentEndPunc
+
+# eliminating hope from Qns an Recos
+#+~PHRASE_START hope _SentEndPunc^* _SentEndPunc
+ 
+:Check=see|check|verify|inquire|ask|make|confirm
+# GRQn 57
++~PHRASE_START _IWe just? following up to _Check
+# GRQn 58
++~PHRASE_START _IWe just? want to _Check
+
+
+# you are required
+:Asked=asked|required|expected|urged|expected|needed|ordered
+# GRQn 59
++you are _Asked to? *
+
+
+# we need/must/should to ...
+:NeedVerbs=need|have
+# GRQn 60
+#+we _NeedVerbs to _ActionVerbs
++we _NeedVerbs to _QuestionVerbs
+
+# GRQn 61
+#+we must _ActionVerbs
++we must _QuestionVerbs
+
+# GRQn 62
+#+we should _ActionVerbs
++we should _QuestionVerbs
+
+
+# Misc action phrases
+# GRQn 63
++i urge you all? to *
+# GRQn 64
++we might? want to *
+
+
+# GRQn 65 - mainly for email
++submissions are? now? invited
+
+
+# GRQn 66
++first priority is *
+
+:Feedback=comments|thoughts|ideas|feedback|input
+
+# removing email specific phrases
+#:Hello=hello|hi|dear|aloha|greetings|namaste|howdy|hey|heya|yo
+#:Salutations=dr|mr|miss|mrs|prof
+
+# Remove email specific rules
+# User's nameb / # <user>, <verb>
+#+_UserName _MidSentPunc* _ActionVerbs
+#-_UserName _MidSentPunc* thank you
+
+# <user> should <verb>
+#+_UserName _MustVerbs _ActionVerbs
+
+# Ignore thanks <name>
+# Ignore Welcome to 
+#:Thanks=thanks|thank you|thank god
+#-_Thanks _UserName => generalized with rule below for social media
+# thank the hangover god etc will be accepted
+#-~PHRASE_START _Thanks 
+
+#-welcome to *
+#-_UserName _Punc+ thanks
+#-_UserName _Punc+ thank you
+
+
+# How about ?
+# GRQn 67
++how about _Articles? *
+# GRQn 68
++what about _Articles? * 
+
+
+# Sentence-start verbs, indicate actions
+# GRQn 69
+#+~PHRASE_START _ActionVerbs _Punc^
++~PHRASE_START _QuestionVerbs _Punc^
+
+# good reason to is too broad - removing
+#+~PHRASE_START good reason to _ActionVerbs
+
+# GRQn 70
+#-~PHRASE_START _ActionVerbs you *
+-~PHRASE_START _QuestionVerbs you *
+
+
+# Some sentence-start verb exceptions
+# GRQn 71
+#-~PHRASE_START _ActionVerbs *? _AuxVerbs
+-~PHRASE_START _QuestionVerbs *? _AuxVerbs
+# GRQn 72
+#-~PHRASE_START _ActionVerbs _ActionVerbs
+-~PHRASE_START _QuestionVerbs _QuestionVerbs
+
+# remiving email specific neg rules
+#:IgnoreWordsFollowedByColon=abstract|phone|fax|email|date|subject|plan|schedule
+#-~PHRASE_START _IgnoreWordsFollowedByColon :
+#:IgnoreVerbsByItself=beef|associate
+#-~PHRASE_START _IgnoreVerbsByItself
+#-~PHRASE_START correct _Punc
+
+# GRQn 73
+-~PHRASE_START open house
+
+#-~PHRASE_START clean sweep
+#-~PHRASE_START look forward to
+#-~PHRASE_START press release
+
+
+# Exclude some common phrases 
+# add the neg rule on 'let me, please allow, back from'
+# add neg rule 'hope I/we action'
+#-~PHRASE_START thank you _Punc^* _Punc?
+
+#-~PHRASE_START back from *
+#-~PHRASE_START thank you ~SENT_END
+#-~SENT_START allow me
+
+#-my name is?
+
+# give me time is Request
+# GRQn 74
++give _MeUs a few days
+# GRQn 75
++give _MeUs some time
+
+#-~PHRASE_START hope _IWe
+#-please allow
+#-~SENT_START let me
+#-what i love about
+
+
+#-~PHRASE_START begin forwarded message :
+#-lead :
+
+
+# just Help with punctuation not expected in Qns => to improve quality
+#+~PHRASE_START help _Punc
+#-love you to^
+
+# GRQn 76
+#-~PHRASE_START open all day ~SENT_END
+-~PHRASE_START open all day 
+
+
+#-you should be good to go
+# GRQn 77 - this may not be a request - removed
+#-i need to 
+
+
+#:IgnoreAfterSearch=engine|results|query
+#-~PHRASE_START search _IgnoreAfterSearch
+
+#:IngoreAfterEmail=message|delivery|filter|messages|filters|address
+#-~PHRASE_START email _IngoreAfterEmail
+#-~PHRASE_START spam digest
+
+:Great=great|happy|wonderful|awesome|fantastic|terrific|splendid|safe|awesome|blast|nice|good
+
+# neg rules to remove 'have a good or great day'
+# GRQn 78
+-~SENT_START have _Articles _Great
+# GRQn 79
+-_IWeSimple? hope you all? had a _Great
+
+#-have fun *
+
+#:Talk=talk|speak
+#-~PHRASE_START _Talk to you *
+
+#-~PHRASE_START see you *
+#-~PHRASE_START date / location :
+#-~PHRASE_START report says
+
+
+# GRQn 80
+# Bill is in QuestionVerb
+-~PHRASE_START bill and i
+
+#-~PHRASE_START fund rated
+#-~PHRASE_START waste of *
+#-~PHRASE_START update from
+
+# GRQn 81
+# neg rule if the sentence/phrase is conditional: if, whether, in case, assuming, supposing, provided 
+:Conditional=if|whether|in case|assuming|supposing|provided
+#-~PHRASE_START _PreVerbs* _Adverbs* _Conditional
+#-~SENT_START _PreVerbs* _Adverbs* _Conditional
+

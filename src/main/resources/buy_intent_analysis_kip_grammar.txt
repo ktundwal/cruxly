@@ -1,0 +1,680 @@
+## Buy Intent (BI) with KIP-awareness
+## vers 0.6 - derived from Buy Intent v1.5
+# author: A. Guha
+
+# Suffixes/prefixes:
+# _X - reference members of alias named X
+# X* - X repeated zero or more times
+# X+ - X repeated one or more times
+# X? - X repeated zero or once
+# X^ - anything EXCEPT X
+
+# GR mP: refers to mth positive grammar rule
+# GR mN: refers to mth negative grammar rule
+# Initial scores are based on KIP not being identified as the object NP
+
+# KIP: defined as alias of keywords. Intent will be detected if it is in the KIP
+#     more than one KIP is allowed at this time
+#     if KIP is null string "", then KIP will be ignored in the intent detection
+
+# Rules: KIP-aware rules are written such that if KIP <> null, it is detected at specific locations in the rule
+#        All intent rules are written to account for KIP, unless they can be KIP independent, in few cases
+
+# Initially, KIP hardcoded for testing. In later versions, KIP will be set by other analytics loop in general.
+# Do we include "I/We want/need/BI the? one/it/that? now?" "IWe am/are getting it/one/that"
+#:KIP=kindle fire|kindlefire|HD kindle fire
+
+# added that to One
+:One=one|it|another|that
+
+# modify the articles to be more general 
+:Karticles=a|#|an|the|that|this|some|these|those|either|some|another|one|2|two|one of the|new|brand new|spanking new|my|my own|our own|our|either|is the|myself a
+
+# 1st person aliases
+:IWeSimple=i|we
+:MeUs=me|us
+:IWeFuture=i'll|we'll|i will|we will
+:IWeFuture=i'll|we'll|i will|we will
+:IWeWould=i'd|we'd|i would|we would
+:IWeCont=i'm|we're|im|ima
+:IWe=i|we|i'd|we'd|i'm|im|we're|i'll|we'll|i'm|ima|we're|i would|we would|i may|i might|we may|we might
+:IvWv=i've|ive|we have|i have|we've
+:MyOur=my|our
+:MyOurSelf=myself|ourself|ourselves
+:Will=will|shall|would|should|could|must
+
+:Punc=,|!|;|.|?|-|(|)|:
+# remove ? in SentEndPunc
+:SentEndPunc=.|!|eom 
+:MidSentPunc=-|,|;|:|)|(
+
+# added demonstrably. only, actually in Adverbs, remo truly from PreVerbs and move to Adverbs
+# removed 'about to' from PreVerbs to avoid dupe with PreVerbs
+:PreVerbs=meanwhile|also|at least|certainly|currently|definitely|finally|finna|haha|hopefully|I guess|guess|immediately|just|kindly|likely|maybe|must say|ok|okay|probably|promptly|quickly|really|so happy|soon|stick around|still|then|urgently|verily|very
+:Adverbs=only|so|also|actually|demonstrably|seriously|immediately|kindly|quickly|promptly|definitely|probably|quickly|really|truly|truely|urgently|maybe|just|very|finna|finally|verily|likely|certainly|hopefully|currently
+
+:SentStartOptional=ok|then|so|hopefully|probably|really|speaking of|speaking of which
+# adjective for 'desparate' - add real, acute, sudden, urgent, pressing, immediate, drastic, extreme, crying
+:Adject=desperate|dire|great|real|accute|sudden|urgent|pressing|immediate|drastic|extreme|crying
+
+# Adding 'is' for bad 1st person grammar
+:AmAre=am|are|is
+
+# It
+:It=it|this|they|those|that
+:Ready=ready|available|finished
+
+# synonyms for offers 
+:offers=offer|bid|proposal|contract|proposition|recommendation|tender|terms|special|deal|bargain|promotion|engagement|clearance|giveaway|closeout|proposal|proffer|deal|order
+
+# synonyms for account 
+:account=basket|account|tab|shopping cart|bill
+
+# remove get
+:toBuy=acquire|bid|buy|purchase|cop|earn|corral|collect|catch|finance|garner|gather|go get|go pick|go buy|grab|have|obtain|pay|pick|procure|secure|rack up|rebuy|repurchase|select|win|sign off|employ|hire|contract|engage|enroll|recruit|register|order|rent|scoop up|shop|snag|snap up
+
+#PIVerbs - consolidated with initial :PIVerbs, :PIForVerbs for entity, PIOfferVerbs for :offers
+# splitting PI or Wants into Buying (BI), Like (L), Try (T) intents 
+# moving acclaim|admire|adore|applaud|appreciate|love|loved|lust|luv|wild about|wild for|* to LikeVerbs
+# delete having, keep having, noticing, regarding 
+# Prune the PIVerbs* list to eliminate low-confidence intent verbs, e.g., the "I accept the offer"?
+#:PIVerbs=accept|accumulate|acquire|act on|activate|advocate|afford|amass|analyse|analyze|anticipate|appraise|appropriate|approve|assess|attached to|attest|attracted to|authorize|avail of|await|awe of|back|bag|bandy about|bankroll|bargain|barter|believe in|benefit from|bid|bless|boast|book|booked|brag|brood about|brood on|brood over|browse|build up on|buy|care for|cash|cast my vote for|catch this|celebrate with|charter|check out|cheer|cheers to|cherish|chew on|chew over|choose|clamor for|clinch|collect|commission|committed to|consume|contract|cop|corral|cotton|could do with|covet|crave|crazy about|crazy for|cultivate|decide on|deliberate on|delight|delight in|delighted with|demand|deserve|desiderate|desire|devoted to|devour|dicker about|dicker over|die|dig|dip into|discovering|dish|dish up|disposed to|dote|double|drawn towards|dream|drink|eat|embrace|employ|enamored with|endorse|engage|enjoy|enlist|enquire|enroll|evaluate|exalt|examine|exchange for|explore|familiarize with|fancy|fantasize|fascinated with|favor|favour|fawn|feast|feed|feel like a|feel a need for|ferret|fetch|finance|find|fish|fix on|flip over|flip through|flirt|flock|focus on|follow|fond of|forage|freak out on|frolic with|fuel|fulfil|fulfill|fund|garner|gather|get|gimme|glorify|go ape over|gorge|gotta get|got to get|gotta have|got to have|got to get|gotta stop by|got to stop by|gotta stop for|got to stop for|grab|gravitate towards|graze|grok|groove|haggle|hail|hanker|have a ball with|have a yen for|hire|hoard|hooked on|horse-trade|hooked|hunger|hunt|imagine|impatient for|indulge|ingest|initiate|ink|inquire|inquiring|inspect|install|interested|investigate|jump for|kick around|land|leaf|learn|lease|like|liked|load up on|lobby|locate|long|look at|look into|lunch|luxuriate|marvel|meditate on|monitor|mull|munch|muse on|nab|need|negotiate|nibble|nip into|nominate|notice|nourish on|obsess with|off to|obtain|opt for|order|outfit|parlay|partake|partial to|patronize|pay|perk|perpend|peruse|pick|picture myself in|pile|pine|pleased with|plow back into|plumb|plunge into|pocket|polish off|ponder|pore|possess|prefer|prescribe|preview|price|prize|procure|purchase|pursue|quench|query|queue|rally|rave|read about|read up on|recommend|refill|reflect on|reflect upon|refuel|regard|register for|registered|reinvest|rejoice|rejuvenate with|relax with|relish|remodel|rent|replenish|repurchase|request|require|research|reserve|revel|revere|review|riff through|riffle through|rock with|rubber stamp|ruminate on|rummage for|salivate|sample|sanction|savor|scan|scoop up|scour|scout|screen|scrounge|scrutinize|search|secure|seek|select|serve|settle on|settle upon|shop|side with|sign|signed up for|sing the praises of|single out|sip|size up for|skim|snag|snap up|spend|stake out|stand in line at|stand in line for|stoke|stop by|stop for|stop at|survey|swallow|switch to|take|take advantage of|take joy in|tap into|taste|test|think of|think about|thirst|thrive|thumb through|tout|track|trade|treasure|triple|try|tuck into|unwind with|upgrade|use|value|venerate|vote|vouch|wait for|wanna|want|win|wish for|wish for|worship|yearn|zero in on
+
+# add: take, use, chill with, want, invest, get (w/ KIP), in desperate need of 
+# remove: land, win, accept, act on, bag, cotton, review, dish, dish up, sign, feed, consume|devour|drink|eat|fuel|gorge|lunch|munch|nibble|nip into|nourish on|parlay|partake|pile|polish off|quench|rejuvenate with|relax with|relish|sip|swallow|taste|
+:BIVerbs=take|use|in desperate need of|invest|accumulate|acquire|activate|afford|amass|appropriate|authorize|avail of|bankroll|bargain|barter|bid|book|booked|build up on|buy|cash|catch this|charter|chill with|choose|clinch|collect|commission|contract|cop|corral|cultivate|demand|double|employ|engage|exchange for|fetch|finance|fulfil|fulfill|fund|garner|gather|get|get me|going get|go get|gotta get|got to get|gotta stop by|got to stop by|gotta stop for|got to stop for|grab|haggle|hire|hoard|horse-trade|hunt|ingest|ink|install|lease|load up on|nab|need|neeed|neeeed|negotiate|obtain|order|outfit|patronize|pay|pick|plow back into|pocket|possess|procure|purchase|pursue|recruit|refill|refuel|register for|registered|reinvest|remodel|rent|replenish|repurchase|request|require|reserve|scoop up|scrounge|secure|select|serve|shop|signed up for|single out|snag|snap up|spend|stand in line at|stand in line for|stop by|stop for|stop at|switch to|take advantage of|tap into|trade|triple|upgrade|want|zero in on
+
+# non BIVerbs = ActionVerbs - BIVerbs / similar for non BIVerbsGerunds; remove want; add know, listen; remove use
+:NonBIVerbs=accept|act on|advocate|analyse|analyze|anticipate|appraise|approve|assess|attached to|attest|attracted to|await|awe of|back|bag|bandy about|believe in|benefit from|bless|boast|brag|brood about|brood on|brood over|browse|care for|cast my vote for|celebrate with|check out|cheer|cheers to|cherish|chew on|chew over|clamor for|committed to|consume|cotton|could do with|covet|crave|crazy about|crazy for|decide on|deliberate on|delight|delight in|delighted with|deserve|desiderate|desire|devoted to|devour|dicker about|dicker over|die|dig|dip into|discovering|dish|dish up|disposed to|dote|drawn towards|dream|drink|eat|embrace|enamored with|endorse|enjoy|enlist|enquire|enroll|evaluate|exalt|examine|explore|familiarize with|fancy|fantasize|fascinated with|favor|favour|fawn|feast|feed|feel like a|ferret|find|fish|fix on|flip over|flip through|flirt|flock|focus on|follow|fond of|forage|freak out on|frolic with|fuel|gimme|glorify|go ape over|gorge|gravitate towards|graze|grok|groove|hail|hanker|have a ball with|have a yen for|hooked on|hooked|hunger|imagine|impatient for|indulge|initiate|inquire|inquiring|inspect|interested|investigate|jump for|kick around|know|leaf|learn|like|liked|listen|lobby|locate|long|look at|look into|lunch|luxuriate|marvel|meditate on|monitor|mull|munch|nibble|nip into|nominate|notice|nourish on|obsess with|off to|opt for|parlay|partake|partial to|perk|perpend|peruse|pile|pine|pleased with|plumb|polish off|ponder|pore|prefer|prescribe|preview|price|prize|quench|query|queue|rally|rave|read about|read up on|recommend|reflect on|reflect upon|regard|rejoice|rejuvenate with|relax with|relish|research|revel|revere|review|riff through|riffle through|rock with|rubber stamp|ruminate on|rummage for|salivate|sample|sanction|savor|scan|scour|scout|screen|scrutinize|search|seek|settle on|settle upon|side with|sign|sing the praises of|sip|size up for|skim|stake out|stoke|survey|swallow|take joy in|taste|test|think of|think about|thirst|thrive|thumb through|tout|track|treasure|try|tuck into|unwind with|value|venerate|vote|vouch|wait for|wanna|wish for|wish for|worship|yearn
+
+:NonBIVerbsGerunds=accepting|acting on|advocating|analysing|analyzing|anticipating|appraising|approving|assessing|attesting|awaiting|backing|bagging|bandying about|believing in|benefittiing from|blessing|boasting|bragging|brooding about|brooding on|brooding over|browsing|careing for|casting my vote for|celebrating with|checking out|cheering|cherishing|chew oning|chewing ove|clamoring for|committing to|consumeing|cottoning|coveting|craving|deciding on|deliberating on|delighting|delighting in|deserving|desiderating|desiring|devoting to|devouring|dickering about|dickering over|dieing|dying|digging|dipping into|discovering|dishing|dishing up|doting|dreaming|drinking|eating|embracing|endorsing|enjoying|enlisting|enquiring|enrolling|evaluating|exalting|examining|exploring|familiarizing with|fancying|fantasizing|favoring|favouring|fawning|feasting|feeding|feeling like|ferreting|finding|fishing|fixing on|flipping over|flipping through|flirting|flocking|focusing on|following|foraging|freaking out on|frolicing with|frolicking with|fueling|glorifying|going ape over|gorging|gravitating towards|grazing|grokking|grooving|hailing|hankering|having a ball with|having a yen foring|hungering|imagining|indulging|initiating|inquiring|inspecting|investigating|jumping for|kicking around|leafing|learning|liking|lobbying|locating|longing|looking at|looking into|lunching|luxuriating|marveling|meditating on|monitoring|mulling|munching|nibbling|nipping into|nominating|noticing|nourishing on|obsessing with|opting for|parlaying|partaking|perking|perpending|perusing|piling|pining|plumbing|polishing off|pondering|poring|preferring|prescribing|previewing|pricing|prizing|quenching|querying|queueing|rallying|raving|reading about|reading up on|recommending|reflecting on|reflecting upon|regarding|rejoicing|rejuvenating with|relaxing with|relishing|researching|reveling|revering|reviewing|riffing through|riffling through|rocking with|rubber stamping|ruminating on|rummaging for|salivating|sampling|sanctioning|savoring|scanning|scouring|scouting|screening|scrutinizing|searching|seeking|settling on|settling upon|siding with|signing|singing the praises of|sipping|sizing up for|skimming|staking out|stoking|surveying|swallowing|taking joy in|tasting|testing|thinking of|thinking about|thirsting|thriving|thumbing through|touting|tracking|treasuring|trying|tucking into|unwinding with|using|valuing|venerating|voting|vouching|waiting for|wannaing|wanting|wish foring|wishing for|worshipping|yearning
+
+# add: chilling with|getting excited for, wanting, in desperate need of
+# remove: winning|needs|,going to, taking, get, accepting|acting on|bagging|consuming|cottoning|using|devouring|drinking|eating|feeding|fueling|ingesting|loading up on|lunching|munching|nibbling|nipping into|nourishing on|parlaying|partaking|polishing off|quenching|sipping|swallowing|tasting|; **added going to get,
+:BIVerbsGerunds=in desperate need of|accumulating|acquiring|affording|amassing|appropriating|authorizing|availing of|bankrolling|bargaining|bartering|bidding|booking|building up on|buying|cashing in|catching this|chartering|chilling with|choosing|clinching|collecting|commissioning|contracting|copping|corralling|could do with|cultivating|demanding|dishing up|do anything for|doubling|employing|engaging|enlisting|exchanging for|fetching|financing|fulfiling|fulfilling|funding|garnering|gathering|getting|getting excited for|go pick|go get|get me|going get|gotta get|got to get|going to get|gotta stop by|got to stop by|gotta stop for|got to stop for|gotta get|grabbing|haggling|hiring|hoarding|horse trading|hunting|in the hunt for|in line at|in line for|inking|installing|landing|leasing|nabbing|need|neeed|neeeed|needing|in need of|in the need of|negotiating|obtaining|ordering|outfitting|patronizing|paying|picking|piling on|plowing back into|pocketing|possessing|procuring|purchasing|pursuing|recruiting|refilling|refueling|registering for|reinvesting|remodeling|renting|replenishing|repurchasing|requesting|requiring|reserving|scooping up|scrounging|securing|selecting|serving|shopping|signing|singling out|snagging|snapping up|snap up|spending|standing in line at|standing in line for|switching to|taking advantage of|tapping into|thirsting|trading|tripling|upgrading|wanting|zeroing in on
+
+# BIforVerbs + for + :offers 
+#:BIforVerbs=ache|affection|ask|beg|care|cast|clamor|cast our vote|cast my vote|crazy|deal|exchange|fall|feel a need|feeling a need|head|itch|look|pant|preference|push|register|sigh|spring
+
+# BIforGerunds + for + :offers 
+# BIforGerunds mapped 1-1 to BIforGerunds
+#:BIforGerunds=aching|asking|begging|casting|clamoring|dealing|dying|dieing|exchanging|falling|feel a need|feeling a need|feel like a|feeling some|feelin' some|feeling like a|have a yen|having a yen|heading|itching|looking|panting|pushing|registering|sighing|springing|stand in line|standing in line
+
+# BIbyVerbs + by (+ entity)
+# BIbyVerbs mapped 1-1 to BIbyVerbs
+#:BIbyVerbs=amazed|astonished|astounded|awed|captivated|dazzled|delighted|enchanted|fascinated
+
+# BITreatMyself + myself/ourselves + with -- expression for buying; sp. fortify
+:BITreatMyself=acquaint|adorn|amuse|familiarize|fortify|lavish|reward|spoil|treat
+
+# PITreatMyselfGerund + myself/ourselves + with -- expression for buying; sp. fortifying
+:BITreatMyselfGerunds=acquainting|adorning|amusing|familiarizing|fortifying|lavishing|rewarding|spoiling|gonna treat|going to treat|treating
+
+# BIMyOur phrases that use my/our
+:BIMyOur=laying|lay|sink|sinking
+
+# initial BISpecialPhrases=cheers to|close the deal|closing the deal|exceeds my expectation|exceeding my expectation|exceeds our expectation|had my fix|had our fix|having my fix|having our fix|have my fix|my kind of|our kind of|strike a bargain|striking a bargain|thumbs up|whet my appetite|whet our appetite|whetting my appetite|whetting our appetite|whoop it up|whooping it up|with my name on it|has my name on it|wild about|with our name on it|has our name on it|would be awesome
+:BISpecialPhrases=close the deal|closing the deal|had my fix|had our fix|having my fix|having our fix|have my fix|strike a bargain|striking a bargain|is on my mind|whet my appetite|whet our appetite|whetting my appetite|whetting our appetite|with my name on it|has my name on it|with our name on it|has our name on it|would be awesome
+
+
+# love/like it
+# add -ve rule for it's like that, feeling miserable
+:Feeling=feelin|feeling|feelin'
+# added Crave to _LoveLike - duplication w/ PIVerbs for hi scoring
+:LoveLike=love|like|<3|want|crave
+
+# add u,her, etc pronouns to YouThey
+:YouThey=you|u|y'all|she|he|they|it|her|your|their|him|them
+:Bad=miserable|bad|awful|tired|anxious|angry|negative|sad|like crap|crappy|like shit|shitty
+:ItsThats=it's|its|that's|thats|it is|that is|looks|look|dont|don't|do not|will not|wont|won't
+
+# I/we can/will 
+# +~PHRASE_START _IWeSimple _Will? _PreVerbs* _PIVerbs * -- replaced by next
+# modify rules to ensure either _IWe or _AmAre are present pre- PIVerbs / ensure phrase start of IWe? or Will?
+# add neg rule for having difficulties
+# add I've/we've been PIVerbsGerunds
+:Having=have a|having|getting|facing|noticing 
+:Difficulties=on the|really|spoiled|spoilt|aroused|difficulty|difficulties|failure|failures|frustrated|frustrations|problems|problems|rid|rid of|issue|issues|pain|pains|hassles|bad luck|crisis|crises|revenge|sad|trouble|troubles|mess|hitch|emergency|aroused|upset
+
+# Rules begin here
+
+# GRBI 1N -- basic neg rule if question mark: KIP indep
+-?
+
+# negative start phrase - neg rule: KIP indep
+-not that
+
+# GRBI - add neg rule if there is an URL to remove spam: KIP indep
+-http
+
+#GRBI 1P
+# I will BI/ I am BI
+# e.g.: I will 'buy' KIP
++_IWe _Will? _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+
+# e.g.: we are 'in desperate need' of KIP
++_IWe _AmAre? _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+
+# e.g.: I am 'buying' KIP
++_IWe _AmAre? _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
+
+# e.g.: will 'buy' KIP
++~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+# e.g.: am 'buying' KIP
++~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
+# e.g.: I'll just 'buy' another KIP
++~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+# e.g.: am 'buying' a KIP
++~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
+
+:MayMight=may|might
+
+# Including "I/We want/need/BIVerb one/it/that=One? now?" "IWe am/are BIGerunds it/one/that=One"
+# removing phrase start for 'I want one', just Want / add phrase start for I will buy
+# e.g.: I want.
++~PHRASE_START _IWe _Will? _PreVerbs* _Adverbs* _BIVerbs _SentEndPunc
+
+# Might have to get KIP - remove opt on KIP
+# e.g.: I might have to get
++~PHRASE_START _IWe? _MayMight have to _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+
+# e.g.: I want one.
++_IWe _Will? _PreVerbs* _Adverbs* _BIVerbs the? _One
+# e.g.: I can use one.
++_IWe can _PreVerbs* _Adverbs* _BIVerbs the? _One
+ 
+
+# GRBI 2N for 'need/have/want to'/BIVerbs non-BIVerbs - KIP indep
+# e.g.: I want to play / We're wanting to go
+-~PHRASE_START _IWe _Will? AmAre? _PreVerbs* _Adverbs* _BIVerbs to _NonBIVerbs
+-~PHRASE_START _IWe? _AmAre? _PreVerbs* _Adverbs* _BIVerbsGerunds to _NonBIVerbs
+-~PHRASE_START _IWe? _AmAre? _PreVerbs* _Adverbs* _BIVerbsGerunds to _NonBIVerbsGerunds
+
+# GRBI -xN for 'need/have/want personal pronoun - remove only since in Adverbs - KIP indep
+:Pronoun=you|him|her
+-~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _AmAre? _PreVerbs* _Adverbs* _BIVerbs _Pronoun
+
+
+#GRBI 2P
+# e.g.: , will get a KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Will _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+
+# e.g.: we will get a KIP
++_IWe _Will _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+# e.g.: we are getting a KIP
++_IWe _AmAre? _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
+# e.g., will get a kip => make will mandatory
++~SENT_START _PreVerbs* _Adverbs* _IWe? _Will _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+
+#GRBI 3N - make will optional 
+# e.g.: , choose to buy a KIP 
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* _BIVerbs to _BIVerbs _Karticles* _KIP
+# e.g.: I choose to buy a KIP 
++_IWe _Will? _PreVerbs* _Adverbs* _BIVerbs to _BIVerbs _Karticles* _KIP
+-~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* _BIVerbs to _NonBIVerbs
+
+#GRBI 3P
+# e.g.: , I will buy a KIP 
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _BIVerbs _Karticles* _KIP
+# e.g.: We will buy a KIP 
++_IWe _Will? _BIVerbs _Karticles* _KIP
+# redundant
+#+~SENT_START _PreVerbs* _Adverbs* _IWe? _Will _BIVerbs _Karticles* _KIP
+
+#GRBI 5P - redundant
+#+_IWe _AmAre? _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
+# e.g., also buying another KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
+
+# Including "I/We want/need/BIVerb one/it/that=One? now?" "IWe am/are BIGerunds it/one/that=One"
+# may add sentendpunc if needed
+# e.g., I'm buying one
++_IWe _AmAre? _PreVerbs* _Adverbs* _BIVerbsGerunds _One
+
+#GRBI 7P - redundant w/ 5P
+#+~SENT_START _PreVerbs* _Adverbs* _AmAre? _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
+
+# GRBI - gonna BUyVerbs
+# Future intent such as 'gonna'/'about to' BuyVerbsGonna /going to buy => _AboutTo
+# :BItoVerbs=ache|addicted|agree|aim|aspire|assent|attached|attempt|attracted|authorize|click|commit|consider|contemplate|determine|elect|encouraged|endeavor|endeavour|expect|go|going|head to|head over to|hope|hurry|hustle|impatient|inclined|inspire|intend|itch|jump|leap|look|manage|march|migrate|motivate|motivated|need|nudge|opt|plan|pledge|plot|pop over|predisposed|promise|promised|propose|push|ready|rush|start|swear|thrilled|travel|try|vow|walk|want
+
+:AboutTo=gonna|going to|fixing to|finna|will|shall|about to|plan to|aim to|encouraged to|hope to|encouraged to|expect to|inclined to|intend to|itching to|hope to|impatient to|motivated to|ready to|need to|want to|plan to|rush to
+:BItoGerunds=aching|agreeing|aiming|aspiring|assenting|attempting|clicking|committing|electing|endeavoring|endeavouring|expecting|going|heading|heading over|head over|hoping|hurrying|hitting up|hitting up that|hustling|intending|itching|jumping|leaping|looking|managing|marching|motivate|nudging|opting|planning|pledging|plotting|popping over|promising|proposing|pushing|rushing|starting|swearing|traveling|trying|vowing|walking|wanting
+
+# replace SENT_START with PHRASE START on _Gonna buy
+# e.g.,gonna buy a KIP; about to buy this KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? _AboutTo _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+
+### sp test case with replacing alias AboutTo with 2 explicit phrases "about to", "itching to" - others will not work
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? about to _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? itching to _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+###
+
+# e.g., I'm gonna/about to buy a KIP 
++_IWe _AmAre? _AboutTo _BIVerbs _Karticles* _KIP
+# e.g., I am planning to buy KIP
++_IWe _AmAre? _BItoGerunds to _BIVerbs _Karticles* _KIP
+# e.g., I am planning to buy KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? _BItoGerunds to _BIVerbs _Karticles* _KIP
+# e.g., I'm gonna buy one
++_IWe _AmAre? _AboutTo _BIVerbs _One
+
+# GRBI 32P - next two redundant with use of Gonna
+#+~PHRASE_START _PreVerbs* _Adverbs* _IWe? going to _BIVerbs _Karticles* _KIP
+#+_IWe _AmAre? going to _BIVerbs _Karticles* _KIP
+
+
+#GRBI 5N -- negative for BI 
+-~PHRASE_START _IWe? _AmAre? _PreVerbs* _Adverbs* _Having _Karticles? _Difficulties
+# GRBI 6N -- sp negative for neg BI words after 'getting'. if not eff., remove getting from gerunds, remove 'in'
+:GettingAfterNeg=used|about|really|ahead|buzzed|well|over|by|to|back|out|even|off|larger|bigger|smaller|worse|mad|better|excited|high
+-getting _GettingAfterNeg
+
+#GRBI 8P
+# e.g., I have been thinking of buying KIP
+:Planning=planning|planning to|thinking of|plotting|plotting to|contemplating
++_IvWv been _PreVerbs* _Adverbs* _Planning? _BIVerbsGerunds _Karticles* _KIP
+
+# Iwe willwould PI_Verbs
+# modify rules to ensure either _IWe or _AmAre are present pre- BIVerbs
+# do we add constraint of phrase start only for these rules? better ensure 1st person not optional
+
+# I/we dont/wont mind PIVerbsGerunds
+# extend rule for cant wait to/for/until/waiting for
+:WontDont=wont|dont|would not|wouldnt|wouldn't
+:Cant=cant|can't|cannot
+:Wait=be waiting|wait
+:ToForUntil=to|to be|to be in|for|until
+
+# GRBI 14P - weak BI, not incl. in Like
+# e.g., I dont mind buying KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _WontDont mind _BIVerbsGerunds _Karticles* _KIP
+
+
+# GRBI 15P - cant wait to buy
+# e.g., I cant wait to buy a KIP
++~PHRASE_START _IWe? _PreVerbs? _Cant _Wait _ToForUntil _IWe? _BIVerbs _Karticles* _KIP
+# e.g., We cant wait to by buying a KIP
++~PHRASE_START _IWe? _PreVerbs? _Cant _Wait _ToForUntil _IWe? be? _BIVerbsGerunds _Karticles* _KIP
+
+# GRBI 15P - cant wait for
+# e.g., cant wait for our new KIP
++~PHRASE_START _IWe? _PreVerbs? _Cant _Wait for _MyOur? _Karticles* _KIP
+
+# cannot wait to <do something> 
+# e.g., cant wait to buy a KIP
++_Cant _Wait to _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+
+# can do with
+# e.g., I can do with a KIP
++_IWe can do with _Karticles* _KIP
+# e.g., I can do with one
++_IWe can do with _One
+
+# time to reconsider
+# e.g., time to reconsider a KIP
++time to reconsider _Karticles* _KIP
+
+# could use another => may be redundant
+# e.g., I could use another KIP
++~PHRASE_START _IWe _PreVerbs* _Adverbs* _Will _BIVerbs _Karticles* _KIP
++~SENT_START _PreVerbs* _Adverbs* _IWe? _Will _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+
+# added :PIVerbs to next rule and look_forward
+# added optional "some"
+# GRBI 16P for BI
+# e.g., I can really use a KIP
++_IWeSimple can _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+
+# GRBI 17P for BI
+# e.g., I plan to buy a KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple? plan to _PreVerbs* _BIVerbs _Karticles* _KIP
+
+# GRBI 18P for BI - use "look forward to" vs "looking forward to some"
+# e.g., I look forward to a KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple? look forward to? _Karticles* _KIP
+
+# GRBI 20P for BI- use "look forward to" vs "looking forward to some"
+# e.g., , just looking forward to a KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple? looking forward to? _Karticles* _KIP
+
+# GRBI 21P for BI - remove optional BIVerbsGerunds
+# e.g., looking forward to buying a KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple? looking forward to _BIVerbsGerunds _Karticles* _KIP
+
+:AmAre=am|are
+# replaced _IWeSimple with _IWe
+#GRBI 22P
+# e.g., buying KIP => extends earlier rule w/ phrase start
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? _Adverbs? _PreVerbs* _BIVerbsGerunds _Karticles* _KIP
+
+
+:AboutOf=about|of
+# remove general ForIntoAt
+#:ForIntoAt=for|into|at
+# add sp rules for looking /thinking look / think / in need of
+
+#GRBI 24P - allow thinking about BIGerunds
+# e.g., , thinking of buying a KIP
++~PHRASE_START _IWe? _AmAre? _Adverbs* thinking _AboutOf _BIVerbsGerunds _Karticles* _KIP
+
+# looking for
+#GRBI 25P
+# e.g., , looking for KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? _Adverbs* looking for _Karticles* _KIP
+
+#GRBI 26P - allow => IWe_ manadatory
+# e.g., , I'll think about buying a KIP
++~PHRASE_START _IWe _Will? _PreVerbs* think _AboutOf _BIVerbsGerunds _Karticles* _KIP
+
+# look for
+#GRBI 27P
+# e.g., , I'll look for a KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _PreVerbs* look for _Karticles* _KIP
+
+#GRBI 28P - Want/BI
+# e.g., , in desperate need of KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? _Adverbs* in _Adject? need of _Karticles* _KIP
+
+:Decide=decide|choose
+# GRBI xx - special case of 'cant decide between *' => does not cover "decide between X and KIP"?
+# e.g., , I cant decide between KIP and foo
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Cant _Adverbs? _Decide between _Karticles* _KIP
+# e.g., I cant decide between KIP and foo
++_IWe _Cant _Adverbs? _Decide between _Karticles* _KIP
+# e.g., , have to decide between KIP and foo
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? have to _Adverbs? _Decide between _Karticles* _KIP
+# e.g., we have to decide between KIP and foo
++_IWe have to _Adverbs? _Decide between _Karticles* _KIP
+
+# GRBI 29P - add phrase start => redundant
+#+_IWeSimple _Will _Adverbs? _BIVerbs
+# GRBI 30P - add phrase start => redundant
+#+_IWeFuture _Adverbs? _BIVerbs _Karticles* _KIP
+
+# Future intention I'd/we'd not incl for Like
+# GRBI 31P 
+# e.g., I would buy KIP
++_IWeWould _Adverbs? _BIVerbs _Karticles* _KIP
+
+# Gonna go: future intention, not incl for Like
+# GRBI 33P
+# e.g., , I am gonna go buy KIP / , I am about to buy KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* gonna go? _BIVerbs _Karticles* _KIP
+# e.g., I am gonna go buy KIP / , I am about to buy KIP
++_IWe _AmAre? gonna go? _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+
+# e.g., , I am gonna go buy one
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* gonna go? _BIVerbs _One
+# e.g., I am gonna go buy one
++_IWe _AmAre? gonna go? _PreVerbs* _Adverbs* _BIVerbs _One
+
+# Wanna / want to: future intention, not incl for Like
+# GRBI 34P - added wanna BI, try
+
+# e.g., , I wanna buy KIP
++~PHRASE_START _PreVerbs* _Adverbs* _PreVerbs* _Adverbs* _IWe? wanna _BIVerbs _Karticles* _KIP
+# e.g., We wanna buy KIP
++_IWe wanna _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+# e.g., We wanna buy one
++_IWe wanna _PreVerbs* _Adverbs* _BIVerbs _One
+#+~PHRASE_START _PreVerbs* _Adverbs* _IWe? wanna try _Karticles* _KIP
+
+# GRBI 35P
+# e.g., , want to buy KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? want to _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+# e.g., We want to buy KIP
++_IWe want to _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+
+#GRBI 37P 
+# e.g., am buying KIP
+#+~PHRASE_START _PreVerbs* _Adverbs* _IWe? am? _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
+
+#GRBI 38P => redundant
+#+~PHRASE_START _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
+
+# starting day/morning with / <> in the morning => committed BI
+:Starting=starting|kicking off|beginning|toasting|greeting
+:Daytime=morning|day|afternoon|evening|night|daytime
+#GRBI 39P
+# e.g., starting our day with KIP
++_IWe? _AmAre? _Starting _MyOur? _Karticles? _Daytime with _Karticles* _KIP
+
+#GRBI 40P -- too broad
+#+ time for _MyOur? _Articles?
+:Cash=cash|dollars|money|moolah|bucks|waited
+:ToFor=to|for
+# e.g., , have money for KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? have _Cash for _Karticles* _KIP
+# e.g., we have cash for KIP
++_IWe _PreVerbs* _Adverbs* have _Cash _ToFor _Karticles* _KIP
+# e.g., wish we have money to buy KIP
++wish _IWe _PreVerbs* _Adverbs* had _Cash _ToFor _BIVerbs? _Karticles* _KIP
+
+# GRBI: too long since/it's been ages since/long time sinc/long time/ I've had KIP or no KIP
+:LongTimeSince=too long since|way too long since|its been ages since|it's been ages since|long time since|long time no
++_LongTimeSince _IWe? _IvWv? had? _Karticles* _KIP
+
+### sp test case with replacing alias AboutTo with explicit phrase "too long since" - others wont work
++too long since _IWe? _IvWv? had? _Karticles* _KIP
+###
+
+
+# reconsider with KIP?
+# e.g., , time to reconsider KIP
++time to reconsider _Karticles* _KIP 
+
+:to=to|2
+# +~PHRASE_START _IWeSimple? _PItoVerbs to _toBuy
+# +~SENT_START PreVerbs? _PItoVerbs _to
+# +~SENT_START _PItoGerunds _to _toBuy
+# +~PHRASE_START _IWeSimple? _Will _PItoVerbs _to _toBuy
+# +~PHRASE_START _IWeSimple? _AmAre? _PItoGerunds _to _toBuy
+
+# PIforVerbs + for + :offers => not effective and not included
+# +~PHRASE_START _SentStartOptional? _IWeSimple? _PIforVerbs for some? _offers
+# +~PHRASE_START _SentStartOptional? _IWeSimple? _Will _PIforVerbs for some? _offers
+# +~PHRASE_START _SentStartOptional? _AmAre? _PIforGerunds for some? _offers
+# PIbyVerbs + by (+ entity) => not effective and not included
+# +~PHRASE_START _SentStartOptional? _IWeSimple? _AmAre? _PIbyVerbs by
+
+#GRBI 41P
+# e.g., , have to buy KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? have _to _toBuy _Karticles* _KIP
+# e.g., we have to get KIP
++_IWe _PreVerbs* _Adverbs* have _to _toBuy _Karticles* _KIP
+# e.g., we have to buy one.
++_IWe _PreVerbs* _Adverbs* have _to _toBuy _One _SentEndPunc 
+
+# Making way /heading over + to => for BI and Try => too weak for BI. disable
+:HeadingTo=heading out|heading over|heading oout|making my way|making our way|walking over|driving|speeding|running|jogging|zipping|zipping over
+#GRBI 42P
+# e.g., , heading out to buy KIP
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? _Adverbs? _HeadingTo _BIVerbs _Karticles* _KIP
+# e.g., we are heading out to buy KIP
++_IWe _AmAre? _Adverbs? _HeadingTo _BIVerbs _Karticles* _KIP 
+# e.g., heading over to buy one
++~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _HeadingTo _BIVerbs _One
+
+
+# PITreatMyself + myself/ourselves + with / to / should include Like?
+#GRBI 43P
+# e.g., treat myself with a KIP
++~PHRASE_START _SentStartOptional? _IWeSimple? _Will? _BITreatMyself _MyOurSelf with _Karticles* _KIP
+#GRBI 44P
+# e.g., treat myself to a KIP
++~PHRASE_START _SentStartOptional? _IWeSimple? _Will? _BITreatMyself _MyOurSelf to _Karticles* _KIP
+
+# PITreatMyselfGerunds + myself/ourselves + with / to
+#GRBI 45P
+# e.g., treating myself with a KIP
++~PHRASE_START _SentStartOptional? _IWe? _AmAre? _BITreatMyselfGerunds _MyOurSelf with _Karticles* _KIP
+#GRBI 46P
+# e.g., treating myself to a KIP
++~PHRASE_START _SentStartOptional? _IWe? _AmAre? _BITreatMyselfGerunds _MyOurSelf to _Karticles* _KIP
+
+# passive form of like: 3rd party fetch/bring/get/buy
+:Gets=get|gets|fetch|fetches|bring|brings|order|orders|buy|buys
+:TakeTook=take|took
+:IfCan=if|can
+:Somebody=someone|somebody
+#GRBI 47P -- weak buy if wish someone else buys
+#+_Somebody? _Gets _MeUs *
+#GRBI 48P -- i-- weak buy if wish someone else buys
+#+~PHRASE_START * _IfCan? _Somebody? _TakeTook _MeUs
+
+:HasHad=has|have|had
+:Wouldnt=wouldn't|shouldn't|can't|cant|cannot|musn't|couldn't
+:GoFor=do with|go for
+:CanCould=can|could
+:So=so|soo|sooo|soooo|sooooo
+# Cool not in BI
+# :Cool=cool|neat|great|amazing|awesome|good|delicious|wonderful|lovely|nice
+:Mind=mind|refuse|be upset|complain|object to|object if you|turn down|reject
+:Think=think|say|vote|declare
+:Hurray=hurrah|hurray|hooray|huzzah|hip-hip|hip hip|yipee
+:Buying=buying|getting|ordering|acquiring|bidding|purchasing|obtaining|picking|procuring|employing|hiring|renting
+:Meals=breakfast|lunch|dinner|snack|drink|treat|dessert|feast|muchies|brunch|chow|luncheon|picnic|spread|refreshment|beverage|repast|tea|supper|banquet|grub|din-din
+:Yes=yes|affirmative|amen|yea|yeah|yep|surely|alright|sure thing|great|aye|all right|by all means|positively|precisely|undoubtedly|indubitably|unquestionably 
+:IsGoes=is|goes|sounds|sound|smells|tastes|taste|looks|would|would be
+
+:OnWithFor=on|with|for
+#GRBI 49P - made IWeSimple optional
+# e.g., KIP on my mind 
++_KIP _OnWithFor? _BISpecialPhrases
+# e.g., having my fix with KIP
++_BISpecialPhrases _OnWithFor? _Karticles* _KIP
+
+#GRBI 50P
+# e.g., we could go for a KIP
++_IWe _CanCould _PreVerbs* _Adverbs* _GoFor _Karticles* _KIP
+
+#GRBI 51P
+# e.g., we'll whet our appetite with a KIP
++_IWeFuture _BISpecialPhrases _OnWithFor? _Karticles* _KIP
+
+#GRBI 52P - add first person - make I/We mandatory
+# e.g., we will be buying KIP
++_IWe _Will be _PreVerbs* _Adverbs* _Buying _Karticles* _KIP
+
+#GRBI 53P
+# e.g., we have our fix => may result in false pos
++_IWe? _Will? _HasHad? _MyOur fix
+
+
+#GRBI 54P -- more want/ like => remove rule
+#+_KIP _IsGoes _So? _Adverbs* _Cool
+
+# added explicit rule for 'wish I had'
+#GRBI 55P
+# e.g., we wish we had a KIP
++_IWe? wish _IWe had _Karticles* _KIP
+
+# added explicit rule for 'would be nice'
+#GRBI 56P
+:Nice=nice|great|super|wonderful|good|awesome
+# e.g., KIP would be so? _Nice
++_KIP would be nice
+
+#GRBI 57P
+# e.g., I am up for a KIP
++_IWe _AmAre? up for _Karticles* _KIP
+
+:ThereIs=there's|there is
+#GRBI 58P
+# e.g., next stop: KIP
+:Dash=:|-
++~PHRASE_START next stop _Dash? _Karticles* _KIP
+
+#GRBI 59P
+# e.g., everything goes better with KIP
++~PHRASE_START _PreVerbs* _Adverbs* everything _IsGoes better with _Karticles* _KIP 
+
+#GRBI 60P - modify to would be vs is/would => redundant
+#+_KIP would be awesome
+
+#GRBI 61P
++could _So? _PreVerbs? _GoFor _Karticles* _KIP 
+
+#GRBI 62P
+# e.g., this KIP has my name on it
+:HasWith=has|with
++_Karticles* _KIP _HasWith _MyOur name on it
+
+#GRBI 63P - buying me/us iff sent/phrase start
+# e.g., buying me a KIP => possible false pos
++~PHRASE_START _PreVerbs* _Adverbs* _Buying _MeUs _Karticles* _KIP
+
+#GRBI 64P
+# e.g., KIP - here I come
++_KIP _Dash? here _IWe come
+
+#GRBI 65P
+# e.g., KIP for breakfast
++_KIP for _MyOur? _Meals
+
+# Will not mind - BI, not incl weak Like
+#GRBI 66P
+# e.g., I will not mind getting a KIP
++_IWe _Will not _Mind _BIVerbsGerunds _Karticles* _KIP 
+# e.g., I will not mind getting a KIP
++_IWe _Will not _Mind _BIVerbsGerunds _One _SentEndPunc
+
+#GRBI 67P
+# e.g., I wouldnt not mind getting a KIP
++_IWe _Wouldnt _Mind _BIVerbsGerunds _Karticles* _KIP
+# e.g., I wouldnt not mind getting one
++_IWe _Wouldnt _Mind _BIVerbsGerunds _One _SentEndPunc
+
+#GRBI 68P - BI not explicit Like - too broad
+#+_IWe _Think _Yes
+
+# BIMyOur phrases that use my/our
+:TeethHands=teeth|hand\hands
+:IntoOn=into|on
+#GRBI 69P - add getting?
+# e.g., I will be getting out hand on a KIP
++_IWeSimple _Will be? getting? _BIMyOur _MyOur _TeethHands _IntoOn _Karticles* _KIP 
+
+:IsAre=is|are
+
+# GRBI
+# e.g., KIP is calling our name
++_KIP _IsAre calling _MyOur name
+# e.g., KIP is truly a must
++_KIP _IsAre _Adverbs? a must
+
+#GRBI 74P
+# e.g., we plan to buy KIP
++_IWe plan to _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP 
+
+#GRBI 75P => redundant
+#+_IWe _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
+#GRBI 76P => redundant
+#+i am _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
+#GRBI 77P => redundant
+#+_IWeSimple are _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
+
+#GRBI 78P
+# e.g., we are all buying KIP
++we all? are all? _BIVerbsGerunds _Karticles* _KIP
+
+#GRBI 79P
+# e.g., , still buying a KIP
++~PHRASE_START still _BIVerbsGerunds _Karticles* _KIP
+
+#GRBI 80P - redundant
+#+~PHRASE_START _BIVerbsGerunds _Karticles* _KIP
+# e.g., buying one => possible false pos?
++~PHRASE_START _BIVerbsGerunds _One _SentEndPunc 
+
+:Future=tomorrow|later|monday|tuesday|wednesday|thursday|friday|saturday|sunday|mon|tue|wed|thu|fri|sat|sun|week|month
+# Future date BI and Try
+#GRBI 81P - not a good use case
+#+~PHRASE_START _PreVerbs* _Adverbs* _BIVerbs _Future _Karticles* _KIP
+
+#GRBI 7N 
+# neg rule if the sentence/phrase is conditional: if, whether, in case, assuming, supposing, provided
+:Conditional=if|whether|in case|assuming|supposing|provided
+-~PHRASE_START _PreVerbs* _Adverbs* _Conditional
+#-~SENT_START _PreVerbs* _Adverbs* _Conditional
