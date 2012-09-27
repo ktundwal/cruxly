@@ -1,19 +1,18 @@
 package com.cruxly.lib.analytics.test;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 
 import org.junit.Test;
 
-import com.cruxly.lib.model.Kips;
+import com.cruxly.lib.model.Kip;
 
 public class TestLikeDetector extends TestDetector {
 
 	@Test
 	public void testFarAwayKindleFire() {
 		String content = "I like it but it actually is very far away KindleFire that is";
-		Kips kip = KINDLEFIRE;
+		Kip kip = KINDLEFIRE;
 		List<String> expectedIntentRules = LIKE;
 		check(content, kip, expectedIntentRules);
 	}
@@ -21,7 +20,7 @@ public class TestLikeDetector extends TestDetector {
 	@Test
 	public void testILikeStarbucks() {
 		String content = "I like starbucks";
-		Kips kip = STARBUCKS;
+		Kip kip = STARBUCKS;
 		List<String> expectedIntentRules = LIKE;
 		check(content, kip, expectedIntentRules);
 	}
@@ -29,7 +28,7 @@ public class TestLikeDetector extends TestDetector {
 	@Test
 	public void testIMissMyMountainBike() {
 		String content = "I miss my mountain bike. ???? # FuckAThief";
-		Kips kip = NO_KIP;
+		Kip kip = NO_KIP;
 		List<String> expectedIntentRules = LIKE;
 		check(content, kip, expectedIntentRules);
 	}
@@ -38,7 +37,7 @@ public class TestLikeDetector extends TestDetector {
 	public void testUmSoTheGuyAtStarbucks() {
 		String content = "Um so the guy at starbucks is amazing, he just gave me my 5$ drink for " +
 				"2$ because I didn't have enough cash on me I'M IN LOVE";
-		Kips kip = STARBUCKS;
+		Kip kip = STARBUCKS;
 		List<String> expectedIntentRules = LIKE;
 		check(content, kip, expectedIntentRules);
 	}
@@ -46,7 +45,7 @@ public class TestLikeDetector extends TestDetector {
 	@Test
 	public void testILikeFooMno() {
 		String content = "abc def I like foo mno pqr";
-		Kips kip = new Kips(Arrays.asList("foo"));
+		Kip kip = new Kip("foo");
 		List<String> expectedIntentRules = LIKE;
 		check(content, kip, expectedIntentRules);
 	}
@@ -54,7 +53,7 @@ public class TestLikeDetector extends TestDetector {
 	@Test
 	public void testILikeFarAwayFoo() {
 		String content = "abc def I like mno pqr vbh jui foo";
-		Kips kip = new Kips(Arrays.asList("foo"));
+		Kip kip = new Kip("foo");
 		List<String> expectedIntentRules = NOINTENT;
 		check(content, kip, expectedIntentRules);
 	}
@@ -62,7 +61,7 @@ public class TestLikeDetector extends TestDetector {
 	@Test
 	public void testILikeYou() {
 		String content = "I like you";
-		Kips kip = NO_KIP;
+		Kip kip = NO_KIP;
 		List<String> expectedIntentRules = LIKE;
 		check(content, kip, expectedIntentRules);
 	}
@@ -70,7 +69,7 @@ public class TestLikeDetector extends TestDetector {
 	@Test
 	public void testStarbucksILikeYou() {
 		String content = "starbucks I like you";
-		Kips kip = STARBUCKS;
+		Kip kip = STARBUCKS;
 		List<String> expectedIntentRules = LIKE;
 		// following 
 		check(content, kip, expectedIntentRules);
@@ -79,7 +78,7 @@ public class TestLikeDetector extends TestDetector {
 	@Test
 	public void testRTLike() {
 		String content = "RT @macyymeoww: I like seriously need Starbucks.";
-		Kips kip = NO_KIP;
+		Kip kip = NO_KIP;
 		List<String> expectedIntentRules = LIKE;
 		check(content, kip, expectedIntentRules);
 	}
@@ -87,7 +86,7 @@ public class TestLikeDetector extends TestDetector {
 	@Test
 	public void testIDefinitelyLikeKindleFire() {
 		String content = "I definitely like KindleFire";
-		Kips kip = NO_KIP;
+		Kip kip = NO_KIP;
 		List<String> expectedIntentRules = LIKE;
 		check(content, kip, expectedIntentRules);
 	}
@@ -95,7 +94,7 @@ public class TestLikeDetector extends TestDetector {
 	@Test
 	public void testKindleFireILoveYou() {
 		String content = "KindleFire, I love you.";
-		Kips kip = NO_KIP;
+		Kip kip = NO_KIP;
 		List<String> expectedIntentRules = LIKE;
 		check(content, kip, expectedIntentRules);
 	}
@@ -103,7 +102,7 @@ public class TestLikeDetector extends TestDetector {
 	@Test
 	public void testCastingMyVoteFor() {
 		String content = "Casting my vote for starbucks";
-		Kips kip = STARBUCKS;
+		Kip kip = STARBUCKS;
 		List<String> expectedIntentRules = LIKE_COMMITMENT;
 		check(content, kip, expectedIntentRules);
 	}
@@ -118,7 +117,7 @@ public class TestLikeDetector extends TestDetector {
 				};
 				
 		String content = "starbucks I like you";
-		Kips kip = STARBUCKS;
+		Kip kip = STARBUCKS;
 		List<String> expectedIntentRules = LIKE;
 		setLogLevel(Level.INFO);
 		check(rules, content, kip, expectedIntentRules);

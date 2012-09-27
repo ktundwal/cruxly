@@ -17,7 +17,7 @@ import com.cruxly.lib.analytics.FiniteStateMachine.FSMResult;
 import com.cruxly.lib.analytics.TextSegment.SentenceEndSegment;
 import com.cruxly.lib.analytics.TextSegment.SentenceStartSegment;
 import com.cruxly.lib.model.EmailMessage;
-import com.cruxly.lib.model.Kips;
+import com.cruxly.lib.model.Kip;
 import com.cruxly.lib.model.TextSegmentEx;
 import com.cruxly.lib.utils.Utils;
 
@@ -53,12 +53,12 @@ public class SurfaceAnalysis {
 		return (FSM != null);
 	}
 	
-	public static SurfaceAnalysis create(String type, String grammarFileName, Kips kips) {
+	public static SurfaceAnalysis create(String type, String grammarFileName, Kip kips) {
 		SurfaceAnalysis sa = null;
 		try {
 			String[] rules = Utils.getRulesFromGrammarFile(grammarFileName);
 			
-			boolean kipAware = kips != null && !kips.isEmpty();
+			boolean kipAware = kips != null;
 			
 			sa = new SurfaceAnalysis(type, kipAware, grammarFileName);
 			sa.setUserName("Peter Doe");
@@ -75,7 +75,7 @@ public class SurfaceAnalysis {
 	}
 	
 	public void insertIntent(String text,
-			Kips kip, List<TextSegmentEx> intent_list) {
+			Kip kip, List<TextSegmentEx> intent_list) {
 		if (Application.DEBUG) {
 			logger.info("STARTING " + _type + " detection");
 		}
@@ -86,7 +86,7 @@ public class SurfaceAnalysis {
 				_surfaceModel  = trainModel(emptyArray, emptyArray);
 			}
 			
-			if (kip != null && !kip.isEmpty()) {
+			if (kip != null) {
 				setKIP(kip);
 			}
 			doExpandAnnotationsToSentences = false;
@@ -160,7 +160,7 @@ public class SurfaceAnalysis {
 		FSM.addAlias("UserName", vals);
 	}
 	
-	public void setKIP (Kips kip) {
+	public void setKIP (Kip kip) {
 		if (!_kipAware) return;
 		
 		List<String> currentKIP = null;
@@ -168,22 +168,19 @@ public class SurfaceAnalysis {
 			currentKIP = getKIP();
 		} catch (Exception e) {}
 		
-		ListIterator<String> iterator = kip.kips.listIterator();
-	    while (iterator.hasNext())
-	    {
-	        iterator.set(iterator.next().toLowerCase());
-	    }
-	    
+ 
 	    Boolean needToReinit = true;
-	    if (currentKIP != null) {
-	    	List diff = ListUtils.subtract(currentKIP, kip.kips);
+	    String[] allTerms = kip.all();
+	    
+		if (currentKIP != null) {
+	    	List diff = ListUtils.subtract(currentKIP, Arrays.asList(allTerms));
 	    	needToReinit = diff.size() > 0;
 	    }
 
 	    if (needToReinit) {
 	    	FSM = new FiniteStateMachine();
 
-			FSM.addAlias(KIP_ALIASKEY, kip.kips.toArray(new String[kip.kips.size()]));
+			FSM.addAlias(KIP_ALIASKEY, allTerms);
 			init();
 			logger.info(_type + " SurfaceAnalysis reinitated with request kip " + kip);
 	    } else{

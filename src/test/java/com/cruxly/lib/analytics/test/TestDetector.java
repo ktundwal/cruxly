@@ -19,7 +19,7 @@ import com.cruxly.lib.analytics.IntentDetector;
 import com.cruxly.lib.analytics.IntentDetectorException;
 import com.cruxly.lib.analytics.SurfaceAnalysis;
 import com.cruxly.lib.model.IntentRule;
-import com.cruxly.lib.model.Kips;
+import com.cruxly.lib.model.Kip;
 import com.cruxly.lib.model.TextSegmentEx;
 import com.cruxly.lib.utils.SingleLineLogFormatter;
 
@@ -39,10 +39,10 @@ public class TestDetector {
 	protected static final List<String> RECOMMENDATION = Arrays.asList(("recommendation"));
 	protected static final List<String> NOINTENT = new ArrayList<String>();
 	
-	protected static final Kips NO_KIP = new Kips();
-	protected static final Kips STARBUCKS = new Kips( Arrays.asList("starbucks"));
-	protected static final Kips STARBUCKS_MOCHA_LATTE = new Kips(Arrays.asList("latte", "starbucks", "mocha", "coffee"));
-	protected static final Kips KINDLEFIRE = new Kips( Arrays.asList("KindleFire", "kindle fire"));
+	protected static final Kip NO_KIP = new Kip();
+	protected static final Kip STARBUCKS = new Kip("starbucks");
+	protected static final Kip STARBUCKS_MOCHA_LATTE = new Kip("starbucks", new String[]{"latte", "mocha", "coffee"});
+	protected static final Kip KINDLEFIRE = new Kip("KindleFire", new String[]{"kindle fire"});
 	
 	private static Logger logger = Logger.getLogger(TestDetector.class.getName());
 	
@@ -63,7 +63,7 @@ public class TestDetector {
 	    }
 	}
 
-	protected void check(String content, Kips kip, List<String> expectedIntentRules) {
+	protected void check(String content, Kip kip, List<String> expectedIntentRules) {
 		IntentRule[] intentRules = null;
 		try {
 			intentRules = _detector.detect(content, kip);
@@ -79,9 +79,9 @@ public class TestDetector {
 		assertEquals(String.format("(%s) %s", kip, content), expectedIntentRules, intents);
 	}
 	
-	protected void check(String[] rules, String content, Kips kip,
+	protected void check(String[] rules, String content, Kip kip,
 			List<String> expectedIntentRules) {
-		SurfaceAnalysis analyzer = createAnalyzer("unknown", rules, kip, kip.kips.size() > 0);
+		SurfaceAnalysis analyzer = createAnalyzer("unknown", rules, kip, kip.industryTerms.length > 0);
 		List<TextSegmentEx> intent_list = new ArrayList<TextSegmentEx>();
 		analyzer.insertIntent(content, kip, intent_list);
 		StringBuffer b = new StringBuffer();
@@ -94,7 +94,7 @@ public class TestDetector {
 	}
 
 	private SurfaceAnalysis createAnalyzer(String type, String[] rules,
-			Kips kip, boolean kipAware) {		
+			Kip kip, boolean kipAware) {		
 		SurfaceAnalysis sa = new SurfaceAnalysis(type, kipAware, "unknown");
 		sa.setUserName("Peter Doe");
 		sa.setRules(rules);

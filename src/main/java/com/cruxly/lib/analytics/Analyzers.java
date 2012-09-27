@@ -4,7 +4,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.logging.Logger;
 
-import com.cruxly.lib.model.Kips;
+import com.cruxly.lib.model.Kip;
 
 
 public class Analyzers {
@@ -61,7 +61,7 @@ public class Analyzers {
 		put (DISLIKE, 			DISLIKE_ANALYSIS_KIP_GRAMMER_TXT);
 	}};
 	
-	public SurfaceAnalysis getAnalyzer(String type, Kips kip) {
+	public SurfaceAnalysis getAnalyzer(String type, Kip kip) {
 		SurfaceAnalysis sa;
 		
 		String key = generateKey(type, kip);
@@ -74,8 +74,7 @@ public class Analyzers {
 			// this is the first time we are asked for this. create one.
 			String grammarFileName;
 			if (kipAwareGrammars.containsKey(type)) {
-				grammarFileName = kip == null || kip.isEmpty() 
-						? grammars.get(type) : kipAwareGrammars.get(type);
+				grammarFileName = kip == null ? grammars.get(type) : kipAwareGrammars.get(type);
 			} else {
 				grammarFileName = grammars.get(type);
 			}
@@ -98,13 +97,13 @@ public class Analyzers {
 		return hasAnalyzer(type, null);
 	}
 	
-	public boolean hasAnalyzer(String type, Kips kips) {
+	public boolean hasAnalyzer(String type, Kip kips) {
 		return _table.containsKey(generateKey(type, kips));
 	}
 	
-	private String generateKey(String type, Kips kip) {
+	private String generateKey(String type, Kip kip) {
 		String key;
-		if (kip != null && !kip.isEmpty() && kipAwareGrammars.containsKey(type)) {
+		if (kip != null && kipAwareGrammars.containsKey(type)) {
 			key = String.format("%s_%s", type, kip.getKey());
 		} else {
 			key = String.format("%s_%s", type, "nokip");

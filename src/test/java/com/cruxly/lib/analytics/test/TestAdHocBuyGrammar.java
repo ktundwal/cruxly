@@ -5,7 +5,7 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import com.cruxly.lib.model.Kips;
+import com.cruxly.lib.model.Kip;
 
 public class TestAdHocBuyGrammar extends TestDetector {
 	
@@ -19,7 +19,7 @@ public class TestAdHocBuyGrammar extends TestDetector {
 				//":LongTimeSince=ages", 
 				"+~PHRASE_START _LongTimeSince _IWe? _IvWv? had? _Karticles* _KIP"}; 
 		String content = "it's been ages since I had starbucks";
-		Kips kip = STARBUCKS_MOCHA_LATTE;
+		Kip kip = STARBUCKS_MOCHA_LATTE;
 		List<String> expectedIntentRules = BUY;
 		// following rule should fire
 		// +_LongTimeSince _IWe? _IvWv? had? _Karticles* _KIP
@@ -35,7 +35,7 @@ public class TestAdHocBuyGrammar extends TestDetector {
 				}; 
 				
 		String content = "we would need x tyui v starbucks";
-		Kips kip = STARBUCKS;
+		Kip kip = STARBUCKS;
 		List<String> expectedIntentRules = BUY;
 		// following rule should fire
 		// +_LongTimeSince _IWe? _IvWv? had? _Karticles* _KIP

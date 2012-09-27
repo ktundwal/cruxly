@@ -5,6 +5,8 @@
   <!-- General --> 
   <!-- ========================================================== --> 
   
+  <!-- http://www.javahotchocolate.com/tutorials/maven.html -->
+  
   <display-name>api</display-name>
   <description>Cruxly Analytics API</description> 
   

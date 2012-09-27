@@ -1,14 +1,24 @@
 package com.cruxly.lib.model;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+@SuppressWarnings("serial")
 @XmlRootElement(name="intent")
-public class IntentRule {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class IntentRule implements Serializable {
 	
+	@Override
+	public String toString() {
+		return "IntentRule [intent=" + intent + ", rule=" + rule + "]";
+	}
+
 	@XmlElement(nillable=true, required=false)
 	public String intent;
 	

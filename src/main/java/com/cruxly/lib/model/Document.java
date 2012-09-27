@@ -1,19 +1,22 @@
-package com.cruxly.api.model;
+package com.cruxly.lib.model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.cruxly.lib.model.Kips;
-import com.cruxly.lib.model.IntentRule;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+
+@SuppressWarnings("serial")
 @XmlRootElement(name="document")
-public class Document {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Document implements Serializable {
 	
 	public Document() {};	// JAXB needs this
 	
-	public Document(String text, Kips kip, boolean debug, String source,
+	public Document(String text, Kip kip, boolean debug, String source,
 			String type, String id, IntentRule[] intents) {
 		super();
 		this.text = text;
@@ -28,8 +31,8 @@ public class Document {
 	@XmlElement(nillable=false, required=true)
 	public String text;
 	
-	@XmlElement(nillable=true, required=false)
-	public Kips kip;
+	@XmlElement(nillable=false, required=true, name="kip")
+	public Kip kip;
 	
 	@XmlElement(nillable=true, required=false)
 	public boolean debug;
@@ -48,7 +51,7 @@ public class Document {
 
 	@Override
 	public String toString() {
-		return "Document [text=" + text + ", kip=" + kip.kips
+		return "Document [text=" + text + ", kip=" + kip
 				+ ", debug=" + debug + ", source=" + source + ", type=" + type
 				+ ", id=" + id + ", intents=" + Arrays.toString(intents) + "]";
 	}

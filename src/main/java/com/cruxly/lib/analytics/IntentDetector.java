@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 import com.cruxly.lib.model.IntentRule;
-import com.cruxly.lib.model.Kips;
+import com.cruxly.lib.model.Kip;
 import com.cruxly.lib.model.TextSegmentEx;
 import com.cruxly.nlp.OpenNLPUtils;
 
@@ -19,7 +19,7 @@ public class IntentDetector {
 	
 	private static final Logger log = Logger.getLogger(IntentDetector.class.getName());
 	
-	public TextSegmentEx[] detectSpecificIntentTextSegments(String content, Kips kip, 
+	public TextSegmentEx[] detectSpecificIntentTextSegments(String content, Kip kip, 
 			SurfaceAnalysis analyzer, String intentType) {
 		
 		if (Application.DEBUG) {
@@ -33,7 +33,7 @@ public class IntentDetector {
 		
 	}
 	
-	public IntentRule[] detect(String content, Kips kip) throws IntentDetectorException {
+	public IntentRule[] detect(String content, Kip kip) throws IntentDetectorException {
 		
 		/* tests
 		 * http://localhost:8888/test.html?data=[{'content':'It\'s%20like%20that?%20%20Its%20ok.%20I%20need%20starbucks'},]
@@ -44,7 +44,7 @@ public class IntentDetector {
 
 			Hashtable<String, Set<IntentRule>> sentence_intents = new Hashtable<String, Set<IntentRule>>(); 
 			
-			log.info(String.format("\n\nINIT DETECTINTENT: KIP(%s) CONTENT(%s)", kip.kips, content));
+			log.info(String.format("\n\nINIT DETECTINTENT: KIP(%s) CONTENT(%s)", kip, content));
 			for (String detectedSentence : detectedSentences) {
 				log.info(String.format("    SENTENCE(%s)", detectedSentence));
 				TextSegmentEx[] segments = detectIntentTextSegments(detectedSentence, kip);
@@ -126,7 +126,7 @@ public class IntentDetector {
 		return allowedIntent;
 	}
 	
-	private TextSegmentEx[] detectIntentTextSegments(String text, Kips kip) {
+	private TextSegmentEx[] detectIntentTextSegments(String text, Kip kip) {
 
 		if (Application.DEBUG) {
 			log.info(String.format("INIT INTENT DETECTION: text(%s), kip(%s)", text, kip));
@@ -138,61 +138,52 @@ public class IntentDetector {
 		
 		if (Application.DETECT_COMMITMENT) {
 			String type = Application.INSTANCE.analyzers.COMMITMENT;
-			long startTime = System.currentTimeMillis();
-			Application.INSTANCE.analyzers.getAnalyzer(type, kip).insertIntent(text, kip, intent_list);
-			long endTime = System.currentTimeMillis();
-			b.append(String.format("%s[%d ms], ", type, endTime - startTime));
+			detectSpecificIntentTextSegments(type, text, kip, intent_list, b);
 		}
 		
 		if (Application.DETECT_BUY) {
 			String type = Application.INSTANCE.analyzers.BUY;
-			long startTime = System.currentTimeMillis();
-			Application.INSTANCE.analyzers.getAnalyzer(type, kip).insertIntent(text, kip, intent_list);
-			long endTime = System.currentTimeMillis();
-			b.append(String.format("%s[%d ms], ", type, endTime - startTime));
+			detectSpecificIntentTextSegments(type, text, kip, intent_list, b);
 		}
 		
 		if (Application.DETECT_TRY) {
 			String type = Application.INSTANCE.analyzers.TRY;
-			long startTime = System.currentTimeMillis();
-			Application.INSTANCE.analyzers.getAnalyzer(type, kip).insertIntent(text, kip, intent_list);
-			long endTime = System.currentTimeMillis();
-			b.append(String.format("%s[%d ms], ", type, endTime - startTime));
+			detectSpecificIntentTextSegments(type, text, kip, intent_list, b);
 		}
 		
 		if (Application.DETECT_RECOMMENDATION) {
 			String type = Application.INSTANCE.analyzers.RECOMMENDATION;
-			long startTime = System.currentTimeMillis();
-			Application.INSTANCE.analyzers.getAnalyzer(type, kip).insertIntent(text, kip, intent_list);
-			long endTime = System.currentTimeMillis();
-			b.append(String.format("%s[%d ms], ", type, endTime - startTime));
+			detectSpecificIntentTextSegments(type, text, kip, intent_list, b);
 		}
 		
 		if (Application.DETECT_QUESTION) {
 			String type = Application.INSTANCE.analyzers.QUESTION;
-			long startTime = System.currentTimeMillis();
-			Application.INSTANCE.analyzers.getAnalyzer(type, kip).insertIntent(text, kip, intent_list);
-			long endTime = System.currentTimeMillis();
-			b.append(String.format("%s[%d ms], ", type, endTime - startTime));
+			detectSpecificIntentTextSegments(type, text, kip, intent_list, b);
 		}
 		
 		if (Application.DETECT_LIKE) {
 			String type = Application.INSTANCE.analyzers.LIKE;
-			long startTime = System.currentTimeMillis();
-			Application.INSTANCE.analyzers.getAnalyzer(type, kip).insertIntent(text, kip, intent_list);
-			long endTime = System.currentTimeMillis();
-			b.append(String.format("%s[%d ms], ", type, endTime - startTime));
+			detectSpecificIntentTextSegments(type, text, kip, intent_list, b);
 		}
 		
 		if (Application.DETECT_DISLIKE) {
 			String type = Application.INSTANCE.analyzers.DISLIKE;
+			detectSpecificIntentTextSegments(type, text, kip, intent_list, b);
+		}
+
+		log.warning("TIME TAKEN " + b.toString() + " to process " + text + " with KIP: " + kip);
+		return intent_list.toArray(new TextSegmentEx[intent_list.size()]);
+	}
+
+	private void detectSpecificIntentTextSegments(String type, String text,
+			Kip kip, List<TextSegmentEx> intent_list, StringBuilder logger) {
+		try {
 			long startTime = System.currentTimeMillis();
 			Application.INSTANCE.analyzers.getAnalyzer(type, kip).insertIntent(text, kip, intent_list);
 			long endTime = System.currentTimeMillis();
-			b.append(String.format("%s[%d ms], ", type, endTime - startTime));
+			logger.append(String.format("%s[%d ms], ", type, endTime - startTime));
+		} catch (Exception e) {
+			log.severe(String.format("Exception analyzing [%s] for [%s] with [%s]. %s", type, text, kip, e.getMessage()));
 		}
-
-		log.warning("TIME TAKEN " + b.toString() + " to process " + text + " with KIP: " + kip.kips);
-		return intent_list.toArray(new TextSegmentEx[intent_list.size()]);
 	}
 }

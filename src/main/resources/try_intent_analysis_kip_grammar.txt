@@ -1,6 +1,6 @@
-# Try Intent (Try)
+## Try intent with KIP-awareness
 # Try intent implies and intent to Try the product or service and should not be a Buy intent or a Like intent
-# vers 1.3
+# vers 0.2 - derived from Try Intent v1.2
 # Author: A. Guha
 
 # Suffixes/prefixes:
@@ -22,6 +22,7 @@
 
 # GR mP: refers to mth positive grammar rule
 # GR mN: refers to mth negative grammar rule
+# Initial scores are based on KIP not being identified as the object NP
 
 # 1st person aliases
 :IWeSimple=i|we
@@ -34,6 +35,27 @@
 :MyOur=my|our
 :MyOurSelf=myself|ourself|ourselves
 :Will=will|shall|would|should|could|must
+
+# KIP: defined as alias of keywords. Intent will be detected if it is in the KIP
+#     more than one KIP is allowed at this time
+#     if KIP is null string "", then KIP will be ignored in the intent detection
+
+# Rules: KIP-aware rules are written such that if KIP <> null, it is detected at specific locations in the rule
+#        All intent rules are written to account for KIP, unless they can be KIP independent, in few cases
+
+# Initially, KIP hardcoded for testing. In later versions, KIP will be set by other analytics loop in general.
+# Do we include "I/We want/need/BI the? one/it/that? now?" "IWe am/are getting it/one/that"
+#:KIP=kindle fire|kindlefire|HD kindle fire
+
+# added that to One
+:One=one|it|another|that
+
+# modify the articles to be more general 
+:Karticles=a|#|an|the|that|this|these|those|either|some|another|one|2|two|one of the|new|brand new|spanking new|my|my own|our own|our|either|is the|myself a
+
+:Punc=,|!|;|.|?|-|(|)|:
+:SentEndPunc=.|!|?|eom|/ 
+:MidSentPunc=-|,|;|:|)|(
 
 # added straight, demonstrably, both, only, honestly, actually in Adverbs, remove truly from PreVerbs and move to Adverbs
 # removed 'about to' from PreVerbs to avoid dupe with PreVerbs
@@ -49,9 +71,9 @@
 
 # It
 :It=it|this|they|those|that
+:Ready=ready|available|finished
 
-# broadened articles to include: some 
-:Articles=a|an|the|some
+:Articles=a|an|the
 
 # synonyms for offers 
 :offers=offer|bid|proposal|contract|proposition|recommendation|tender|terms|special|deal|bargain|promotion|engagement|clearance|closeout|proposal|proffer|deal|order
@@ -104,49 +126,39 @@
 # negative start phrase - neg rule
 -not that
 
-#GRBI 1P
-#+~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _PreVerbs* _Adverbs* _TryVerbs
-#+~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* _TryVerbs
+#GRTry 1P - I/We will try <KIP>
+# removed only - in Adverbs
+#+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Will only? _PreVerbs* _Adverbs* _TryVerbs _Karticles* _KIP
+#+~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? only? _PreVerbs* _Adverbs* _TryVerbs
++_IWe _Will? _PreVerbs* _Adverbs* _TryVerbs _Karticles* _KIP
++~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* _TryVerbs _Karticles* _KIP
 
-#GRTry 1P - I/We will try < >
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Will _PreVerbs* _Adverbs* _TryVerbs
-+_IWe _Will? _PreVerbs* _Adverbs* _TryVerbs
+#GRTry 1b P - I/We am off to KIP (weak/not expected construct)
++_IWe _AmAre? _PreVerbs* _Adverbs* _TryVerbs _Karticles* _KIP
++~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _TryVerbs _Karticles* _KIP
 
-#GRTry 1b P - I/We am off to < > (weak/not expected construct)
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre _PreVerbs* _Adverbs* _TryVerbs
-+_IWe _AmAre? _PreVerbs* _Adverbs* _TryVerbs
+#GRTry 5P - I/we or am/are trying <KIP>
+#+~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _TryVerbsGerunds
+#+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre _PreVerbs* _Adverbs* _TryVerbsGerunds
+#+~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre _PreVerbs* _TryVerbsGerunds
++_IWe _AmAre? _PreVerbs* _Adverbs* _TryVerbsGerunds _Karticles* _KIP
++~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _TryVerbsGerunds _Karticles* _KIP
 
+#GRTry 7P - make explicit by avoiding gerunds alone - keep articles
+#+~SENT_START _PreVerbs* _Adverbs* _PreVerbs* _AmAre? _TryVerbsGerunds _Articles
 
-#GRTry 3P - redundant
-#+~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _TryVerbs _Articles
-#+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Will _TryVerbs _Articles
-#GRTry 4P => redundant
-#+~PHRASE_START _IWe _PreVerbs* _TryVerbs
-
-#GRTry 5P 
-#e.g., We are trying < >
-+_IWe _AmAre? _PreVerbs* _Adverbs* _TryVerbsGerunds
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _TryVerbsGerunds
-
-#GRTry 6P - making I/we or am/are explicit in trying
-+~SENT_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _TryVerbsGerunds
-+~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre _PreVerbs* _TryVerbsGerunds
-
-#GRTry 7P - avoiding gerunds alone - keep articles 
-+~SENT_START _PreVerbs* _Adverbs* _PreVerbs* _AmAre? _TryVerbsGerunds _Articles
-
-#GRTry - 'I/we would/will like to try'
-#+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Will? like to _TryVerbs
-+_IWe _PreVerbs* _Adverbs* _Will? like to _TryVerbs
-+~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? like to _PreVerbs* _Adverbs* _TryVerbs
+#GRTry - I/we would/will like to try <KIP>
+#+~PHRASE_START _PreVerbs* _Adverbs* _IWe _PreVerbs* _Will? like to _TryVerbs _Karticles* _KIP
++_IWe _PreVerbs* _Adverbs* _Will? like to _TryVerbs _Karticles* _KIP
++~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? like to _PreVerbs* _Adverbs* _TryVerbs _Karticles* _KIP
 
 #GRTry 8P
 #+~PHRASE_START _PreVerbs* _Adverbs* _IvWv been _PreVerbs* _Adverbs* _TryVerbsGerunds
-# e.g., I have been thinking of trying < >
+# e.g., I have been thinking of trying KIP
 :Planning=planning|planning to|thinking of|plotting|plotting to|contemplating
-+_IvWv been _PreVerbs* _Adverbs* _Planning? _TryVerbsGerunds
++_IvWv been _PreVerbs* _Adverbs* _Planning? _TryVerbsGerunds _Karticles* _KIP 
 
-# GRTry 9P- redundant 
+# GRTry 9P - redundant
 #+_IWe _Will? _PreVerbs* _TryVerbs
 # GRTry 10P - redundant
 #+_IWe _AmAre? _Adverbs* _TryVerbs
@@ -163,26 +175,23 @@
 :Wait=be waiting|wait
 :ToForUntil=to|to be|to be in|for|until
 
-# GRTry 14P -
-# e.g., I dont mind trying <> -- leave IWe? optional - SENT_START case redundant
+# GRTry 14P: 
+# e.g., I dont mind trying <KIP> -- leave IWe? optional - SENT_START case redundant
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _WontDont mind _TryVerbsGerunds
-#+~SENT_START _PreVerbs* _Adverbs* _IWe? _WontDont mind _PreVerbs* _Adverbs* _TryVerbsGerunds
-+_IWe? _WontDont mind _PreVerbs* _Adverbs* _TryVerbsGerunds 
+#+~SENT_START _PreVerbs* _Adverbs* _IWe? _WontDont mind _PreVerbs* _Adverbs* _TryVerbsGerunds _Karticles* _KIP
++_IWe? _WontDont mind _PreVerbs* _Adverbs* _TryVerbsGerunds _Karticles* _KIP
 
-# GRTry 15P - cant wait to try w/ TryVerbs => for BI
-#+~PHRASE_START _IWe? _PreVerbs? _Cant _Wait _ToForUntil _TryVerbs
-
-# GRTry 16P for Try
-# e.g., I can just try <>
+# GRTry 16P
+# e.g., I can just try <KIP>
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple can _PreVerbs? _TryVerbs
-+_IWeSimple can _PreVerbs* _Adverbs* _TryVerbs
++_IWeSimple can _PreVerbs* _Adverbs* _TryVerbs _Karticles* _KIP
 
 # GRTry 17P for Try
-# e.g., I plan to try < >
+# e.g., I plan to try <KIP>
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple? plan to _PreVerbs* _TryVerbs
-+_IWeSimple plan to _PreVerbs* _Adverbs* _TryVerbs
++_IWeSimple plan to _PreVerbs* _Adverbs* _TryVerbs _Karticles* _KIP
 
-#GRTry 18P - making I/we or am/are explicit in trying
+#GRTry 18P -redundant
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _Adverbs? _PreVerbs* _TryVerbsGerunds
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre _Adverbs? _PreVerbs* _TryVerbsGerunds
 #GRTry 19P - not needed rel to #18
@@ -190,42 +199,45 @@
 
 :AboutOf=about|of
 :ForIntoAt=for|into|at
-#GRTry 20P 
-# e.g., I am thinking about < > => this is aleady in BI
+#GRTry 20P - rule for looking /thinking look / think about
+# e.g., I am thinking about <KIP> => this is a BI - aleady in BI
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre _Adverbs* thinking _AboutOf
-#GRTry 21P => this is aleady in BI
+#+_IWe? _AmAre _PreVerbs* _Adverbs* thinking _AboutOf _Karticles* _KIP
+ 
+#GRTry 21P => this is a BI - aleady in BI
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre _Adverbs* looking _ForIntoAt
-#GRTry 22P => this is aleady in BI
+#GRTry 22P => this is a BI - aleady in BI
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Will _PreVerbs* think _AboutOf
-#GRTry 23P => this is aleady in BI
+#GRTry 23P => this is a BI - aleady in BI
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Will _PreVerbs* look _ForIntoAt
 
 # GRTry 24P - redundant
-+_IWeSimple _Will _Adverbs? _TryVerbs
+#+_IWeSimple _Will _Adverbs? _TryVerbs
 # GRTry 25P - redundant
 #+_IWeFuture _Adverbs? _TryVerbs
-# GRTry 26P- redundant
+# GRTry 26P - redundant
 #+_IWeWould _Adverbs? _TryVerbs
 
 :AboutTo=gonna|going to|gonna go|fixing to|finna|will|shall|about to|plan to|aim to|encouraged to|hope to|encouraged to|expect to|inclined to|intend to|itching to|hope to|impatient to|motivated to|ready to|need to|want to|plan to|rush to
 
-# GRTry 27P: I am going to try < >
-+~PHRASE_START _IWe? going to _TryVerbs
-+_IWe? _AmAre? _AboutTo _PreVerbs* _Adverbs* _TryVerbs
+# GRTry 27P: I am going to try <KIP>
+#+~PHRASE_START _IWe? going to _TryVerbs
+#+~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _AboutTo _PreVerbs* _Adverbs* _TryVerbs _Karticles* _KIP
++_IWe? _AmAre? _AboutTo _PreVerbs* _Adverbs* _TryVerbs _Karticles* _KIP
 
-# GRTry 28P - redundant
+# GRTry 28P: I am gonna try <KIP> => covered with AboutTo try rule
 #+~PHRASE_START _IWe? gonna go? _TryVerbs
+
 # GRTry 29P - redundant
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe? will _TryVerbs
 
 # GRTry 30P
-#e.g., we want to try < >
+#e.g., we want to try <KIP>
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe? want to _TryVerbs
-+_IWe want to _PreVerbs* _Adverbs* _TryVerbs
++_IWe want to _PreVerbs* _Adverbs* _TryVerbs _Karticles* _KIP
 
 #GRTry 31P - redundant
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre _Adverbs? _TryVerbsGerunds
-#+~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _Adverbs? _TryVerbsGerunds
 # GRTry 32P - redundant
 #+~PHRASE_START _PreVerbs* _Adverbs* _Adverbs? _TryVerbsGerunds _Articles
 
@@ -236,9 +248,9 @@
 # removed speeding from HeadingTo; adding 'to' to most destinations
 :HeadingTo=heading to|heading over to|heading out to|making my way to|making our way to|walking over|walking to|driving to|running to|jogging to|zipping to|zipping over to
 #GRTry 33P
-# e.g., Making way /heading over to try < > - keep IWe optional
+# e.g., Making way /heading over to try <KIP> - keep IWe optional
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe? AmAre? _Adverbs? _HeadingTo _TryVerbs
-+_IWe? AmAre? _Adverbs? _HeadingTo _TryVerbs
++_IWe? AmAre? _Adverbs? _HeadingTo _TryVerbs _Karticles* _KIP 
 
 # passive form of like: 3rd party fetch/bring/get/buy
 :Gets=get|gets|fetch|fetches|bring|brings|order|orders|buy|buys
@@ -253,10 +265,6 @@
 :CanCould=can|could
 :So=so|soo|sooo|soooo|sooooo
 
-:Punc=,|!|;|.|?|-|(|)|:
-:SentEndPunc=.|!|?|eom|/ 
-:MidSentPunc=-|,|;|:|)|(
-
 # GRTry 34P -redundant
 #+_IWe plan to *? _TryVerbs
 #GRTry 35P -redundant
@@ -264,11 +272,10 @@
 #GRTry 36P -redundant
 #+i am _TryVerbsGerunds
 #GRTry 37P - redundant, also and not needed
-#+and _IWeSimple are _TryVerbsGerunds
+#+and _IWeSimple are _TryVerbsGerunds _Karticles* _KIP
 
 #GRTry 38P
-# e.g., we are all just trying < >
-+we all? are all? _PreVerbs* _Adverbs* _TryVerbsGerunds
++we all? are all? _PreVerbs* _Adverbs* _TryVerbsGerunds _Karticles* _KIP
 
 #GRTry 39P - no 1st person
 #+~PHRASE_START still _TryVerbsGerunds

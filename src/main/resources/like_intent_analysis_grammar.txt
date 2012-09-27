@@ -1,5 +1,5 @@
 # Like Intent (Like)
-# vers 1.5
+# vers 1.7
 # Author: A. Guha
 
 # Suffixes/prefixes:
@@ -13,33 +13,50 @@
 # GR mN: refers to mth negative grammar rule
 # Initial scores are based on KIP not being identified as the object NP
 
+# modify the articles to be more general 
+:Karticles=a|#|an|the|that|this|some|these|those|either|some|another|one|2|two|one of the|new|brand new|spanking new|my|my own|our own|our|either|is the|myself a
+
+# added that, they to One
+:One=one|it|another|that|they
+
 # 1st person aliases
 :IWeSimple=i|we
 :MeUs=me|us
-:IWeFuture=i'll|we'll
+:IWeFuture=i'll|we'll|i will|we will
+:IWeFuture=i'll|we'll|i will|we will
 :IWeWould=i'd|we'd|i would|we would
-:IWeCont=i'm|we're|im
-# Like I/We will not have conditional like - removing i'd|we'd|i would|we would
-:IWe=i|we|i'm|im|we're|i'll|we'll|i'm|we're
+:IWeCont=i'm|we're|im|ima
+:IWe=i|we|i'd|we'd|i'm|im|we're|i'll|we'll|i'm|ima|we're|i would|we would|i may|i might|we may|we might
 :IvWv=i've|ive|we have|i have|we've
 :MyOur=my|our
 :MyOurSelf=myself|ourself|ourselves
 :Will=will|shall|would|should|could|must
 
-# added demonstrably. only, actually in Adverbs, remo truly from PreVerbs and move to Adverbs
-:PreVerbs=meanwhile|about to|also|at least|certainly|currently|definitely|finally|finna|haha|hopefully|I guess|guess|immediately|just|kindly|likely|maybe|must say|ok|okay|probably|promptly|quickly|really|so happy|soon|stick around|still|then|urgently|verily|very
-:Adverbs=only|so|also|actually|demonstrably|seriously|immediately|kindly|quickly|promptly|definitely|probably|quickly|really|truly|truely|urgently|maybe|just|very|finna|finally|verily|likely|certainly|hopefully|currently
+:Punc=,|!|;|.|?|-|(|)|:
+# remove ? in SentEndPunc
+:EndPunc=,|.|;|#|&|!|/|eom
+:SentEndPunc=.|!|eom 
+:MidSentPunc=-|,|;|:|)|(
+
+# added straight, demonstrably, both, only, honestly, actually in Adverbs, remove truly from PreVerbs and move to Adverbs
+# removed 'about to' from PreVerbs to avoid dupe with PreVerbs
+:PreVerbs=meanwhile|also|at least|certainly|currently|definitely|finally|finna|haha|hopefully|I guess|guess|immediately|just|kindly|likely|maybe|must say|ok|okay|probably|promptly|quickly|really|so happy|soon|stick around|still|then|urgently|verily|very
+:Adverbs=straight|honestly|both|only|so|also|actually|demonstrably|seriously|immediately|kindly|quickly|promptly|definitely|probably|quickly|really|truly|truely|urgently|maybe|just|very|finna|finally|verily|likely|certainly|hopefully|currently
 
 :SentStartOptional=ok|then|so|hopefully|probably|really|speaking of|speaking of which
-:Adject=desperate|dire|great
+# adjective for 'desparate' - add real, acute, sudden, urgent, pressing, immediate, drastic, extreme, crying
+:Adject=desperate|dire|great|real|accute|sudden|urgent|pressing|immediate|drastic|extreme|crying
 
 # Adding 'is' for bad 1st person grammar
 :AmAre=am|are|is
+:IsAreWasWere=is|was|are|were
 
 # It
 :It=it|this|they|those|that
 :Ready=ready|available|finished
 :Articles=a|an|the
+## merged Articles with Karticles; added 'more'
+:Karticles=a|#|an|the|that|this|some|these|those|either|some|more|another|one|2|two|one of the|new|brand new|spanking new|my|my own|our own|our|either|is the|myself a
 
 # added miss to like verbs
 # removed hooked, imagine, boast, deserve, recommend| crave, want, wanna, groove, grok. gimme, got me some. replace vote with vote for, wait for, gimme, gotta have, got to have (in BI)
@@ -66,6 +83,22 @@
 # LikeMyOur phrases that use my/our
 :LikeMyOur=laying|lay|sink|sinking
 
+# adverbs for nice: NiceAdverbs: for <KIP> is _NiceAdverbs _Nice
+:NiceAdverbs=very|most|much|too|so|mucho|truly|indeed|genuinely|honestly|actually|seriously|definitely|really|truly|truely|just|verily|certainly
+# basic nice adjectives/adverbs => merge Cool with Nice 
+#:Cool=cool|neat|great|amazing|awesome|good|delicious|wonderful|lovely|nice
+:Nice=neat|cool|admirable|admired|adorable|alluring|amazing|ambrosial|appealing|appetizing|appreciated|artistic|astonishing|astounding|attractive|awe-inspiring|awesome|beautiful|beloved|beneficial|best|bewitching|brilliant|captivating|charming|cherished|chic|classic|clever|commendable|cute|dandy|darling|dazzling|dear|delectable|delicious|delightful|delish|desirable|distinctive|divine|dreamy|effective|elegant|enchanting|enjoyable|enthralling|enticing|enviable|esteemed|estimable|excellent|exceptional|exemplary|exquisite|extraordinary|fab|fabulous|fancy|fantastic|fascinating|favorable|fine|finest|first-class|first-rate|first-string|fit for king|five-star|friendly|genial|gentle|glamorous|glorious|good|good-looking|gorgeous|gracious|grand|grandiose|gratifying|great|greatest|groovy|heavenly|heirloom|held dear|helpful|highly regarded|hot property|hunky dory|imperial|imposing|impressive|in class by itself|in demand|incomparable|incredible|inestimable|ingenious|invaluable|inviting|laudable|lavish|likeable|lofty|lovable|loveable|loved|lovely|luscious|luxurious|magnific|magnificent|magnifico|majestic|marvelous|matchless|meritorious|miraculous|mouthwatering|nectarous|nice|nifty|noble|notable|of value|opulent|out of sight|out of this world|outstanding|palatial|peachy|peerless|peerless|phenomenal|pleasant|pleasing|pleasurable|plush|polite|posh|praiseworthy|precious|precious|preferable|preternatural|pretty|priceless|priceless|prized|prized|profitable|radiant|refined|regal|remarkable|respected|resplendent|royal|savory|scrumptious|sensational|simpatico|splendid|splendiferous|splendrous|standout|stately|stunning|stylish|sumptuous|super|superb|super-duper|superior|superlative|supreme|swanky|sweet|tasteful|tasty|tasty|tempting|terrific|tiptop|top-notch|treasured,|tremendous|unparalleled|useful|valuable|valued|winning|winsome|wonderful|wondrous|world-class|worthwhile|worthy
+
+
+# e.g., < > is/was nice
++_IsAreWasWere Adverbs* _NiceAdverbs* _Nice
++_It _IsAreWasWere Adverbs* _NiceAdverbs* _Nice
+
+# e.g., < > has been nice
+:HasHad=has|have|had
++_HasHad been? Adverbs* _NiceAdverbs* _Nice
++_It _HasHad been? Adverbs* _NiceAdverbs* _Nice
+
 # love/like it
 # add -ve rule for it's like that, feeling miserable
 :Feeling=feelin|feeling|feelin'
@@ -74,7 +107,10 @@
 :LoveLike=love|<3|lk
 :YouThey=you|u|y'all|she|he|they|it|my
 
-:Bad=miserable|bad|awful|tired|anxious|angry|negative|sad|like crap|crappy|like shit|shitty|upset
+# Use IsWasFoundDisVerbs instead of Bad=miserable|bad|awful|tired|<>angry|<>negative|sad|crap|crappy|shit|shitty|<>upset|retarded
+#:Bad=miserable|bad|awful|tired|anxious|angry|negative|sad|like crap|crappy|like shit|shitty|upset
+:IsWasFoundDisVerbs=abhorrent|abominable|aggravating|annoying|appalling|ass|atrocious|awful|bad|baffling|bizzare|bothersome|bullshit|confusing|crap|crappy|crappiest|creepy|cruddy|crummy|cumbersome|damaged|dangerous|defective|deficient|degrading|despicable|detestable|difficult|directionless|dirty|disagreeable|disappointed|disappointing|dissapointed|dissapointing|discardable|disgraceful|disheartening|dishonest|dishonorable|dismal|disorganized|dissatisfying|disturbing|doomed|dreadful|dumb|dump|duped by|edgy|fake|false|flawed|forgettable|frustrating|fucked up|fucking|fuckin|fucking up|fuckin up|gross|grossed-out|grotesque|hideous|hopeless|horrible|horrible|horrid|hurt by|idiotic|ignorant|inadequate|incapable|incompetent|inferior|infuriating|insulting|irritating|like crap|limiting|loathesome|lousy|maddening|miserable|nasty|nauseating|nauseous|noisome|noxious|objectionable|obnoxious|obscene|odious|offensive|overpriced|over priced|overrated|painful|pathetic|phony|poor|regretful|repugnant|retarded|ridiculous|ridic|sad|saddest|shit|shitty|on my shitlist|on our shitlist|stupid|stupid ass|sucks|sucky|terrible
+
 :ItsThats=is|but|are|it's|its|that's|thats|it is|that is|almost|looks|look|dont|don't|do not|will not|was|wont|won't|use to|crazy|exactly|just|tastes|taste|looks|look|smells|smell|feels|sounds|sound
 
 # GRLike1N -- basic neg rule if question mark
@@ -85,6 +121,9 @@
 
 # negative start phrase - neg rule
 -not that
+
+# e.g., I like < > => remove end punctuation
++~PHRASE_START _IWe? _NiceAdverbs* _LikeVerbs
 
 # miss negative
 :Your=your|her|their|him|them|you|u|being|are|i
@@ -101,15 +140,13 @@
 # GRLike 1P 
 # modify rules to ensure either _IWe or _AmAre are present pre- LikeVerbs as with Buy
 #+_IWe? _AmAre? in? _LoveLike with?
-+~SENT_START _AmAre? in? _LoveLike with?
-+~PHRASE_START _AmAre? in? _LoveLike with?
-+_IWe _AmAre? in? _LoveLike with?
-+_AmAre in? _LoveLike with?
++_IWe _AmAre? _PreVerbs* _Adverbs* in? _LoveLike with?
++_AmAre in? _PreVerbs* _Adverbs* _LoveLike with?
 
 # GRLike 3N -- negative on you/they/my love
 -_YouThey all? _Adverbs? _LoveLike
 # GRLike 4N -- negative
--_IWe? _AmAre? _Feeling _PreVerbs? _Bad
+-_IWe? _AmAre? _Feeling _PreVerbs? _IsWasFoundDisVerbs
 _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 
 #GRLike 5N
@@ -128,9 +165,10 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 -_LoveLike _LikeMeUs 
 
 #GRLike 6N
-## neg rule on like or live those/that/them/etc
-:That=that|them|tht|thm|those|thos|and|him|her|you|how|when|where|which|what|their
--_LoveLike _That
+## neg rule on like or live those|that|them|etc
+# remove you, It (it, taht they, those, this) from That for KIP case
+:ThatKIP=and|him|her|how|when|where|which|what|their
+-_LoveLike _ThatKIP
 
 #GRLike 7N
 # neg rule with dont/not want/feel LoveLike
@@ -149,17 +187,20 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 # explicit Like rules - use the 2nd general rule for like
 # +~PHRASE_START _IWe _Will? _PreVerbs* _Adverbs* like
 +~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _PreVerbs* _Adverbs* like
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _PreVerbs* _Adverbs* _LikeVerbs
 +~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* like
++~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* _LikeVerbs
 
-# neg rules with Liking/Liike
+# neg rules with Liking/Like
 :NeverNeither=never|neither|not|to|a
 -like _NeverNeither
 -~PHRASE_START _IWe? like _Your
+
 # special case of Winning
 +~PHRASE_START winning _SentEndPunc
 
 # special case of my favorite thing - add Adverbs
-+~PHRASE_START _MyOur _Adverbs* favorite thing ever? _IsAre 
++~PHRASE_START _MyOur _Adverbs* favorite thing ever? _IsAreWasWere 
 
 # make first person explicit for LikeVerbs/Gerunds
 # modify rules to ensure either _IWe or _AmAre are present pre- LikeVerbs as with Buy
@@ -167,8 +208,8 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 +~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _PreVerbs* _Adverbs* _LikeVerbs
 +~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* _LikeVerbs
 
-#GRLike 3P 
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Will _PreVerbs* _Adverbs* _LikeVerbs
+#GRLike 3P - redundant
+#+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Will _PreVerbs* _Adverbs* _LikeVerbs
 
 # GRBI -xN for Like verbs non-like Verbs/Gerunds - add Preverbs Adverbs before, rem only
 -~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _AmAre? _PreVerbs* _Adverbs* _LikeVerbs to _NonLikeVerbs
@@ -176,8 +217,8 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 -~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _LikeVerbsGerunds to _NonLikeVerbs
 -~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _LikeVerbsGerunds to _NonLikeVerbsGerunds
 
-#GRLike 4P
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _LikeVerbs _Articles
+#GRLike 4P - redundant
+#+~PHRASE_START _PreVerbs* _Adverbs* _IWe _Will? _LikeVerbs _Articles
 
 #GRLike 5P
 +~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _LikeVerbs
@@ -196,6 +237,7 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 # modify rules to ensure either _IWe or _AmAre are present pre- LikeVerbs as with Buy - added _IWe
 # relaxing rule with articles
 # allow after gerunds w/o I/We Am/Are explicit
+
 :AfterGerunds=this|with|the|a|that|some
 +~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _LikeVerbsGerunds _AfterGerunds
  
@@ -207,18 +249,12 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 #GRLike 9P
 +~PHRASE_START _PreVerbs* _Adverbs* _IvWv been _PreVerbs* _Adverbs* _LikeVerbsGerunds
 
-# Iwe willwould PI_Verbs
-# modify rules to ensure either _IWe or _AmAre are present pre- PIVerbs
-# do we add constraint of phrase start only for these rules? better ensure 1st person not optional
 # GRLike 10P - add phrase start - redundant
 #+~PHRASE_START _IWe _Will? _PreVerbs* _LikeVerbs
-
 # GRLike 12P - add phrase start - redundant
 #+~PHRASE_START _IWe _AmAre? _Adverbs* _LikeVerbsGerunds
-
 # GRLike 13P - redundant
 #+~PHRASE_START _IWe _Will? _LikeVerbs _Articles
-
 
 # I/we dont/wont mind PIVerbsGerunds
 # extend rule for cant wait to/for/until/waiting for
@@ -228,38 +264,43 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 :ToForUntil=to|to be|to be in|for|until|till|til
 
 # GRLike 15P - cant wait to like verbs, removing LikeVerbs, LikeVerbGerunds
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _PreVerbs? _Cant _Wait _ToForUntil
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _PreVerbs? _Cant _Wait _ToForUntil
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _PreVerbs? _Cant _Wait _ToForUntil
++~SENT_START _PreVerbs* _Adverbs* _IWe? _PreVerbs? _Cant _Wait _ToForUntil
 
 # add neg rule on cannot wait to <do something> 
 -_Cant _Wait to
 
-# GRLike 16P for Like
-+~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple? look forward to some? _Articles
+# GRLike 16P look/looking forward to
+## e.g., I look/looking forward to <KIP>
+:Look=look|looking
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _Look forward to 
++~SENT_START _PreVerbs* _Adverbs* _IWe? _Look forward to 
 
 # GRLike 17P for Like -- needs to have KIP after 
-+~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple? look forward to _LikeVerbsGerunds
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _Look forward to _LikeVerbsGerunds
++~SENT_START _PreVerbs* _Adverbs* _IWe? _Look forward to _LikeVerbsGerunds
+
 # GRLike 19P -- add looking forward to rules. change IWeSimple to IWe
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? looking forward to _LikeVerbsGerunds
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? looking forward to _AfterGerunds
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _Look forward to _LikeVerbsGerunds
++~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _Look forward to _LikeVerbsGerunds
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _Look forward to _AfterGerunds
++~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _Look forward to _AfterGerunds
 
 # GRLike 18P for Like - redundant with above rule
 #+~PHRASE_START _IWeSimple? looking forward to some? _Articles
-
 
 :AboutOf=about|of
 :ForIntoAt=for|into|at
 # add sp rule for looking /thinking look / think / in need of
 
-# GRLike 22P
-+~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple _Will _Adverbs? _LikeVerbs
+# GRLike 22P -redundant
+#+~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple _Will _Adverbs? _LikeVerbs
 
 # GRLike 23P
 +~PHRASE_START _PreVerbs* _Adverbs* _IWeFuture _Adverbs? _LikeVerbs
 
 #GRLike 25P - redundant
 #+~PHRASE_START _IWe? am? _Adverbs? _LikeVerbsGerunds
-
 #GRLike 26P - too broad w/o _IWe
 #+~PHRASE_START _Adverbs? _LikeVerbsGerunds _Articles?
 
@@ -279,7 +320,6 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 :GoFor=do with|go for
 :CanCould=can|could
 :So=so|soo|sooo|soooo|sooooo
-:Cool=cool|neat|great|amazing|awesome|good|delicious|wonderful|lovely|nice
 :Mind=mind|refuse|be upset|complain|object to|object if you|turn down|reject
 :Think=think|say|vote|declare
 :Hurray=hurrah|hurray|hooray|huzzah|hip-hip|hip hip|yipee
@@ -287,8 +327,9 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 :Yes=yes|affirmative|amen|yea|yeah|yep|surely|alright|sure thing|great|aye|all right|by all means|positively|precisely|undoubtedly|indubitably|unquestionably 
 :IsGoes=is|goes|sounds|sound|smells|tastes|taste|looks|would|would be
 
-#GRLike 27P- made IWeSimple optional
-+_IWeSimple? _Will _LikeSpecialPhrases
+#GRLike 27P- made IWeSimple optional => IW? will? cheers to < >
+:ForWith=for|with
++_IWe? _Will? _LikeSpecialPhrases _ForWith?
 
 #GRLike 28P
 +_IWeFuture _LikeSpecialPhrases
@@ -299,15 +340,15 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 #GRLike 29P
 +_IWe? _Will? _HasHad? _MyOur fix
 
-#GRLike 29P => Cool related GR for Like - removing, too broad
-#+~PHRASE_START _SentStartOptional? _PreVerbs? _Cool
+#GRLike 29P => Nice related GR for Like - removing, too broad
+#+~PHRASE_START _SentStartOptional? _PreVerbs? _Nice
 
 #GRLike 30P -- needs to be checked with KIP before this phrase 
-+_IsGoes _So? _Adverbs* _Cool
++_IsGoes _So? _Adverbs* _Nice
 
 # added explicit rule for 'wish I had'
 #GRLike 31P - add phrase start
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Adverbs? _PreVerbs* wish _IWe had *
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Adverbs? _PreVerbs* wish _IWe had
 
 # added explicit rule for 'would be nice', nothing like
 #GRLike 32P -- needs to be checked with KIP after this phrase 
@@ -323,18 +364,19 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 
 # GRLike -- needs to be checked with KIP before this phrase
 :IsAre= is|are
-+_IsAre the best
++_IsAreWasWere the best
 
 :ThereIs=there's|there is
 #GRLike 35P -- add KIP after these rules, add +nothing like a
 +~PHRASE_START _PreVerbs* _Adverbs* _ThereIs? nothing like a?
 +~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? rocking with
 
-#GRLike 36P
-+~PHRASE_START everything _IsGoes better with
+# GRLike 36P
+:Everything=everything|things|all things
++~PHRASE_START _Everything _IsGoes better with
 
-#GRLike 37P -- needs to be checked with KIP before this phrase
-+_IsWould be? awesome
+#GRLike 37P -- e.g., < > would be _Nice (awesome)
++_IsWould be? _Nice
 +this made _MyOur day
 
 #GRLike 38P
@@ -355,15 +397,10 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 +_IWeSimple _Wish for
 
 # phrases like sinking my/our teeth
-:TeethHands=teeth|hand\hands
+:TeethHands=teeth|hand|hands
 :IntoOn=into|on
 #GRLike 43P
-+_IWeSimple _Will be? _LikeMyOur _MyOur _TeethHands _IntoOn
-
-
-:Punc=,|!|;|.|?|-|(|)|:
-:SentEndPunc=.|!|?|eom|/ 
-:MidSentPunc=-|,|;|:|)|(
++_IWeSimple _Will be? like? to? _LikeMyOur _MyOur _TeethHands _IntoOn
 
 #GRLike 44P - redundant
 #+_IWe _LikeVerbsGerunds
@@ -379,7 +416,6 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 #GRLike 48P
 # Needed to add IWe, AmAre explicit - done
 #+~PHRASE_START _LikeVerbsGerunds
-
 
 # GRLike 9N
 # neg rule if the sentence/phrase is conditional: if, whether, in case, assuming, supposing, provided 

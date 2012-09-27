@@ -1,5 +1,5 @@
 # Like Intent (Like) with KIP-awareness
-# vers 0.3
+# vers 0.5
 # Author: A. Guha
 
 # Suffixes/prefixes:
@@ -116,6 +116,7 @@
 
 # e.g., <KIP>, I like you => remove end punctuation
 #:Comma=,|:|-|#
+# interm punc creates new phrase => simple rule for'KIP I love you'
 #+_KIP _Comma? ~PHRASE_START? IWe? _NiceAdverbs* _LikeVerbs
 +~PHRASE_START _KIP _IWe? _NiceAdverbs* _LikeVerbs
 
@@ -188,7 +189,7 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 
 #GRLike 6N
 ## neg rule on like or live those|that|them|etc
-# remove you, It (it, taht they, those, this)  from That for KIP case
+# remove you, It (it, taht they, those, this) from That for KIP case
 :ThatKIP=and|him|her|how|when|where|which|what|their
 -_LoveLike _ThatKIP
 
@@ -214,7 +215,7 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 +_IWe _Will? _PreVerbs* _Adverbs* _LikeVerbs _It
 +~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* _LikeVerbs _It
 
-# neg rules with Liking|Liike
+# neg rules with Liking|Like
 :NeverNeither=never|neither|not|to|a
 -like _NeverNeither
 -~PHRASE_START _IWe? like _Your
@@ -241,8 +242,8 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 #GRLike 4P - redundant
 
 #GRLike 5P
-# e.g., I am 'delighted with' <KIP>
-# +~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _LikeVerbs
+# e.g., We are delighted with' <KIP>
+#+~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _LikeVerbs
 +_IWe _AmAre? _PreVerbs* _Adverbs* _LikeVerbs _Karticles? _KIP
 +~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _LikeVerbs _Karticles? _KIP
 # e.g., I am 'delighted with' it 
@@ -433,6 +434,8 @@ e.g., <KIP> is so nice, removed 'so', since it is in NiceAdverbs
 #+with _MyOur name on it
 
 #GRLike 40PV e.g., KIP: here we come
+#+_KIP _Comma? here _IWe come
+# interm punc creates new phrase => simple rule for'KIP here we come'
 +_KIP here _IWe come
 
 # wish => keeping it part of Like, removed hope
@@ -447,7 +450,7 @@ e.g., <KIP> is so nice, removed 'so', since it is in NiceAdverbs
 +_IWe _Wish for _Karticles? _KIP
 
 # phrases like sinking my|our teeth
-:TeethHands=teeth|hand\hands
+:TeethHands=teeth|hand|hands
 :IntoOn=into|on
 #GRLike 43P: e.e., I will like to lay my hands on <KIP>
 #:LikeMyOur=laying|lay|sink|sinking

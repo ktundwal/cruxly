@@ -26,7 +26,7 @@
 <body>
     <div id="content">
         <div class="s3">
-            <h2>Beanstalk API server health check</h2>
+            <h2>Cruxly API server health check</h2>
 			<table style='border: 1px solid black;'>
 				<tr><td colspan="2" align="center"><strong>Server details</strong></td></tr>
 				<tr><td>Server time</td><td><%= new java.util.Date() %></td></tr>

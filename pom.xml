@@ -92,6 +92,12 @@
       <artifactId>stanford-corenlp</artifactId>
       <version>1.3.3</version>
     </dependency>
+    <dependency>
+      <groupId>edu.stanford.nlp</groupId>
+      <artifactId>stanford-corenlp</artifactId>
+      <version>1.3.3</version>
+      <classifier>models</classifier>
+    </dependency>
     <!-- End CoreNLP -->
 
     <!-- OpenNLP -->

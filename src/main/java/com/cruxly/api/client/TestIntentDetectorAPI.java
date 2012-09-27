@@ -6,8 +6,8 @@ import java.util.Arrays;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;
 
-import com.cruxly.api.model.Document;
-import com.cruxly.lib.model.Kips;
+import com.cruxly.lib.model.Document;
+import com.cruxly.lib.model.Kip;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
@@ -44,7 +44,7 @@ public class TestIntentDetectorAPI {
 		// Get JSON for application
 		Document[] documents = new Document[1];
 		documents[0] = new Document("I love coffee", 
-				new Kips(Arrays.asList("latte", "starbucks", "mocha", "coffee")), 
+				new Kip("starbucks", new String[]{"latte", "mocha", "coffee"}, null), 
 				true, "twitter", "tweet", "001", null);
 		WebResource webResource = service.path("json").path("intents");
 		return webResource.type(MediaType.APPLICATION_JSON)

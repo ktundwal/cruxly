@@ -5,7 +5,7 @@ public enum Application {
 	
 	public static final boolean DEBUG = System.getProperty("environment") == "development";
 	
-	public static final boolean DETECT_COMMITMENT = false;
+	public static final boolean DETECT_COMMITMENT = true;
 	public static final boolean DETECT_BUY = true;
 	public static final boolean DETECT_LIKE = true;
 	public static final boolean DETECT_TRY = true;

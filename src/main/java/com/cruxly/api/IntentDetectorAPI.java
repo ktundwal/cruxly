@@ -8,9 +8,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import com.cruxly.api.model.Document;
 import com.cruxly.lib.analytics.IntentDetector;
 import com.cruxly.lib.analytics.IntentDetectorException;
+import com.cruxly.lib.model.Document;
 
 @Path("/json/intents")
 public class IntentDetectorAPI {
