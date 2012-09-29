@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
-import edu.stanford.nlp.dcoref.CorefChain;
+/*import edu.stanford.nlp.dcoref.CorefChain;
 import edu.stanford.nlp.dcoref.CorefCoreAnnotations.CorefChainAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.NamedEntityTagAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations.PartOfSpeechAnnotation;
@@ -21,7 +21,7 @@ import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.trees.TreeCoreAnnotations.TreeAnnotation;
 import edu.stanford.nlp.trees.semgraph.SemanticGraph;
 import edu.stanford.nlp.trees.semgraph.SemanticGraphCoreAnnotations.CollapsedCCProcessedDependenciesAnnotation;
-import edu.stanford.nlp.util.CoreMap;
+import edu.stanford.nlp.util.CoreMap;*/
 
 /*
  * http://nlp.stanford.edu/software/corenlp.shtml#Download
@@ -30,7 +30,7 @@ import edu.stanford.nlp.util.CoreMap;
 public enum CoreNLP {
      INSTANCE;
     
-     private StanfordCoreNLP _nlp;
+     /*private StanfordCoreNLP _nlp;
 
      private CoreNLP() {
           // creates a StanfordCoreNLP object, with POS tagging, lemmatization,
@@ -85,5 +85,5 @@ public enum CoreNLP {
           Map<Integer, CorefChain> graph = document.get(CorefChainAnnotation.class);    
          
           return sentences;
-     }
+     }*/
 }

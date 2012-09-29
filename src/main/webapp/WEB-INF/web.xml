@@ -12,7 +12,7 @@
   
   <!-- Set timeout to 120 minutes --> 
   <session-config> 
-  	<session-timeout>120</session-timeout> 
+  	<session-timeout>300</session-timeout> 
   </session-config> 
   
   <!-- ========================================================== --> 
@@ -64,6 +64,17 @@
     <servlet-name>Jersey REST Service</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
+  
+  <servlet> 
+     <servlet-name>log4j-init</servlet-name>
+     <servlet-class>com.cruxly.servlets.Log4jInit</servlet-class> 
+     <init-param>
+       <param-name>log4j-init-file</param-name>
+       <param-value>WEB-INF/classes/log4j.xml</param-value>
+     </init-param>
+     <load-on-startup>1</load-on-startup>
+  </servlet>
+  
   
   <!-- ========================================================== --> 
   <!-- Filters --> 

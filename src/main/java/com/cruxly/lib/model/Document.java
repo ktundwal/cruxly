@@ -8,6 +8,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import javax.validation.constraints.NotNull;
+
 
 @SuppressWarnings("serial")
 @XmlRootElement(name="document")
@@ -28,10 +30,22 @@ public class Document implements Serializable {
 		this.intents = intents;
 	}
 	
+	public Document(String text, Kip kip) {
+		super();
+		this.text = text;
+		this.kip = kip;
+		this.debug = false;
+		this.source = "";
+		this.type = "";
+		this.id = "";
+		this.intents = null;
+	}
+
+	@NotNull
 	@XmlElement(nillable=false, required=true)
 	public String text;
 	
-	@XmlElement(nillable=false, required=true, name="kip")
+	@XmlElement(nillable=true, required=false, name="kip")
 	public Kip kip;
 	
 	@XmlElement(nillable=true, required=false)

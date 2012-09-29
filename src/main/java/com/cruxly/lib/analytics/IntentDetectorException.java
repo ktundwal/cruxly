@@ -1,6 +1,12 @@
 package com.cruxly.lib.analytics;
 
-public class IntentDetectorException extends Exception {
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import com.cruxly.api.model.ErrorBean;
+
+public class IntentDetectorException extends WebApplicationException {
 
 	/**
 	 * 
@@ -8,17 +14,19 @@ public class IntentDetectorException extends Exception {
 	private static final long serialVersionUID = 1L;
 
 	private Throwable cause = null;
-
+	
 	public IntentDetectorException() {
-		super();
+		super(Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.APPLICATION_JSON).build());
 	}
 
 	public IntentDetectorException(String message) {
-		super(message);
+		super(Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+				.entity(new ErrorBean(message)).type(MediaType.APPLICATION_JSON).build());
 	}
 
 	public IntentDetectorException(String message, Throwable cause) {
-		super(message);
+		super(Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+				.entity(new ErrorBean(message + cause)).type(MediaType.APPLICATION_JSON).build());
 		this.cause = cause;
 	}
 

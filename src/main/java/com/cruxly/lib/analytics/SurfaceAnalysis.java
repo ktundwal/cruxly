@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,7 +35,7 @@ public class SurfaceAnalysis {
 	private Boolean _kipAware;
 	private static final List<String> UNKNOWN_KIP = Arrays.asList(("unknown"));
 	
-	private static final Logger logger = Logger.getLogger(SurfaceAnalysis.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(SurfaceAnalysis.class.getName());
 
 	public void setRules(String[] rules) {
 		this.grammarSplitAtLineBreaks = rules;
@@ -69,16 +68,19 @@ public class SurfaceAnalysis {
 			sa.init();
 			
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, String.format("Exception initiating analytics TYPE(%s) GRAMMAR(%s)", type, grammarFileName), e);
+			if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, String.format("Exception initiating analytics TYPE(%s) GRAMMAR(%s)", type, grammarFileName), e);
+            }
 		}
 		return sa;
 	}
 	
-	public void insertIntent(String text,
+	public boolean insertIntent(String text, TextSegment[] arrTokens,
 			Kip kip, List<TextSegmentEx> intent_list) {
-		if (Application.DEBUG) {
-			logger.info("STARTING " + _type + " detection");
+		if (LOGGER.isLoggable(Level.FINE)) {
+			LOGGER.log(Level.FINE, "STARTING " + _type + " detection");
 		}
+		boolean found = false;
 		DocumentSurfaceScore score;
 		try {			
 			if (_surfaceModel == null) {
@@ -93,20 +95,25 @@ public class SurfaceAnalysis {
 			
 			EmailMessage emailMessage = Utils.getEmailMessage(text);
 			
-			score = rateDocumentImportance(emailMessage, 
+			score = rateDocumentImportance(emailMessage, arrTokens,
 					StringUtils.getEmailContent(emailMessage), _surfaceModel, 
 					null /* , TextSegment [] ignore*/);
 			
 			TextSegmentEx[] detectedSegments = TextSegmentEx.GetTextSegmentsEx(score.annotations, _type);
+			found = detectedSegments.length > 0;
 			intent_list.addAll(Arrays.asList(detectedSegments));
-			
-			for (TextSegmentEx detectedSegment : detectedSegments) {
-				logger.info(String.format("\n          RESULT : detectedSegments(%s)", detectedSegment));
+			if (LOGGER.isLoggable(Level.FINE)) {
+				for (TextSegmentEx detectedSegment : detectedSegments) {
+					LOGGER.log(Level.FINE, String.format("\n          RESULT : detectedSegments(%s)", detectedSegment));
+				}
+				LOGGER.log(Level.FINE, "          DONE");
 			}
-			logger.info("          DONE");
 		} catch (Exception e) {
-			logger.log(Level.SEVERE, String.format("Exception analyzing TYPE(%s) TEXT(%s) KIP(%s) ", _type, text, kip), e);
+			if (LOGGER.isLoggable(Level.SEVERE)) {
+                LOGGER.log(Level.SEVERE, String.format("Exception analyzing TYPE(%s) TEXT(%s) KIP(%s) ", _type, text, kip), e);
+			}
 		}
+		return found;
 	}
 
 	public void init() {
@@ -141,7 +148,6 @@ public class SurfaceAnalysis {
 				String rule = rules[i].substring(1).trim();
 				boolean sentStartRule = false;
 
-	
 				String[] vals = StringUtils.splitBySeparator (rule, ' ');
 				if (vals[0].equals("*"))
 					throw new RuntimeException ("Rule starting with \"*\" : "+rules[i]);
@@ -182,9 +188,13 @@ public class SurfaceAnalysis {
 
 			FSM.addAlias(KIP_ALIASKEY, allTerms);
 			init();
-			logger.info(_type + " SurfaceAnalysis reinitated with request kip " + kip);
+			if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, _type + " SurfaceAnalysis reinitated with request kip " + kip);
+			}
 	    } else{
-	    	logger.info(_type + " SurfaceAnalysis already has kip " + kip + ". Skipping setKIP() call.");
+	    	if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, _type + " SurfaceAnalysis already has kip " + kip + ". Skipping setKIP() call.");
+	    	}
 	    }
 	}
 	
@@ -224,6 +234,7 @@ public class SurfaceAnalysis {
 				for (int i=0; i<inbox.length; i++) {
 					String text = StringUtils.getEmailContent(inbox[i]);
 					DocumentSurfaceScore dss = rateDocumentImportance (inbox[i],
+							StringUtils.splitIntoTextSegments(text, true, true),
 							text,
 							model,
 							null);
@@ -271,6 +282,7 @@ public class SurfaceAnalysis {
 	}
 
 	public DocumentSurfaceScore rateDocumentImportance (EmailMessage document,
+			TextSegment[] arrTokens, 
 			String text,
 			SurfaceModel model,
 			TextSegment [] ignore) {
@@ -283,8 +295,6 @@ public class SurfaceAnalysis {
 			for (int i=0; i<ignore.length; i++)
 				ignoreRegions.addElement(ignore[i]);
 		}
-
-		TextSegment[] arrTokens = StringUtils.splitIntoTextSegments(text, true, true);
 		
 		// Ignore subjects that start with "re:" (add the tokens from subject to ignoreRegions)
 		if ((document.subject != null) && (document.subject.trim().toLowerCase().startsWith("re:"))) {
@@ -307,8 +317,8 @@ public class SurfaceAnalysis {
 			
 		}
 		
-		if (Application.DEBUG) {
-			logger.info(String.format("    DOCUMENT: %s", document.text));
+		if (LOGGER.isLoggable(Level.FINE)) {
+            LOGGER.log(Level.FINE, String.format("    DOCUMENT: %s", document.text));
 			StringBuffer buffer = new StringBuffer();
 			int i = 0;
 			for (TextSegment token : arrTokens) {
@@ -316,7 +326,7 @@ public class SurfaceAnalysis {
 				buffer.append("___");
 				i++;
 			}
-			logger.info("    TOKENS: " + buffer.toString());
+			LOGGER.log(Level.FINE, "    TOKENS: " + buffer.toString());
 		}
 		
 		TwoInts[] annotations0 = new TwoInts[0];
@@ -326,11 +336,12 @@ public class SurfaceAnalysis {
 		//TwoInts[] a2 = new TwoInts[annotationsVecNeg.size()];
 		//annotationsVecNeg.copyInto(a2);
 		
-		if (Application.DEBUG) {
+		if (LOGGER.isLoggable(Level.FINE)) {
 			Iterator<TwoInts> annotationsVecNegItr = annotationsVecNeg.iterator();
 			while(annotationsVecNegItr.hasNext()) {
 				TwoInts rule = (TwoInts)annotationsVecNegItr.next();
-				logger.info(String.format("          Recognized REJECT rule: location(%d, %d) path(%s)", rule.a, rule.b, rule.path));
+				LOGGER.log(Level.FINE, String.format("          Recognized REJECT rule: location(%d, %d) path(%s)", 
+						rule.a, rule.b, rule.path));
 			}
 		}
 		
@@ -340,11 +351,12 @@ public class SurfaceAnalysis {
 			TwoInts[] a1 = new TwoInts[annotationsVec.size()];
 			annotationsVec.copyInto(a1);
 			
-			if (Application.DEBUG) {
+			if (LOGGER.isLoggable(Level.FINE)) {
 				Iterator<TwoInts> annotationsVecItr = annotationsVec.iterator();
 				while(annotationsVecItr.hasNext()) {
 					TwoInts rule = (TwoInts)annotationsVecItr.next();
-					logger.info(String.format("          Recognized ACCEPT rule: location(%d, %d) path(%s)", rule.a, rule.b, rule.path));
+					LOGGER.log(Level.FINE, String.format("          Recognized ACCEPT rule: location(%d, %d) path(%s)", 
+							rule.a, rule.b, rule.path));
 				}
 			}
 			
@@ -352,10 +364,12 @@ public class SurfaceAnalysis {
 			TwoInts[] a2 = new TwoInts[0];
 			annotations0 = TwoInts.excludeOverlapping(a1, a2);
 			
-			logger.info(String.format("          POST excludeOverlapping: num rules = %d", annotations0.length));
-			for (int i=0; i<annotations0.length; i++) {
-				logger.info(String.format("          POST excludeOverlapping: location(%d, %d) path(%s)", 
-						annotations0[i].a, annotations0[i].b, annotations0[i].path));
+			if (LOGGER.isLoggable(Level.FINE)) {
+				LOGGER.log(Level.FINE, String.format("          POST excludeOverlapping: num rules = %d", annotations0.length));
+				for (int i=0; i<annotations0.length; i++) {
+					LOGGER.log(Level.FINE, String.format("          POST excludeOverlapping: location(%d, %d) path(%s)", 
+							annotations0[i].a, annotations0[i].b, annotations0[i].path));
+				}
 			}
 		}
 		

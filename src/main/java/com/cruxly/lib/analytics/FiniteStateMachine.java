@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Vector;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.cruxly.lib.analytics.FiniteStateMachine.FSMResult;
@@ -22,7 +23,7 @@ public class FiniteStateMachine {
 				+ stateCount + "]";
 	}
 
-	private static Logger logger = Logger.getLogger(FiniteStateMachine.class.getName());
+	private static Logger LOGGER = Logger.getLogger(FiniteStateMachine.class.getName());
 	
 	public static final int ACCEPT = 1;
 	public static final int REJECT = -1;
@@ -71,7 +72,9 @@ public class FiniteStateMachine {
 		}
 		
 		aliases.put(key, s);
-		logger.finer("Added alias: " + key + ": " + b.toString());
+		if (LOGGER.isLoggable(Level.FINER)) {
+            LOGGER.log(Level.FINER, "Added alias: " + key + ": " + b.toString());
+		}
 	}
 	
 	public String [] resolveAlias(String aliasKey) {
@@ -195,7 +198,9 @@ public class FiniteStateMachine {
 	}
 	
 	public FSMResult processSequence(TextSegment [] sequence, int idx, int targetState) {
-		logger.finer ("*"+sequence[idx].text.substring(sequence[idx].posStart, sequence[idx].posEnd));
+		if (LOGGER.isLoggable(Level.FINER)) {
+            LOGGER.log(Level.FINER, "*"+sequence[idx].text.substring(sequence[idx].posStart, sequence[idx].posEnd));
+		}
 		Vector<FSMResult> v = new Vector<FSMResult>();
 		
 		processSequenceAux (sequence, idx, idx, startState, v, 1, targetState);
@@ -212,7 +217,9 @@ public class FiniteStateMachine {
 				bestResult = er;
 		}
 		
-		logger.finer("processSequence FSMResult = " + bestResult.matchedPath);
+		if (LOGGER.isLoggable(Level.FINER)) {
+            LOGGER.log(Level.FINER, "processSequence FSMResult = " + bestResult.matchedPath);
+		}
 		return bestResult;
 	}
 	
@@ -228,7 +235,9 @@ public class FiniteStateMachine {
 		State [] nextStates3 = null;
 		State [] nextStates4 = null;
 		
-		logger.finer("             " + state);
+		if (LOGGER.isLoggable(Level.FINER)) {
+            LOGGER.log(Level.FINER, "             " + state);
+		}
 		
 		if (sequence[idx] instanceof SpecialSymbolSegment) {
 			String specialSymbol = ((SpecialSymbolSegment)sequence[idx]).getSymbol();
@@ -242,7 +251,9 @@ public class FiniteStateMachine {
 					&& !(sequence[idx + 1] instanceof SpecialSymbolSegment)) {
 				String request_symbol_plus_1 = sequence[idx].toString() + " " + sequence[idx+1].toString();
 				nextStates2 = state.processTransition(request_symbol_plus_1); // To support 2-word aliases
-				logger.finer("             FSM...NEXTSTATES 2 MATCH = " + request_symbol_plus_1);
+				if (LOGGER.isLoggable(Level.FINER)) {
+		            LOGGER.log(Level.FINER, "             FSM...NEXTSTATES 2 MATCH = " + request_symbol_plus_1);
+				}
 			}
 			
 			if (idx + 2 < sequence.length 
@@ -251,7 +262,9 @@ public class FiniteStateMachine {
 				String request_symbol_plus_2 = sequence[idx].toString() + " " + 
 					sequence[idx+1].toString() + " " + sequence[idx+2].toString();
 				nextStates3 = state.processTransition(request_symbol_plus_2); // to support 3-word aliases
-				logger.finer("             FSM...NEXTSTATES 3 MATCH = " + request_symbol_plus_2);
+				if (LOGGER.isLoggable(Level.FINER)) {
+		            LOGGER.log(Level.FINER, "             FSM...NEXTSTATES 3 MATCH = " + request_symbol_plus_2);
+				}
 			}
 			
 			if (idx + 3 < sequence.length 
@@ -261,7 +274,9 @@ public class FiniteStateMachine {
 				String request_symbol_plus_3 = sequence[idx].toString() + " " + sequence[idx+1].toString() 
 						+ " " + sequence[idx+2].toString() + " " + sequence[idx+3].toString();
 				nextStates4 = state.processTransition(request_symbol_plus_3); // to support 4-word aliases
-				logger.finer("             FSM...NEXTSTATES 4 MATCH = " + request_symbol_plus_3);
+				if (LOGGER.isLoggable(Level.FINER)) {
+		            LOGGER.log(Level.FINER, "             FSM...NEXTSTATES 4 MATCH = " + request_symbol_plus_3);
+				}
 			}
 		}
 		
@@ -273,14 +288,22 @@ public class FiniteStateMachine {
 		
 		if (nextStates != null) {
 			for (int i=0; i<nextStates.length; i++) {
-				logger.finer(String.format("                 i=%d nextStates[i]=%s", i, nextStates[i]));
-				logger.finer(String.format("                 %s", this));
+				if (LOGGER.isLoggable(Level.FINER)) {
+		            LOGGER.log(Level.FINER, String.format("                 i=%d nextStates[i]=%s", i, nextStates[i]));
+				}
+				if (LOGGER.isLoggable(Level.FINER)) {
+		            LOGGER.log(Level.FINER, String.format("                 %s", this));
+				}
 				if ((nextStates[i] == ACCEPT_STATE) && (targetState == ACCEPT)) {
-					logger.finer("ACCEPT_STATE: " + state.path);
+					if (LOGGER.isLoggable(Level.FINER)) {
+			            LOGGER.log(Level.FINER, "ACCEPT_STATE: " + state.path);
+					}
 					evals.addElement(new FSMResult(numMatched, ACCEPT, idx, 
 							(state != null && state.path != null) ? state.path : ""));
 				} else if ((nextStates[i] == REJECT_STATE) && (targetState == REJECT)) {
-					logger.finer("REJECT_STATE: " + state.path);
+					if (LOGGER.isLoggable(Level.FINER)) {
+			            LOGGER.log(Level.FINER, "REJECT_STATE: " + state.path);
+					}
 					evals.addElement(new FSMResult(numMatched, REJECT, idx,
 							(state != null && state.path != null) ? state.path : ""));
 				} else if (nextStates[i].endStateOnPath == targetState) {
@@ -307,11 +330,15 @@ public class FiniteStateMachine {
 			if (nextStates != null) {
 				for (int i=0; i<nextStates.length; i++) {
 					if ((nextStates[i] == ACCEPT_STATE) && (targetState == ACCEPT)) {
-						logger.finer("ACCEPT_STATE: " + state.path);
+						if (LOGGER.isLoggable(Level.FINER)) {
+				            LOGGER.log(Level.FINER, "ACCEPT_STATE: " + state.path);
+						}
 						evals.addElement(new FSMResult(numMatched, ACCEPT, idx,
 								(state != null && state.path != null) ? state.path : ""));
 					} else if ((nextStates[i] == REJECT_STATE) && (targetState == REJECT)) {
-						logger.finer("REJECT_STATE: " + state.path);
+						if (LOGGER.isLoggable(Level.FINER)) {
+				            LOGGER.log(Level.FINER, "REJECT_STATE: " + state.path);
+						}
 						evals.addElement(new FSMResult(numMatched, REJECT, idx,
 								(state != null && state.path != null) ? state.path : ""));
 					} else if (nextStates[i].endStateOnPath == targetState) {
@@ -328,7 +355,9 @@ public class FiniteStateMachine {
 		try {
 			mergedArray = merge(nextStates, nextStates2, nextStates3, nextStates4);
 		} catch (Exception e) {
-			logger.severe("Exception merging states: " + e.getMessage());
+			if (LOGGER.isLoggable(Level.SEVERE)) {
+	            LOGGER.log(Level.SEVERE, "Exception merging states: " + e.getMessage());
+			}
 		}
 		return mergedArray;
 	}
@@ -401,7 +430,7 @@ public class FiniteStateMachine {
 		
 		public State () {
 			id = ++stateCount;
-			logger.finer ("State: "+stateCount);
+			LOGGER.finer ("State: "+stateCount);
 			transitions = new Transitions();
 			transitionsNeg = new Transitions();
 			transitionsNeg.put(ANY, new Set());
@@ -581,11 +610,11 @@ public class FiniteStateMachine {
 			
 			
 			if (result.size() == 0) {
-				if (Application.DEBUG) {
+				if (LOGGER.isLoggable(Level.FINER)) {
 					StringBuffer b = new StringBuffer();
 					b.append(String.format("State with endStateOnPath [%d] id [%d] cannot be transitioned any further for [%s]", 
 							this.endStateOnPath, this.id, symbol));
-					logger.finer(b.toString());
+					LOGGER.log(Level.FINER, b.toString());
 				}
 				return null;
 			}
@@ -593,14 +622,14 @@ public class FiniteStateMachine {
 			State[] _result = new State[result.size()];
 			result.copyInto(_result);
 			
-			if (Application.DEBUG) {
+			if (LOGGER.isLoggable(Level.FINER)) {
 				StringBuffer b = new StringBuffer();
 				b.append(String.format("State with endStateOnPath [%d] id [%d] and can be transitioned to [%d] states for [%s]", 
 						this.endStateOnPath, this.id, result.size(), symbol));
 				for (State s : _result) {
 					b.append("\n\t" + s.transitions);
 				}
-				logger.finer(b.toString());
+				LOGGER.log(Level.FINER, b.toString());
 			}
 			
 			return _result;

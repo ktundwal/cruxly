@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration PUBLIC "-//LOGGER" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+
+<log4j:configuration>
+	<appender name="STDOUT" class="org.apache.log4j.ConsoleAppender">
+        <!--  <param name="Target" value="System.out" /> -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <!-- 
+            <param name="ConversionPattern"
+                value="[%d{ISO8601}] %-5p [%c] %m %n" />
+            -->
+            <param name="ConversionPattern" value="%-5p [%c] %m %n" />
+        </layout>
+    </appender>
+     
+    <appender name="STDERR" class="org.apache.log4j.ConsoleAppender">
+        <!-- <param name="Target" value="System.err" /> -->
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="[%d{ISO8601}] %-5p [%c] %m %n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR" />
+            <param name="LevelMax" value="FATAL" />
+        </filter>
+    </appender>
+    <!-- 
+    <appender name="SW_ROLLING_FILE"
+        class="org.apache.log4j.RollingFileAppender">
+        <param name="File" value="/users/codyburleson/dev/sw.log" />
+        <param name="Append" value="true" />
+        <param name="MaxFileSize" value="500KB" />
+        <param name="MaxBackupIndex" value="5" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="[%d{ISO8601}] %-5p %m%n" />
+        </layout>
+    </appender>
+     -->
+ 
+    <!--                          -->
+    <!-- Declare the SMTPAppender -->
+    <!--                          -->
+    <appender name="EMAIL" class="org.apache.log4j.net.SMTPAppender">
+        <param name="BufferSize" value="512" />
+        <param name="SMTPHost" value="smtp.gmail.com" />
+        <param name="SMTPUsername" value="support@cruxly.com" />
+        <param name="SMTPPassword" value="fixemail" />
+        <param name="From" value="support@cruxly.com" />
+        <param name="To" value="ktundwal@gmail.com" />
+        <param name="Subject" value="[api] Application message" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern"
+                value="[%d{ISO8601}]%n%n%-5p%n%n%c%n%n%m%n%n" />
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="ERROR" />
+            <param name="LevelMax" value="FATAL" />
+        </filter>
+    </appender>
+ 
+    <logger name="com.cruxly.api.IntentDetectorAPI" additivity="false">
+        <level value="info" />
+        <!-- <appender-ref ref="SW_ROLLING_FILE" /> -->
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDERR" />
+        <appender-ref ref="EMAIL" />
+    </logger>
+    
+    <logger name="com.cruxly.lib.analytics.Analyzers" additivity="false">
+        <level value="warn" />
+        <!-- <appender-ref ref="SW_ROLLING_FILE" />  -->
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDERR" />
+        <appender-ref ref="EMAIL" />
+    </logger>
+    
+    <logger name="com.cruxly.lib.analytics.SurfaceAnalysis" additivity="false">
+        <level value="warn" />
+        <!-- <appender-ref ref="SW_ROLLING_FILE" /> -->
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="STDERR" />
+        <appender-ref ref="EMAIL" />
+    </logger>
+         
+    <!-- ** -->
+     
+    <root>
+        <level value="INFO" />
+        <appender-ref ref="STDERR" />
+        <appender-ref ref="EMAIL" />
+        <!-- <appender-ref ref="ConsoleAppender"/> -->
+    </root>
+  
+</log4j:configuration>
+

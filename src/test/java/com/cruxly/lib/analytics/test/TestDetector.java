@@ -17,7 +17,10 @@ import org.junit.Before;
 import com.cruxly.lib.analytics.FiniteStateMachine;
 import com.cruxly.lib.analytics.IntentDetector;
 import com.cruxly.lib.analytics.IntentDetectorException;
+import com.cruxly.lib.analytics.StringUtils;
 import com.cruxly.lib.analytics.SurfaceAnalysis;
+import com.cruxly.lib.analytics.TextSegment;
+import com.cruxly.lib.model.Document;
 import com.cruxly.lib.model.IntentRule;
 import com.cruxly.lib.model.Kip;
 import com.cruxly.lib.model.TextSegmentEx;
@@ -66,7 +69,7 @@ public class TestDetector {
 	protected void check(String content, Kip kip, List<String> expectedIntentRules) {
 		IntentRule[] intentRules = null;
 		try {
-			intentRules = _detector.detect(content, kip);
+			intentRules = _detector.detect(new Document(content, kip));
 		} catch (IntentDetectorException e) {
 			Assert.fail(e.getMessage());
 		}
@@ -83,7 +86,8 @@ public class TestDetector {
 			List<String> expectedIntentRules) {
 		SurfaceAnalysis analyzer = createAnalyzer("unknown", rules, kip, kip.industryTerms.length > 0);
 		List<TextSegmentEx> intent_list = new ArrayList<TextSegmentEx>();
-		analyzer.insertIntent(content, kip, intent_list);
+		TextSegment[] arrTokens = StringUtils.splitIntoTextSegments(content, true, true);
+		analyzer.insertIntent(content, arrTokens, kip, intent_list);
 		StringBuffer b = new StringBuffer();
 		b.append("DETECTED SEGMENTS: " + intent_list.size());
 		for (TextSegmentEx intent : intent_list) {

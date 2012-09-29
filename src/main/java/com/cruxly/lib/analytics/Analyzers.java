@@ -2,6 +2,7 @@ package com.cruxly.lib.analytics;
 
 import java.util.Hashtable;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.cruxly.lib.model.Kip;
@@ -9,7 +10,7 @@ import com.cruxly.lib.model.Kip;
 
 public class Analyzers {
 	
-	private static final Logger logger = Logger.getLogger(Analyzers.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(Analyzers.class.getName());
 	
 	public final String COMMITMENT_ANALYSIS_GRAMMER_TXT 	= "commitment_surface_analysis_grammar.txt";
 	public final String BUY_ANALYSIS_GRAMMER_TXT 			= "buy_intent_analysis_grammar.txt";
@@ -68,8 +69,10 @@ public class Analyzers {
 		
 		if (this.hasAnalyzer(type, kip)) {
 			sa = _table.get(key);
-			logger.info(String.format("Found Analyzer [%s] in cache. [%d] total analyzers",
+			if (LOGGER.isLoggable(Level.FINE)) {
+                LOGGER.log(Level.FINE, String.format("Found Analyzer [%s] in cache. [%d] total analyzers",
 					key, _table.size()));
+			}
 		} else {
 			// this is the first time we are asked for this. create one.
 			String grammarFileName;
@@ -83,8 +86,10 @@ public class Analyzers {
 			_table.put(key, sa);
 			long endTime = System.currentTimeMillis();
 			
-			logger.warning(String.format("Instantiated Analyzer for [%s] in %d ms. Total analyzers = %d",
+			if (LOGGER.isLoggable(Level.INFO)) {
+                LOGGER.log(Level.INFO, String.format("Instantiated Analyzer for [%s] in %d ms. Total analyzers = %d",
 					key, endTime - startTime, _table.size()));
+			}
 		}
 		return sa;
 	}

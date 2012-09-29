@@ -46,13 +46,13 @@ public class TestIntentDetectorAPI {
 		documents[0] = new Document("I love coffee", 
 				new Kip("starbucks", new String[]{"latte", "mocha", "coffee"}, null), 
 				true, "twitter", "tweet", "001", null);
-		WebResource webResource = service.path("json").path("intents");
+		WebResource webResource = service.path("v1").path("analyze");
 		return webResource.type(MediaType.APPLICATION_JSON)
 						  .accept(MediaType.APPLICATION_JSON)
 						  .post(ClientResponse.class, documents);
 	}
 
 	private static URI getBaseURI() {
-		return UriBuilder.fromUri("http://localhost:8080/api/rest").build();
+		return UriBuilder.fromUri("http://localhost:8080/api").build();
 	}
 }
