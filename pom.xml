@@ -195,10 +195,18 @@
     
     <!--  servlet for log4jinit -->
     <dependency>
-		<groupId>javax.servlet</groupId>
-		<artifactId>servlet-api</artifactId>
-		<version>2.5</version>
-	</dependency>
+  		<groupId>javax.servlet</groupId>
+  		<artifactId>servlet-api</artifactId>
+  		<version>2.5</version>
+  	</dependency>
+
+    <!-- beanstalker -->
+    <!-- <dependency>
+      <groupId>br.com.ingenieux</groupId>
+      <artifactId>beanstalk-maven-plugin</artifactId>
+      <version>0.2.7-RC6</version>
+    </dependency> -->
+                
   </dependencies>
 
   <build>
@@ -230,6 +238,17 @@
           </archive>
         </configuration>
       </plugin>
+
+      <!-- <plugin>
+        <groupId>br.com.ingenieux</groupId>
+        <artifactId>beanstalk-maven-plugin</artifactId>
+        <version>0.2.7-RC7-SNAPSHOT</version>
+        <configuration>
+          <accessKey>AKIAJ2HYPFDJULTVFWQA</accessKey>
+          <secretKey>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</secretKey>
+        </configuration>
+      </plugin> -->
+
     </plugins>
   </build>
   <organization>

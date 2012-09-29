@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
@@ -23,6 +24,7 @@ public class IntentRule implements Serializable {
 	public String intent;
 	
 	@XmlElement(nillable=true, required=false)
+	@XmlTransient
 	public String rule;
 	
 	public IntentRule() {}

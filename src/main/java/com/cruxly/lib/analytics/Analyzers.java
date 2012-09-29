@@ -1,7 +1,6 @@
 package com.cruxly.lib.analytics;
 
 import java.util.Hashtable;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

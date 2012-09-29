@@ -1,4 +1,4 @@
-package com.cruxly.lib.analytics;
+package com.cruxly.api;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;

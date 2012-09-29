@@ -13,7 +13,7 @@ public class TestBuyDetector extends TestDetector {
 	@Test
 	public void test1NeedAmericanApparelDiscoPants() {
 		String content = "Need American Apparel disco pants : ((((";
-		Kip kip = new Kip("American Apparel");
+		Kip kip = new Kip(new String[]{"American Apparel"});
 		List<String> expectedIntentRules = BUY;
 		check(content, kip, expectedIntentRules);
 	}

@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
@@ -49,6 +50,7 @@ public class Document implements Serializable {
 	public Kip kip;
 	
 	@XmlElement(nillable=true, required=false)
+	@XmlTransient
 	public boolean debug;
 	
 	@XmlElement(nillable=true, required=false)

@@ -45,7 +45,7 @@ public class TestLikeDetector extends TestDetector {
 	@Test
 	public void testILikeFooMno() {
 		String content = "abc def I like foo mno pqr";
-		Kip kip = new Kip("foo");
+		Kip kip = new Kip(new String[]{"foo"});
 		List<String> expectedIntentRules = LIKE;
 		check(content, kip, expectedIntentRules);
 	}
@@ -53,7 +53,7 @@ public class TestLikeDetector extends TestDetector {
 	@Test
 	public void testILikeFarAwayFoo() {
 		String content = "abc def I like mno pqr vbh jui foo";
-		Kip kip = new Kip("foo");
+		Kip kip = new Kip(new String[]{"foo"});
 		List<String> expectedIntentRules = NOINTENT;
 		check(content, kip, expectedIntentRules);
 	}

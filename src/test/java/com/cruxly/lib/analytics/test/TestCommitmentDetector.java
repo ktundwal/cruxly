@@ -21,7 +21,7 @@ public class TestCommitmentDetector extends TestDetector {
 	public void testRallySoftwareIsLookingFor() {
 		String content = "Rally Software is looking for: Software Engineer - Web Application.INSTANCE " +
 				"... http://t.co/CnIWnVwM # job";
-		Kip kip = new Kip("Rally Software");
+		Kip kip = new Kip(new String[]{"Rally Software"});
 		List<String> expectedIntentRules = COMMITMENT;
 		check(content, kip, expectedIntentRules);
 	}

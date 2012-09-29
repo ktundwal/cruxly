@@ -88,7 +88,7 @@ public class SurfaceAnalysis {
 				_surfaceModel  = trainModel(emptyArray, emptyArray);
 			}
 			
-			if (kip != null) {
+			if (kip != null && kip.keyTerms != null) {
 				setKIP(kip);
 			}
 			doExpandAnnotationsToSentences = false;

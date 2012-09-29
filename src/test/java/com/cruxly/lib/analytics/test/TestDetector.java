@@ -14,9 +14,9 @@ import junit.framework.Assert;
 
 import org.junit.Before;
 
+import com.cruxly.api.IntentDetectorException;
 import com.cruxly.lib.analytics.FiniteStateMachine;
 import com.cruxly.lib.analytics.IntentDetector;
-import com.cruxly.lib.analytics.IntentDetectorException;
 import com.cruxly.lib.analytics.StringUtils;
 import com.cruxly.lib.analytics.SurfaceAnalysis;
 import com.cruxly.lib.analytics.TextSegment;
@@ -43,9 +43,10 @@ public class TestDetector {
 	protected static final List<String> NOINTENT = new ArrayList<String>();
 	
 	protected static final Kip NO_KIP = new Kip();
-	protected static final Kip STARBUCKS = new Kip("starbucks");
-	protected static final Kip STARBUCKS_MOCHA_LATTE = new Kip("starbucks", new String[]{"latte", "mocha", "coffee"});
-	protected static final Kip KINDLEFIRE = new Kip("KindleFire", new String[]{"kindle fire"});
+	protected static final Kip STARBUCKS = new Kip(new String[]{"starbucks"});
+	protected static final Kip STARBUCKS_MOCHA_LATTE = new Kip(new String[]{"starbucks"}, 
+			new String[]{"latte", "mocha", "coffee"});
+	protected static final Kip KINDLEFIRE = new Kip(new String[]{"KindleFire"}, new String[]{"kindle fire"});
 	
 	private static Logger logger = Logger.getLogger(TestDetector.class.getName());
 	
@@ -84,7 +85,7 @@ public class TestDetector {
 	
 	protected void check(String[] rules, String content, Kip kip,
 			List<String> expectedIntentRules) {
-		SurfaceAnalysis analyzer = createAnalyzer("unknown", rules, kip, kip.industryTerms.length > 0);
+		SurfaceAnalysis analyzer = createAnalyzer("unknown", rules, kip, kip.keyTerms != null);
 		List<TextSegmentEx> intent_list = new ArrayList<TextSegmentEx>();
 		TextSegment[] arrTokens = StringUtils.splitIntoTextSegments(content, true, true);
 		analyzer.insertIntent(content, arrTokens, kip, intent_list);

@@ -44,7 +44,7 @@ public class TestIntentDetectorAPI {
 		// Get JSON for application
 		Document[] documents = new Document[1];
 		documents[0] = new Document("I love coffee", 
-				new Kip("starbucks", new String[]{"latte", "mocha", "coffee"}, null), 
+				new Kip(new String[]{"starbucks"}, new String[]{"latte", "mocha", "coffee"}, null), 
 				true, "twitter", "tweet", "001", null);
 		WebResource webResource = service.path("v1").path("analyze");
 		return webResource.type(MediaType.APPLICATION_JSON)

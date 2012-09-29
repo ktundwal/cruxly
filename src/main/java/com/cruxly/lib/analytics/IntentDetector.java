@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.cruxly.api.IntentDetectorException;
 import com.cruxly.lib.model.Document;
 import com.cruxly.lib.model.IntentRule;
 import com.cruxly.lib.model.Kip;

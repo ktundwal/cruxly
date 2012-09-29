@@ -11,7 +11,7 @@ public class TestDislikeDetector extends TestDetector {
 	@Test
 	public void testIHateFarAwayRomney() {
 		String content = "I hate knats them bitches love black people more than Romney";
-		Kip kip = new Kip("Romney");
+		Kip kip = new Kip(new String[]{"Romney"});
 		List<String> expectedIntentRules = DISLIKE;
 		check(content, kip, expectedIntentRules);
 	}
