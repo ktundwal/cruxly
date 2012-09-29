@@ -190,9 +190,20 @@ public class IntentDetector {
 
 		if (LOGGER.isLoggable(Level.INFO)) {
             LOGGER.log(Level.INFO, String.format("ANALYSIS RESULTS: %s to process TEXT[%s] KIP[%s] TOKENS[%s]", 
-            		b.toString(),  text, kip, arrTokens));
+            		b.toString(),  text, kip, serializeTokens(arrTokens)));
 		}
 		return intent_list.toArray(new TextSegmentEx[intent_list.size()]);
+	}
+
+	private String serializeTokens(TextSegment[] arrTokens) {
+		StringBuffer buffer = new StringBuffer();
+		int i = 0;
+		for (TextSegment token : arrTokens) {
+			buffer.append(String.format("[%d](%d)%s(%d)", i, token.posStart, token, token.posEnd));
+			buffer.append("___");
+			i++;
+		}
+		return buffer.toString();
 	}
 
 	private void detectSpecificIntentTextSegments(String type, String text, TextSegment[] arrTokens,
