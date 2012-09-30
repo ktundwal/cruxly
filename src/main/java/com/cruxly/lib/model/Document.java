@@ -3,13 +3,12 @@ package com.cruxly.lib.model;
 import java.io.Serializable;
 import java.util.Arrays;
 
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-
-import javax.validation.constraints.NotNull;
 
 
 @SuppressWarnings("serial")

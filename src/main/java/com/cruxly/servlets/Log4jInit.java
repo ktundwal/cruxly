@@ -1,6 +1,7 @@
 package com.cruxly.servlets;
 
 import javax.servlet.http.HttpServlet;
+
 import org.apache.log4j.PropertyConfigurator;
   
 @SuppressWarnings("serial")

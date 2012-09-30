@@ -1,7 +1,6 @@
 package com.cruxly.api.client;
 
 import java.net.URI;
-import java.util.Arrays;
 
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.UriBuilder;

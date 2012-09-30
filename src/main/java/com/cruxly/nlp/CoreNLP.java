@@ -3,9 +3,6 @@
 
 package com.cruxly.nlp;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
 
 /*import edu.stanford.nlp.dcoref.CorefChain;
 import edu.stanford.nlp.dcoref.CorefCoreAnnotations.CorefChainAnnotation;

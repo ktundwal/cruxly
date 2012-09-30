@@ -2,15 +2,12 @@ package com.cruxly.lib.analytics;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.HashSet;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.cruxly.lib.analytics.FiniteStateMachine.FSMResult;
 import com.cruxly.lib.analytics.TextSegment.SpecialSymbolSegment;
 
 public class FiniteStateMachine {
