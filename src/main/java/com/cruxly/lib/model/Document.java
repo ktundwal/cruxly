@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @XmlRootElement(name="document")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Document implements Serializable {
-	
+
 	public Document() {};	// JAXB needs this
 	
 	public Document(String text, Kip kip, boolean debug, String source,
@@ -29,6 +29,11 @@ public class Document implements Serializable {
 		this.type = type;
 		this.id = id;
 		this.intents = intents;
+		this.author = "";
+		this.author_user_name = "";
+		this.image = "";
+		this.tweet_id = "";
+		this.date = "";
 	}
 	
 	public Document(String text, Kip kip) {
@@ -40,6 +45,12 @@ public class Document implements Serializable {
 		this.type = "";
 		this.id = "";
 		this.intents = null;
+		this.author = "";
+		this.author_user_name = "";
+		this.image = "";
+		this.tweet_id = "";
+		this.date = "";
+		
 	}
 
 	@NotNull
@@ -64,6 +75,21 @@ public class Document implements Serializable {
 	
 	@XmlElement(nillable=true, required=false)
 	public IntentRule[] intents;
+	
+	@XmlElement(nillable=true, required=false)
+	public String author;
+
+	@XmlElement(nillable=true, required=false)
+	public String author_user_name;
+
+	@XmlElement(nillable=true, required=false)
+	public String image;
+
+	@XmlElement(nillable=true, required=false)
+	public String tweet_id;
+
+	@XmlElement(nillable=true, required=false)
+	public String date;
 
 	@Override
 	public String toString() {
