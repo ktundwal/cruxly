@@ -12,6 +12,7 @@ public class Analyzers {
 	private static final Logger LOGGER = Logger.getLogger(Analyzers.class.getName());
 	
 	public final String COMMITMENT_ANALYSIS_GRAMMER_TXT 	= "commitment_surface_analysis_grammar.txt";
+	public final String COMMITMENT_ANALYSIS_KIP_GRAMMER_TXT = "commitment_surface_analysis_kip_grammar.txt";
 	public final String BUY_ANALYSIS_GRAMMER_TXT 			= "buy_intent_analysis_grammar.txt";
 	public final String BUY_ANALYSIS_KIP_GRAMMER_TXT 		= "buy_intent_analysis_kip_grammar.txt";
 	public final String LIKE_ANALYSIS_GRAMMER_TXT 			= "like_intent_analysis_grammar.txt";
@@ -59,6 +60,7 @@ public class Analyzers {
 		put (LIKE, 				LIKE_ANALYSIS_KIP_GRAMMER_TXT);
 		put (TRY, 				TRY_ANALYSIS_KIP_GRAMMER_TXT);
 		put (DISLIKE, 			DISLIKE_ANALYSIS_KIP_GRAMMER_TXT);
+		put (COMMITMENT, 		COMMITMENT_ANALYSIS_KIP_GRAMMER_TXT);
 	}};
 	
 	public SurfaceAnalysis getAnalyzer(String type, Kip kip) {
