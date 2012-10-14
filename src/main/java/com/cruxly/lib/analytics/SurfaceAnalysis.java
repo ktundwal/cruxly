@@ -78,7 +78,7 @@ public class SurfaceAnalysis {
 	public boolean insertIntent(String text, TextSegment[] arrTokens,
 			Kip kip, List<TextSegmentEx> intent_list) {
 		if (LOGGER.isLoggable(Level.FINE)) {
-			LOGGER.log(Level.FINE, "STARTING " + _type + " detection");
+			LOGGER.fine("STARTING " + _type + " detection");
 		}
 		boolean found = false;
 		DocumentSurfaceScore score;
@@ -104,9 +104,9 @@ public class SurfaceAnalysis {
 			intent_list.addAll(Arrays.asList(detectedSegments));
 			if (LOGGER.isLoggable(Level.FINE)) {
 				for (TextSegmentEx detectedSegment : detectedSegments) {
-					LOGGER.log(Level.FINE, String.format("\n          RESULT : detectedSegments(%s)", detectedSegment));
+					LOGGER.fine(String.format("\n          RESULT : detectedSegments(%s)", detectedSegment));
 				}
-				LOGGER.log(Level.FINE, "          DONE");
+				LOGGER.fine("          DONE");
 			}
 		} catch (Exception e) {
 			if (LOGGER.isLoggable(Level.SEVERE)) {

@@ -1,5 +1,5 @@
 ## Buy Intent (BI) with KIP-awareness
-## vers 0.6 - derived from Buy Intent v1.5
+## vers 0.8 - derived from Buy Intent v1.5
 # author: A. Guha
 
 # Suffixes/prefixes:
@@ -154,6 +154,8 @@
 
 # e.g.: we are 'in desperate need' of KIP
 +_IWe _AmAre? _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
+## add special case of phrase_start for 'need KIP'
++~PHRASE_START _IWe? _AmAre? _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
 
 # e.g.: I am 'buying' KIP
 +_IWe _AmAre? _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
@@ -173,6 +175,7 @@
 # removing phrase start for 'I want one', just Want / add phrase start for I will buy
 # e.g.: I want.
 +~PHRASE_START _IWe _Will? _PreVerbs* _Adverbs* _BIVerbs _SentEndPunc
+
 
 # Might have to get KIP - remove opt on KIP
 # e.g.: I might have to get
@@ -248,7 +251,9 @@
 ### sp test case with replacing alias AboutTo with 2 explicit phrases "about to", "itching to" - others will not work
 +~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? about to _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
 +~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? itching to _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
-###
+##
+## add about to with phrase_start
++~PHRASE_START _PreVerbs* IWe? _AmAre? _AboutTo _BIVerbs * _KIP
 
 # e.g., I'm gonna/about to buy a KIP 
 +_IWe _AmAre? _AboutTo _BIVerbs _Karticles* _KIP
@@ -403,6 +408,8 @@
 +~PHRASE_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* gonna go? _BIVerbs _Karticles* _KIP
 # e.g., I am gonna go buy KIP / , I am about to buy KIP
 +_IWe _AmAre? gonna go? _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
++_IWe _AmAre? going to go? _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
++_IWe _AmAre? about to go? _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
 
 # e.g., , I am gonna go buy one
 +~PHRASE_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* gonna go? _BIVerbs _One
@@ -536,7 +543,7 @@
 :Buying=buying|getting|ordering|acquiring|bidding|purchasing|obtaining|picking|procuring|employing|hiring|renting
 :Meals=breakfast|lunch|dinner|snack|drink|treat|dessert|feast|muchies|brunch|chow|luncheon|picnic|spread|refreshment|beverage|repast|tea|supper|banquet|grub|din-din
 :Yes=yes|affirmative|amen|yea|yeah|yep|surely|alright|sure thing|great|aye|all right|by all means|positively|precisely|undoubtedly|indubitably|unquestionably 
-:IsGoes=is|goes|sounds|sound|smells|tastes|taste|looks|would|would be
+#:IsGoes=is|goes|sounds|sound|smells|tastes|taste|looks|would|would be
 
 :OnWithFor=on|with|for
 #GRBI 49P - made IWeSimple optional
@@ -562,8 +569,9 @@
 +_IWe? _Will? _HasHad? _MyOur fix
 
 
-#GRBI 54P -- more want/ like => remove rule
-#+_KIP _IsGoes _So? _Adverbs* _Cool
+#GRBI 54P --modified IsGoes
+:IsGoes=sounds|sound|would|would be
++_KIP _IsGoes _So? _Adverbs* _Cool
 
 # added explicit rule for 'wish I had'
 #GRBI 55P

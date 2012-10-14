@@ -1,5 +1,5 @@
-# Commitment grammar
-## vers 0.2
+# Commitment grammar with KIP-awareness
+## vers 0.3
 # author: A. Guha - modified version from KK
 
 # derived from email committments/promises - some email specific rules have been removed
@@ -122,7 +122,7 @@
 +~PHRASE_START _CPreVerbs* _Adverbs* _IWeCont _CPreVerbs* _ActionVerbsGerund * _KIP
 
 # rule: I about to/I will? I would get <kip>
-+_IWeSimple _AboutTo _CPreVerbs* _Adverbs* _ActionVerbs * _KIP
+#+_IWe? _AmAre? _AboutTo _CPreVerbs* _Adverbs* _ActionVerbs * _KIP
 +_IWeFuture _CPreVerbs* _Adverbs* _ActionVerbs * _KIP
 +_IWeWould _CPreVerbs* _Adverbs* _ActionVerbs * _KIP
 
@@ -173,7 +173,7 @@
 
 # rule: 'I am about to go' - redundant?
 +~PHRASE_START _CPreVerbs* _IWe? _AmAre? _CPreVerbs* _Adverbs* _AboutTo _ActionVerbs * _KIP
-+~PHRASE_START _CPreVerbs* _IWe? _AmAre? _Adverbs* _AboutTo _ActionVerbs * _KIP
+#+~PHRASE_START _CPreVerbs* _IWe? _AmAre? _Adverbs* _AboutTo _ActionVerbs * _KIP
 
 # add negative rule on AboutTo miss
 -_AboutTo miss

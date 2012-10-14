@@ -119,7 +119,6 @@ public class TestLikeDetector extends TestDetector {
 		String content = "starbucks I like you";
 		Kip kip = STARBUCKS;
 		List<String> expectedIntentRules = LIKE;
-		setLogLevel(Level.INFO);
 		check(rules, content, kip, expectedIntentRules);
 	}
 }

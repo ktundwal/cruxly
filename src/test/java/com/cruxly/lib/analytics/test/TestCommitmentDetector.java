@@ -10,7 +10,7 @@ public class TestCommitmentDetector extends TestDetector {
 	@Test
 	public void testAboutToMakeAAmericanApparelOrder() {
 		String content = "about to make a american apparel order..... should i";
-		Kip kip = NO_KIP;
+		Kip kip = new Kip(new String[]{"american apparel"});
 		List<String> expectedIntentRules = COMMITMENT;
 		check(content, kip, expectedIntentRules);
 	}
@@ -61,6 +61,13 @@ public class TestCommitmentDetector extends TestDetector {
 	@Test
 	public void test_14_Three_Redbulls_And_A_Large_Coffee_Later_STARBUCKS_MOCHA_LATTE() {
 		String content = "Three Redbulls and a large coffee later... I'm crashing incredibly hard.";
+		Kip kip = STARBUCKS_MOCHA_LATTE;
+		List<String> expectedIntentRules = COMMITMENT;
+		check(content, kip, expectedIntentRules);
+	}
+	@Test
+	public void test_15_About_To_Download_STARBUCKS_MOCHA_LATTE() {
+		String content = "About to download starbucks.";
 		Kip kip = STARBUCKS_MOCHA_LATTE;
 		List<String> expectedIntentRules = COMMITMENT;
 		check(content, kip, expectedIntentRules);

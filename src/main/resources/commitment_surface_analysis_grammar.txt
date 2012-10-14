@@ -1,5 +1,5 @@
 # Commitment grammar
-## vers 1.9
+## vers 2.0
 # author: A. Guha - modified and updated from KK initial version
 
 
@@ -55,8 +55,8 @@
 :Requested=asked|requested|demanded|directed|insisted|petitioned
 :Say=say|guess|assume|presume
 
-# basic commmit: I am gonna do 
-+~PHRASE_START _CPreVerbs* _IWeSimple? _CPreVerbs* _AboutTo _CPreVerbs* _ActionVerbs
+# basic commmit: I am gonna do
++~PHRASE_START _CPreVerbs* _IWe? _AmAre? _AboutTo _CPreVerbs* _Adverbs* _ActionVerbs
 
 #+~PHRASE_START _SentStartOptional? _IWeSimple? _CPreVerbs* _AboutTo _CPreVerbs* _ActionVerbs
 -~PHRASE_START _CPreVerbs* _AboutTo _CPreVerbs* _ActionVerbs more? _Interesting
@@ -103,7 +103,7 @@
 +~PHRASE_START _CPreVerbs* _Adverbs* _IWeCont _CPreVerbs* _ActionVerbsGerund
  
 # rule: I about to/I will? I would get < >
-+_IWeSimple _AboutTo _CPreVerbs* _Adverbs* _ActionVerbs
+#+_IWeSimple _AboutTo _CPreVerbs* _Adverbs* _ActionVerbs
 +_IWeFuture _CPreVerbs* _Adverbs* _ActionVerbs
 +_IWeWould _CPreVerbs* _Adverbs* _ActionVerbs
 

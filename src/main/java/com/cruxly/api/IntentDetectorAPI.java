@@ -48,7 +48,7 @@ private static final Logger LOGGER = Logger.getLogger(IntentDetectorAPI.class.ge
 	@Produces(MediaType.APPLICATION_JSON)
 	public Document[] sample(
 			@QueryParam("text") @DefaultValue("I love starbucks") final String text,
-			@QueryParam("kip") @DefaultValue("starbucks") final String kip) 
+			@QueryParam("kip") @DefaultValue("") final String kip) 
 					throws IntentDetectorException {
 		
 		Document[] documents = new Document[1];

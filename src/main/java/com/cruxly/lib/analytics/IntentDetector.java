@@ -26,7 +26,7 @@ public class IntentDetector {
 			SurfaceAnalysis analyzer, String intentType) {
 		
 		if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, String.format("INIT INTENT DETECTION: text(%s), kip(%s), intentType(%s)", 
+            LOGGER.fine(String.format("INIT INTENT DETECTION: text(%s), kip(%s), intentType(%s)", 
             		content, kip, intentType));
 		}
 		
@@ -50,12 +50,12 @@ public class IntentDetector {
 			Hashtable<String, Set<IntentRule>> sentence_intents = new Hashtable<String, Set<IntentRule>>(); 
 			
 			if (LOGGER.isLoggable(Level.FINE)) {
-	            LOGGER.log(Level.FINE, String.format("\n\nINIT DETECTINTENT: KIP(%s) CONTENT(%s)", 
+	            LOGGER.fine(String.format("\n\nINIT DETECTINTENT: KIP(%s) CONTENT(%s)", 
 	            		document.kip, document.text));
 			}
 	        for (String detectedSentence : detectedSentences) {
 	        	if (LOGGER.isLoggable(Level.FINE)) {
-	                LOGGER.log(Level.FINE, String.format("    SENTENCE(%s)", detectedSentence));
+	                LOGGER.fine(String.format("    SENTENCE(%s)", detectedSentence));
 	        	}
 				TextSegmentEx[] segments = detectIntentTextSegments(detectedSentence, document.kip);
 				for (TextSegmentEx segmentEx : segments) {
@@ -64,7 +64,7 @@ public class IntentDetector {
 					String sentence = segmentEx.segment.toString();
 					
 					if (LOGGER.isLoggable(Level.FINE)) {
-			            LOGGER.log(Level.FINE, String.format("        INTENT(%s), RULE(%s), SEGMENT(%s)", 
+			            LOGGER.fine(String.format("        INTENT(%s), RULE(%s), SEGMENT(%s)", 
 			            		intent, rule, sentence));
 					}
 					
@@ -145,7 +145,7 @@ public class IntentDetector {
 	private TextSegmentEx[] detectIntentTextSegments(String text, Kip kip) {
 
 		if (LOGGER.isLoggable(Level.FINE)) {
-            LOGGER.log(Level.FINE, String.format("INIT INTENT DETECTION: text(%s), kip(%s)", text, kip));
+            LOGGER.fine(String.format("INIT INTENT DETECTION: text(%s), kip(%s)", text, kip));
 		}
 
 		List<TextSegmentEx> intent_list = new ArrayList<TextSegmentEx>();
@@ -190,7 +190,7 @@ public class IntentDetector {
 		}
 
 		if (LOGGER.isLoggable(Level.INFO)) {
-            LOGGER.log(Level.INFO, String.format("ANALYSIS RESULTS: %s to process TEXT[%s] KIP[%s] TOKENS[%s]", 
+            LOGGER.info(String.format("ANALYSIS RESULTS: %s to process TEXT[%s] KIP[%s] TOKENS[%s]", 
             		b.toString(),  text, kip, serializeTokens(arrTokens)));
 		}
 		return intent_list.toArray(new TextSegmentEx[intent_list.size()]);
