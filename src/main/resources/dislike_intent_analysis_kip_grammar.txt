@@ -1,5 +1,5 @@
 # Dislike Intent with KIP-awareness
-# vers 0.3
+# vers 0.4
 # Author: A. Guha
 
 # Suffixes/prefixes:
@@ -102,6 +102,10 @@
 # added to gerunds going to cut it|gonna cut it|be trusted
 :LikeVerbsGerunds=acclaiming|acceptable|good|addicted to|admiring|adoring|advocating|applauding|appreciating|approving|attesting|backing|be trusted|believing in|benefitting from|blessing|boasting|bragging|caring for|casting my vote for|celebrating with|celebrating|cheering|cherishing|clamor for|could go for|delighting in|deserving|desiderating|desiring|devoting to|digging|dipping into|doting|dreaming of|dreaming about|dying for|dieing for|embracing|endorsing|enjoying|exalting|fancying|fancy a|fantasizing|favoring|favouring|fawning|feasting|feeling a need for|feelin' a need for|feeling some|feelin' some|flirting|flocking to|frolicing with|glorifying|gorging|going ape over|going to cut it|gonna cut it|hailing|hankering|having a yen for|hook me up|hooked on|hungering|imagining|indulging|jumping for|liking|lobbying|longing|looking forward to|loving|lusting|luxuriating|luving|marveling|nominating|obsessed with|obsessing|opting for|perking up|picturing myself in|pining|plunging into|preferring|pricing|prizing|rallying|raving|recommending|rejoicing|rejuvenating with|relaxing with|relishing|reveling|revering|rocking with|rubber stamping|salivating|sanctioning|savoring|siding with|singing the praises of|sold on|stoking|taking joy in|thriving|touting|treasuring|tucking into|unwinding with|valuing|venerating|voting|vouching|waiting for|winning|wish I had|wishing for|worshipping|yearning
 
+## adding Buy (Want) Verbs and Gerunds, in case needed for neg rules
+#:BIVerbs=take|use|in desperate need of|invest|accumulate|acquire|activate|afford|amass|appropriate|authorize|avail of|bankroll|bargain|barter|bid|book|booked|build up on|buy|cash|catch this|charter|chill with|choose|clinch|collect|commission|contract|cop|corral|cultivate|demand|double|employ|engage|exchange for|fetch|finance|fulfil|fulfill|fund|garner|gather|get|get me|going get|go get|gotta get|got to get|gotta stop by|got to stop by|gotta stop for|got to stop for|grab|haggle|hire|hoard|horse-trade|hunt|ingest|ink|install|lease|load up on|nab|need|neeed|neeeed|negotiate|obtain|order|outfit|patronize|pay|pick|plow back into|pocket|possess|procure|purchase|pursue|recruit|refill|refuel|register for|registered|reinvest|remodel|rent|replenish|repurchase|request|require|reserve|scoop up|scrounge|secure|select|serve|shop|signed up for|single out|snag|snap up|spend|stand in line at|stand in line for|stop by|stop for|stop at|switch to|take advantage of|tap into|trade|triple|upgrade|want|zero in on
+#:BIVerbsGerunds=in desperate need of|accumulating|acquiring|affording|amassing|appropriating|authorizing|availing of|bankrolling|bargaining|bartering|bidding|booking|building up on|buying|cashing in|catching this|chartering|chilling with|choosing|clinching|collecting|commissioning|contracting|copping|corralling|could do with|cultivating|demanding|dishing up|do anything for|doubling|employing|engaging|enlisting|exchanging for|fetching|financing|fulfiling|fulfilling|funding|garnering|gathering|getting|getting excited for|go pick|go get|get me|going get|gotta get|got to get|going to get|gotta stop by|got to stop by|gotta stop for|got to stop for|gotta get|grabbing|haggling|hiring|hoarding|horse trading|hunting|in the hunt for|in line at|in line for|inking|installing|landing|leasing|nabbing|need|neeed|neeeed|needing|in need of|in the need of|negotiating|obtaining|ordering|outfitting|patronizing|paying|picking|piling on|plowing back into|pocketing|possessing|procuring|purchasing|pursuing|recruiting|refilling|refueling|registering for|reinvesting|remodeling|renting|replenishing|repurchasing|requesting|requiring|reserving|scooping up|scrounging|securing|selecting|serving|shopping|signing|singling out|snagging|snapping up|snap up|spending|standing in line at|standing in line for|switching to|taking advantage of|tapping into|thirsting|trading|tripling|upgrading|wanting|zeroing in on
+
 # LikeMyOur phrases that use my/our
 :LikeMyOur=laying|lay|sink|sinking
 
@@ -199,10 +203,10 @@
 ## it is being stupid
 +_It _IsWasWere being _PreVerbs* _Adverbs* _IsWasFoundDisVerbs
 
-# e.g., KIP are awful
-+_KIP are? _PreVerbs* _Adverbs* _IsWasFoundDisVerbs
+## e.g., KIP are awful -- remove optional are
++_KIP are _PreVerbs* _Adverbs* _IsWasFoundDisVerbs
 # e.g., they are awful
-+_It are? _PreVerbs* _Adverbs* _IsWasFoundDisVerbs
++_It are _PreVerbs* _Adverbs* _IsWasFoundDisVerbs
 
 ## e.g., I hate KIP
 +_IWe _AmAre? _PreVerbs* _Adverbs* _AmAreDisVerbs _Karticles? _KIP

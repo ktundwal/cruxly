@@ -33,6 +33,8 @@ public class Document implements Serializable {
 		this.image = "";
 		this.tweet_id = "";
 		this.date = "";
+		this.latitude = "";
+		this.longitude = "";
 	}
 	
 	public Document(String text, Kip kip) {
@@ -49,6 +51,8 @@ public class Document implements Serializable {
 		this.image = "";
 		this.tweet_id = "";
 		this.date = "";
+		this.latitude = "";
+		this.longitude = "";
 		
 	}
 
@@ -89,6 +93,12 @@ public class Document implements Serializable {
 
 	@XmlElement(nillable=true, required=false)
 	public String date;
+	
+	@XmlElement(nillable=true, required=false)
+	public String latitude;
+	
+	@XmlElement(nillable=true, required=false)
+	public String longitude;
 
 	@Override
 	public String toString() {
