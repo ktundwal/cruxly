@@ -135,7 +135,7 @@ public class TestDetector {
 	
 	protected void check(String[] rules, String content, Kip kip,
 			List<String> expectedIntentRules) {
-		SurfaceAnalysis analyzer = createAnalyzer("unknown", rules, kip, kip.keyTerms != null);
+		SurfaceAnalysis analyzer = createAnalyzer("unknown", rules, kip, kip.getKeyTerms() != null);
 		List<TextSegmentEx> intent_list = new ArrayList<TextSegmentEx>();
 		TextSegment[] arrTokens = StringUtils.splitIntoTextSegments(content, true, true);
 		analyzer.insertIntent(content, arrTokens, kip, intent_list);

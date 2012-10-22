@@ -18,7 +18,7 @@ public class TestDislikeDetector extends TestDetector {
 	
 	@Test
 	public void testKindleFireIsStupidAs() {
-		String content = "KindleFire is Stupid ass.";
+		String content = "KindleFire is stupid ass.";
 		Kip kip = KINDLEFIRE;
 		List<String> expectedIntentRules = DISLIKE;
 		check(content, kip, expectedIntentRules);

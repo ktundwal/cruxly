@@ -1,5 +1,5 @@
 ## Buy Intent (BI) with KIP-awareness
-## vers 0.8 - derived from Buy Intent v1.5
+## vers 0.9 - derived from Buy Intent v1.5
 # author: A. Guha
 
 # Suffixes/prefixes:
@@ -47,6 +47,7 @@
 # remove ? in SentEndPunc
 :SentEndPunc=.|!|eom 
 :MidSentPunc=-|,|;|:|)|(
+:EndPunc=,|.|;|&|!|/|eom
 
 # added demonstrably. only, actually in Adverbs, remo truly from PreVerbs and move to Adverbs
 # removed 'about to' from PreVerbs to avoid dupe with PreVerbs
@@ -61,7 +62,9 @@
 :AmAre=am|are|is
 
 # It
-:It=it|this|they|those|that
+## It: add them
+:It=it|this|they|those|that|them
+
 :Ready=ready|available|finished
 
 # synonyms for offers 
@@ -182,9 +185,10 @@
 +~PHRASE_START _IWe? _MayMight have to _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
 
 # e.g.: I want one.
-+_IWe _Will? _PreVerbs* _Adverbs* _BIVerbs the? _One
+## add EndPunc after "buy one"
++_IWe _Will? _PreVerbs* _Adverbs* _BIVerbs the? _One _EndPunc
 # e.g.: I can use one.
-+_IWe can _PreVerbs* _Adverbs* _BIVerbs the? _One
++_IWe can _PreVerbs* _Adverbs* _BIVerbs the? _One SentEndPunc
  
 
 # GRBI 2N for 'need/have/want to'/BIVerbs non-BIVerbs - KIP indep
@@ -232,7 +236,8 @@
 # Including "I/We want/need/BIVerb one/it/that=One? now?" "IWe am/are BIGerunds it/one/that=One"
 # may add sentendpunc if needed
 # e.g., I'm buying one
-+_IWe _AmAre? _PreVerbs* _Adverbs* _BIVerbsGerunds _One
+## add EndPunc after "Buy One"
++_IWe _AmAre? _PreVerbs* _Adverbs* _BIVerbsGerunds _One _EndPunc
 
 #GRBI 7P - redundant w/ 5P
 #+~SENT_START _PreVerbs* _Adverbs* _AmAre? _PreVerbs* _Adverbs* _BIVerbsGerunds _Karticles* _KIP
@@ -262,7 +267,8 @@
 # e.g., I am planning to buy KIP
 +~PHRASE_START _PreVerbs* _Adverbs* _IWe? _AmAre? _BItoGerunds to _BIVerbs _Karticles* _KIP
 # e.g., I'm gonna buy one
-+_IWe _AmAre? _AboutTo _BIVerbs _One
+## add EndPunc after _One
++_IWe _AmAre? _AboutTo _BIVerbs _One _EndPunc
 
 # GRBI 32P - next two redundant with use of Gonna
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe? going to _BIVerbs _Karticles* _KIP
@@ -314,7 +320,8 @@
 # e.g., I can do with a KIP
 +_IWe can do with _Karticles* _KIP
 # e.g., I can do with one
-+_IWe can do with _One
+## add EndPunc after _One
++_IWe can do with _One _EndPunc
 
 # time to reconsider
 # e.g., time to reconsider a KIP
@@ -412,9 +419,11 @@
 +_IWe _AmAre? about to go? _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
 
 # e.g., , I am gonna go buy one
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* gonna go? _BIVerbs _One
+## add EndPunc after _One
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* gonna go? _BIVerbs _One _EndPunc
 # e.g., I am gonna go buy one
-+_IWe _AmAre? gonna go? _PreVerbs* _Adverbs* _BIVerbs _One
+## add EndPunc after _One
++_IWe _AmAre? gonna go? _PreVerbs* _Adverbs* _BIVerbs _One _EndPunc
 
 # Wanna / want to: future intention, not incl for Like
 # GRBI 34P - added wanna BI, try
@@ -424,7 +433,8 @@
 # e.g., We wanna buy KIP
 +_IWe wanna _PreVerbs* _Adverbs* _BIVerbs _Karticles* _KIP
 # e.g., We wanna buy one
-+_IWe wanna _PreVerbs* _Adverbs* _BIVerbs _One
+## add EndPunc after _One
++_IWe wanna _PreVerbs* _Adverbs* _BIVerbs _One _EndPunc
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe? wanna try _Karticles* _KIP
 
 # GRBI 35P
@@ -501,7 +511,8 @@
 # e.g., we are heading out to buy KIP
 +_IWe _AmAre? _Adverbs? _HeadingTo _BIVerbs _Karticles* _KIP 
 # e.g., heading over to buy one
-+~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _HeadingTo _BIVerbs _One
+## add EndPunc after _One
++~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _HeadingTo _BIVerbs _One _EndPunc
 
 
 # PITreatMyself + myself/ourselves + with / to / should include Like?
@@ -535,8 +546,9 @@
 :GoFor=do with|go for
 :CanCould=can|could
 :So=so|soo|sooo|soooo|sooooo
-# Cool not in BI
-# :Cool=cool|neat|great|amazing|awesome|good|delicious|wonderful|lovely|nice
+## Cool not in BI - but modified to Good be desirable  
+:Good=good|great|awesome|delicious|wonderful|lovely|nice
+
 :Mind=mind|refuse|be upset|complain|object to|object if you|turn down|reject
 :Think=think|say|vote|declare
 :Hurray=hurrah|hurray|hooray|huzzah|hip-hip|hip hip|yipee
@@ -571,7 +583,8 @@
 
 #GRBI 54P --modified IsGoes
 :IsGoes=sounds|sound|would|would be
-+_KIP _IsGoes _So? _Adverbs* _Cool
+#:Good=good|great|awesome|delicious|wonderful|lovely|nice
++_KIP _IsGoes _So? _Adverbs* _Good
 
 # added explicit rule for 'wish I had'
 #GRBI 55P

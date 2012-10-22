@@ -1,5 +1,5 @@
 # Dislike Intent
-# vers 1.1
+# vers 1.2
 # Author: A. Guha
 
 # Suffixes/prefixes:
@@ -30,7 +30,8 @@
 # remove ? in SentEndPunc
 :SentEndPunc=.|!|eom 
 :MidSentPunc=-|,|;|:|)|(
-:EndPunc=,|.|;|#|&|!|/|eom
+## remove # from EndPunc
+:EndPunc=,|.|;|&|!|/|eom
 
 # added straight, demonstrably, both, only, honestly, actually in Adverbs, remove truly from PreVerbs and move to Adverbs
 # removed 'about to' from PreVerbs to avoid dupe with PreVerbs
@@ -62,8 +63,8 @@
 :IsWasFoundDisVerbs=abhorrent|abominable|aggravating|annoying|appalling|ass|atrocious|awful|bad|baffling|bizzare|bothersome|bullshit|confusing|crap|crappy|crappiest|creepy|cruddy|crummy|cumbersome|damaged|dangerous|defective|deficient|degrading|despicable|detestable|difficult|directionless|dirty|disagreeable|disappointed|disappointing|dissapointed|dissapointing|discardable|disgraceful|disheartening|dishonest|dishonorable|dismal|disorganized|dissatisfying|disturbing|doomed|dreadful|dumb|dump|duped by|edgy|fake|false|flawed|forgettable|frustrating|fucked up|fucking|fuckin|fucking up|fuckin up|gross|grossed-out|grotesque|hideous|hopeless|horrible|horrible|horrid|hurt by|idiotic|ignorant|inadequate|incapable|incompetent|inferior|infuriating|insulting|irritating|like crap|limiting|loathesome|lousy|maddening|miserable|nasty|nauseating|nauseous|noisome|noxious|objectionable|obnoxious|obscene|odious|offensive|overpriced|over priced|overrated|painful|pathetic|phony|poor|regretful|repugnant|retarded|ridiculous|ridic|sad|saddest|shit|shitty|on my shitlist|on our shitlist|stupid|stupid ass|sucks|sucky|terrible
 
 # I/We am/are/found <no_kip> VP => AmAreDisVerbs VP
-## add ass, ditch, dissapointed (sp)
-:AmAreDisVerbs=ditch|abhor|abhorred|aggravated with|aggravated by|angry with|angry at|angered by|annoyed of|annoyed at|annoyed about|annoying|appalled by|averse to|aversion to|avoid |avoided |avoiding|badgered by|baffled by|belittled by|berated by|bitched at|bitter about|bothered by|got the brush-off|bugged by|cheated by|cheated on |concerned with|confused by|conned by |contempt for|creeped out by|critical of|cross with|cross at|cynical of|deceived by|degraded by|despicable|despise|despised|despising|detest|detested|detesting|disappointed by|disappointed with|disapprove of|disapproved of|discarded|disconnected from|disconnecting|discontented with|discouraged by|disdainful of|disenchanted of|disenchanted by|disgusted by|disheartened by|disillusioned by|dislike|disliked |disliking|dismayed by|dismayed with|displeased with|displeased by|disrelish|disrelished|disrelishing|dissatisfied with|disturbed by|dread|dreading|dreaded|dump|dumping|dumped|embarrassed by|eschew|eschewed|evaded|evade|exploited by|fear|fearful|fed up with|frustrated by|furious with|furious at|fucked by|hate|hated|haunted by|have a dislike for|have an aversion to|have no taste for|have no stomach for|hindered by|hold in abomination|hold in contempt|horrified |infuriated with|infuriated by|insulted by|irritated by|let down by|loathe|lousy|mad|messed up|miffed at|misled by|mislike|misrelish|mistrust|nagged by|nauseated by|object to|objectified|obligated|offended by|pessimistic on|pessimistic on|pissed at|pissed about|rather not have|rattled by|recoil at|regret|reject|rejected|repeled by|repelled by|resent|resented|resentful of|revolt against
+# add ass, ditch, dissapointed (sp), upset with/at
+:AmAreDisVerbs=ditch|abhor|abhorred|aggravated with|aggravated by|angry with|angry at|angered by|annoyed of|annoyed at|annoyed about|annoying|appalled by|averse to|aversion to|avoid|avoided|avoiding|badgered by|baffled by|belittled by|berated by|bitched at|bitter about|bothered by|got the brush-off|bugged by|cheated by|cheated on|concerned with|confused by|conned by|contempt for|creeped out by|critical of|cross with|cross at|cynical of|deceived by|degraded by|despicable|despise|despised|despising|detest|detested|detesting|disappointed by|disappointed with|disapprove of|disapproved of|discarded|disconnected from|disconnecting|discontented with|discouraged by|disdainful of|disenchanted of|disenchanted by|disgusted by|disheartened by|disillusioned by|dislike|disliked|disliking|dismayed by|dismayed with|displeased with|displeased by|disrelish|disrelished|disrelishing|dissatisfied with|disturbed by|dread|dreading|dreaded|dump|dumping|dumped|embarrassed by|eschew|eschewed|evaded|evade|exploited by|fear|fearful|fed up with|frustrated by|furious with|furious at|fucked by|hate|hated|haunted by|have a dislike for|have an aversion to|have no taste for|have no stomach for|hindered by|hold in abomination|hold in contempt|horrified|infuriated with|infuriated by|insulted by|irritated by|let down by|loathe|loathing|lousy|mad|messed up|miffed at|misled by|mislike|misrelish|mistrust|nagged by|nauseated by|object to|objectified|obligated|offended by|pessimistic on|pessimistic on|pissed at|pissed about|rather not have|rattled by|recoil at|regret|reject|rejected|repeled by|repelled by|resent|resented|resenting|resentful of|revolt against|upset with|upset at
 
 ##:AmAreDisGerunds VP
 # remov annoying / add: drawback to, done with,  dissapointed (sp)
@@ -150,8 +151,8 @@ IWe _Dont _LikeVerbs
 
 # modify rules to ensure either _IWe or _AmAre are present pre- PIVerbs / ensure phrase start of IWe? or Will?
 # add neg rule for having difficulties
-# add I've/we've been PIVerbsGerunds
-:Having=have a|having|getting|facing|noticing 
+## add I've/we've been PIVerbsGerunds, add "had"
+:Having=have a|had|having|getting|facing|noticing 
 :Difficulties=difficulty|difficulties|failure|failures|problems|problems|issue|issues|hassles|bad luck|trouble|troubles
 
 #GRDislike 3P - e.g, I was/am disappointed

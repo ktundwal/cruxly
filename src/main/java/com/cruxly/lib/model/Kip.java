@@ -19,21 +19,52 @@ public class Kip implements Serializable {
 	@XmlElement(nillable=false, required=true, name="keyterms")
 	public String[] keyTerms = null;
 
+	public String[] getKeyTerms() {
+		if (this.keyTerms != null) {
+			return convertToLowerCase(this.keyTerms);
+		} else
+			return this.keyTerms;
+	}
+
 	@XmlElement(nillable=false, required=true, name="genericterms")
 	public String[] genericTerms = null;
 	
+	public String[] getGenericTerms() {
+		if (this.genericTerms != null) {
+			return convertToLowerCase(this.genericTerms);
+		} else
+			return this.genericTerms;
+	}
+
 	@XmlElement(nillable=false, required=true, name="competingterms")
 	public String[] competingTerms = null;
 
-	public Kip(String[] keyterms) {
+	public String[] getCompetingTerms() {
+		if (this.competingTerms != null) {
+			return convertToLowerCase(this.competingTerms);
+		} else
+			return this.competingTerms;
+	}
+
+	public Kip(String[] keyTerms) {
 		super();
-		this.keyTerms = keyterms;
+		this.keyTerms = keyTerms;
+		if (this.keyTerms != null) {
+			this.keyTerms = convertToLowerCase(this.keyTerms);
+		}
 	}
 
 	public Kip(String[] keyTerms, String[] industryTerms) {
 		super();
 		this.keyTerms = keyTerms;
+		if (this.keyTerms != null) {
+			this.keyTerms = convertToLowerCase(this.keyTerms);
+		}
+		
 		this.genericTerms = industryTerms;
+		if (this.genericTerms != null) {
+			this.genericTerms = convertToLowerCase(this.genericTerms);
+		}
 	}
 
 	public Kip(String[] keyTerms, String[] industryTerms, String[] competingTerms) {
@@ -101,13 +132,13 @@ public class Kip implements Serializable {
 	public String[] all() {
 		List<String> all = new ArrayList<String>();
 		if (this.keyTerms != null) {
-			all.addAll(Arrays.asList(this.keyTerms));
+			all.addAll(Arrays.asList(convertToLowerCase(this.keyTerms)));
 		}
 		if (this.genericTerms != null) {
-			all.addAll(Arrays.asList(this.genericTerms));
+			all.addAll(Arrays.asList(convertToLowerCase(this.genericTerms)));
 		}
 		if (this.competingTerms != null) {
-			all.addAll(Arrays.asList(this.competingTerms));
+			all.addAll(Arrays.asList(convertToLowerCase(this.competingTerms)));
 		}
 		
 		return all.toArray(new String[all.size()]);

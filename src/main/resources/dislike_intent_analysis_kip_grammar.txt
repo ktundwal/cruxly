@@ -1,5 +1,5 @@
 # Dislike Intent with KIP-awareness
-# vers 0.4
+# vers 0.5
 # Author: A. Guha
 
 # Suffixes/prefixes:
@@ -45,7 +45,8 @@
 
 :Punc=,|!|;|.|?|-|(|)|:
 # remove ? in SentEndPunc
-:EndPunc=,|.|;|#|&|!|/|eom
+## remove # from EndPunc
+:EndPunc=,|.|;|&|!|/|eom
 :SentEndPunc=.|!|eom 
 :MidSentPunc=-|,|;|:|)|(
 
@@ -62,8 +63,8 @@
 :AmAre=am|are|is
 :IsWasWere=is|was|were
 
-# It
-:It=it|this|they|those|that
+## It: add them
+:It=it|this|they|those|that|them
 :Ready=ready|available|finished
 #:Articles=a|an|the|this
 ## merged Articles with Karticles; added 'more'
@@ -78,8 +79,8 @@
 :IsWasFoundDisVerbs=abhorrent|abominable|aggravating|annoying|appalling|ass|atrocious|awful|bad|baffling|bizzare|bothersome|bullshit|confusing|crap|crappy|crappiest|creepy|cruddy|crummy|cumbersome|damaged|dangerous|defective|deficient|degrading|despicable|detestable|difficult|directionless|dirty|disagreeable|disappointed|disappointing|dissapointed|dissapointing|discardable|disgraceful|disheartening|dishonest|dishonorable|dismal|disorganized|dissatisfying|disturbing|doomed|dreadful|dumb|dump|duped by|edgy|fake|false|flawed|forgettable|frustrating|fucked up|fucking|fuckin|fucking up|fuckin up|gross|grossed-out|grotesque|hideous|hopeless|horrible|horrible|horrid|hurt by|idiotic|ignorant|inadequate|incapable|incompetent|inferior|infuriating|insulting|irritating|like crap|limiting|loathesome|lousy|maddening|miserable|nasty|nauseating|nauseous|noisome|noxious|objectionable|obnoxious|obscene|odious|offensive|overpriced|over priced|overrated|painful|pathetic|phony|poor|regretful|repugnant|retarded|ridiculous|ridic|sad|saddest|shit|shitty|on my shitlist|on our shitlist|stupid|stupid ass|sucks|sucky|terrible
 
 # I/We am/are/found <kip> VP => AmAreDisVerbs VP
-# add ass, ditch, dissapointed (sp)
-:AmAreDisVerbs=ditch|abhor|abhorred|aggravated with|aggravated by|angry with|angry at|angered by|annoyed of|annoyed at|annoyed about|annoying|appalled by|averse to|aversion to|avoid |avoided |avoiding|badgered by|baffled by|belittled by|berated by|bitched at|bitter about|bothered by|got the brush-off|bugged by|cheated by|cheated on |concerned with|confused by|conned by |contempt for|creeped out by|critical of|cross with|cross at|cynical of|deceived by|degraded by|despicable|despise|despised|despising|detest|detested|detesting|disappointed by|disappointed with|disapprove of|disapproved of|discarded|disconnected from|disconnecting|discontented with|discouraged by|disdainful of|disenchanted of|disenchanted by|disgusted by|disheartened by|disillusioned by|dislike|disliked |disliking|dismayed by|dismayed with|displeased with|displeased by|disrelish|disrelished|disrelishing|dissatisfied with|disturbed by|dread|dreading|dreaded|dump|dumping|dumped|embarrassed by|eschew|eschewed|evaded|evade|exploited by|fear|fearful|fed up with|frustrated by|furious with|furious at|fucked by|hate|hated|haunted by|have a dislike for|have an aversion to|have no taste for|have no stomach for|hindered by|hold in abomination|hold in contempt|horrified |infuriated with|infuriated by|insulted by|irritated by|let down by|loathe|lousy|mad|messed up|miffed at|misled by|mislike|misrelish|mistrust|nagged by|nauseated by|object to|objectified|obligated|offended by|pessimistic on|pessimistic on|pissed at|pissed about|rather not have|rattled by|recoil at|regret|reject|rejected|repeled by|repelled by|resent|resented|resentful of|revolt against
+# add ass, ditch, dissapointed (sp), upset with/at
+:AmAreDisVerbs=ditch|abhor|abhorred|aggravated with|aggravated by|angry with|angry at|angered by|annoyed of|annoyed at|annoyed about|annoying|appalled by|averse to|aversion to|avoid|avoided|avoiding|badgered by|baffled by|belittled by|berated by|bitched at|bitter about|bothered by|got the brush-off|bugged by|cheated by|cheated on|concerned with|confused by|conned by|contempt for|creeped out by|critical of|cross with|cross at|cynical of|deceived by|degraded by|despicable|despise|despised|despising|detest|detested|detesting|disappointed by|disappointed with|disapprove of|disapproved of|discarded|disconnected from|disconnecting|discontented with|discouraged by|disdainful of|disenchanted of|disenchanted by|disgusted by|disheartened by|disillusioned by|dislike|disliked|disliking|dismayed by|dismayed with|displeased with|displeased by|disrelish|disrelished|disrelishing|dissatisfied with|disturbed by|dread|dreading|dreaded|dump|dumping|dumped|embarrassed by|eschew|eschewed|evaded|evade|exploited by|fear|fearful|fed up with|frustrated by|furious with|furious at|fucked by|hate|hated|haunted by|have a dislike for|have an aversion to|have no taste for|have no stomach for|hindered by|hold in abomination|hold in contempt|horrified|infuriated with|infuriated by|insulted by|irritated by|let down by|loathe|loathing|lousy|mad|messed up|miffed at|misled by|mislike|misrelish|mistrust|nagged by|nauseated by|object to|objectified|obligated|offended by|pessimistic on|pessimistic on|pissed at|pissed about|rather not have|rattled by|recoil at|regret|reject|rejected|repeled by|repelled by|resent|resented|resenting|resentful of|revolt against|upset with|upset at
 
 #:AmAreDisGerunds VP
 # remov annoying / add: drawback to, done with,  dissapointed (sp)
@@ -182,8 +183,8 @@
 
 # modify rules to ensure either _IWe or _AmAre are present pre- PIVerbs / ensure phrase start of IWe? or Will?
 # add neg rule for having difficulties
-# add I've/we've been PIVerbsGerunds
-:Having=have a|having|getting|facing|noticing|seeing
+# add I've/we've been PIVerbsGerunds, add 'had'
+:Having=have a|having|getting|facing|noticing|seeing|had
 :Difficulties=difficulty|difficulties|failure|failures|problems|problems|issue|issues|hassles|bad luck|trouble|troubles
 
 #GRDislike 3P - e.g, I was/am disappointed
@@ -211,7 +212,8 @@
 ## e.g., I hate KIP
 +_IWe _AmAre? _PreVerbs* _Adverbs* _AmAreDisVerbs _Karticles? _KIP
 ## e.g., I hate it
-+_IWe _AmAre? _PreVerbs* _Adverbs* _AmAreDisVerbs _It
+## add EndPunc after "dislike _It"
++_IWe _AmAre? _PreVerbs* _Adverbs* _AmAreDisVerbs _It _EndPunc
 
 #GRDislike - has/have the worst
 # <kip> has/have _worst 
@@ -247,34 +249,41 @@
 # e.g., , we hate KIP
 +~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _AmAreDisVerbs _Karticles? _KIP
 ## e.g., , we hate it
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _AmAreDisVerbs _It
+## add EndPunc after "dislike _It"
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _AmAreDisVerbs _It _EndPunc
 # e.g., Hate KIP
 +~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _AmAreDisVerbs _Karticles? _KIP
 # e.g., Hate it
-+~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _AmAreDisVerbs _It
+## add EndPunc after "dislike _It"
++~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _AmAreDisVerbs _It _EndPunc
 # e.g., , we have hated KIP
 +~PHRASE_START _PreVerbs* _Adverbs* _IWe Have? AmAreDisVerbs _Karticles? _KIP
 ## e.g., , we have hated it
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe Have? AmAreDisVerbs _It
+## add EndPunc after "dislike _It"
++~PHRASE_START _PreVerbs* _Adverbs* _IWe Have? AmAreDisVerbs _It _EndPunc
 # e.g., Hated KIP
 +~SENT_START _PreVerbs* _Adverbs* _IWe? Have? _AmAreDisVerbs _Karticles? _KIP
 # e.g., Hated it
-+~SENT_START _PreVerbs* _Adverbs* _IWe? Have? _AmAreDisVerbs _It
+## add EndPunc after "dislike _It"
++~SENT_START _PreVerbs* _Adverbs* _IWe? Have? _AmAreDisVerbs _It _EndPunc
 
 # e.g., I am getting annoyed by KIP
 +_IWe _AmAre _PreVerbs* _Adverbs* getting? _AmAreDisVerbs _Karticles? _KIP
 # e.g., I am getting annoyed by it
-+_IWe _AmAre _PreVerbs* _Adverbs* getting? _AmAreDisVerbs _It
+## add EndPunc after "dislike _It"
++_IWe _AmAre _PreVerbs* _Adverbs* getting? _AmAreDisVerbs _It _EndPunc
 
 #GRDislike 5P -- AmAreDisGerunds
 # e.g., I am hating KIP
 +~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _AmAreDisGerunds _Karticles? _KIP
 # e.g., I am hating it
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _AmAreDisGerunds _Karticles? _It
+## add EndPunc after "disliking _It"
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _AmAreDisGerunds _Karticles? _It _EndPunc
 # e.g., Hating KIP
 +~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre _PreVerbs* _Adverbs* _AmAreDisGerunds _Karticles? _KIP
 # e.g., Hating it
-+~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre _PreVerbs* _Adverbs* _AmAreDisGerunds _Karticles? _It
+# e.g., I am hating it
++~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre _PreVerbs* _Adverbs* _AmAreDisGerunds _Karticles? _It _EndPunc
 
 #GRDislike 6P -- WasDissedVerbs by
 # e.g., I was appalled by KIP
@@ -290,17 +299,17 @@
 # e.g., I hate KIP
 +~PHRASE_START _PreVerbs* _Adverbs* _IWe _PreVerbs* Adverbs* _IDisVerbs _Karticles? _KIP
 ## e.g., I hate it
-+~PHRASE_START _PreVerbs* _Adverbs* _IWe _PreVerbs* Adverbs* _IDisVerbs _It
+## add EndPunc after "dislike _It"
++~PHRASE_START _PreVerbs* _Adverbs* _IWe _PreVerbs* Adverbs* _IDisVerbs _It _EndPunc
 
 # e.g., Hate KIP
 +~SENT_START _PreVerbs* Adverbs* _IWe? _PreVerbs* Adverbs* _IDisVerbs _Karticles? _KIP
 ## e.g., Hate it
-+~SENT_START _PreVerbs* Adverbs* _IWe? _PreVerbs* Adverbs* _IDisVerbs _It
+## add EndPunc after "dislike _It"
++~SENT_START _PreVerbs* Adverbs* _IWe? _PreVerbs* Adverbs* _IDisVerbs _It _EndPunc
 
 #GRDislike 8P -- AmAreDisGerunds => deleted redundant
-
 #GRDislike 9P => redundant w/ use of Karticles
-
  
 #GRDislike 10P -- negative for DisLike
 :WithFrom=with|from
@@ -317,11 +326,13 @@
 # e.g., I have been annoyed with KIP
 +~PHRASE_START _PreVerbs* _Adverbs* _IvWv been _PreVerbs* _Adverbs* _AmAreDisGerunds _Karticles? _KIP
 ## e.g., I have been annoyed with it
-+~PHRASE_START _PreVerbs* _Adverbs* _IvWv been _PreVerbs* _Adverbs* _AmAreDisGerunds _It
+## add EndPunc after "disliking _It"
++~PHRASE_START _PreVerbs* _Adverbs* _IvWv been _PreVerbs* _Adverbs* _AmAreDisGerunds _It _EndPunc
 # e.g., Been annoyed with KIP
 +~SENT_START _PreVerbs* _Adverbs* _IvWv? been? _PreVerbs* _Adverbs* _AmAreDisGerunds _Karticles? _KIP
 ## e.g., Been annoyed with it
-+~SENT_START _PreVerbs* _Adverbs* _IvWv? been? _PreVerbs* _Adverbs* _AmAreDisGerunds _It
+## add EndPunc after "disliking _It"
++~SENT_START _PreVerbs* _Adverbs* _IvWv? been? _PreVerbs* _Adverbs* _AmAreDisGerunds _It _EndPunc
 
 # GRDislike 12P - add phrase start => redundant
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _Adverbs* _AmAreDisVerbs
@@ -357,13 +368,15 @@
 # e.g., We are all hating KIP
 +we all? are all? _AmAreDisGerunds _Karticles? _KIP
 ## e.g., We are all hating it
-+we all? are all? _AmAreDisGerunds _It
+## add EndPunc after "disliking _It"
++we all? are all? _AmAreDisGerunds _It _EndPunc
 
 #GRDislike 22P
 # e.g.,  , still hating KIP
 +~PHRASE_START still _AmAreDisGerunds _Karticles? _KIP
 ## e.g.,  , still hating it
-+~PHRASE_START still _AmAreDisGerunds _It
+## add EndPunc after "disliking _It"
++~PHRASE_START still _AmAreDisGerunds _It _EndPunc
 
 # <kip> keeps screwing us
 # need to add <KI>> sucks w/ EndPunc defined
@@ -371,6 +384,8 @@
 :Keep=keep|keeps
 # e.g., KIP keeps screwing us
 +_KIP _Keep? _Screwing _MeUs
+## adding explicit rule on "screwing us"
++_KIP keeps screwing _MeUs
 # e.g., it keeps screwing us
 +_It _Keep? _Screwing _MeUs
 
