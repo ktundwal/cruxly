@@ -1,5 +1,5 @@
 ## Buy Intent (BI) with KIP-awareness
-## vers 0.9 - derived from Buy Intent v1.5
+## vers 1.0 - derived from Buy Intent v1.5
 # author: A. Guha
 
 # Suffixes/prefixes:
@@ -547,7 +547,7 @@
 :CanCould=can|could
 :So=so|soo|sooo|soooo|sooooo
 ## Cool not in BI - but modified to Good be desirable  
-:Good=good|great|awesome|delicious|wonderful|lovely|nice
+:Good=good|great|awesome|delicious|wonderful|lovely|nice|super
 
 :Mind=mind|refuse|be upset|complain|object to|object if you|turn down|reject
 :Think=think|say|vote|declare
@@ -593,9 +593,9 @@
 
 # added explicit rule for 'would be nice'
 #GRBI 56P
-:Nice=nice|great|super|wonderful|good|awesome
-# e.g., KIP would be so? _Nice
-+_KIP would be nice
+#:Nice=nice|great|super|wonderful|good|awesome
+# e.g., KIP would be so? _Good
++_KIP would be so? _Good
 
 #GRBI 57P
 # e.g., I am up for a KIP

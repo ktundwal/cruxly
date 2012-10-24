@@ -13,7 +13,7 @@ public class TestLikeDetector extends TestDetector {
 	public void testFarAwayKindleFire() {
 		String content = "I like it but it actually is very far away KindleFire that is";
 		Kip kip = KINDLEFIRE;
-		List<String> expectedIntentRules = LIKE;
+		List<String> expectedIntentRules = NOINTENT;
 		check(content, kip, expectedIntentRules);
 	}
 	
@@ -62,7 +62,7 @@ public class TestLikeDetector extends TestDetector {
 	public void testILikeYou() {
 		String content = "I like you";
 		Kip kip = NO_KIP;
-		List<String> expectedIntentRules = LIKE;
+		List<String> expectedIntentRules = NOINTENT;
 		check(content, kip, expectedIntentRules);
 	}
 	
@@ -87,7 +87,7 @@ public class TestLikeDetector extends TestDetector {
 	public void testIDefinitelyLikeKindleFire() {
 		String content = "I definitely like KindleFire";
 		Kip kip = NO_KIP;
-		List<String> expectedIntentRules = LIKE;
+		List<String> expectedIntentRules = BUY;
 		check(content, kip, expectedIntentRules);
 	}
 	

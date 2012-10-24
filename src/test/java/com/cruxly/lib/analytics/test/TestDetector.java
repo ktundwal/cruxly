@@ -34,6 +34,7 @@ public class TestDetector {
 	protected static final List<String> COMMITMENT = Arrays.asList("commitment");
 	protected static final List<String> DISLIKE = Arrays.asList("dislike");
 	protected static final List<String> BUY = Arrays.asList("buy");
+	protected static final List<String> BUY_LIKE = Arrays.asList("buy", "like");
 	protected static final List<String> BUY_COMMITMENT = Arrays.asList("buy", "commitment");
 	protected static final List<String> LIKE_COMMITMENT = Arrays.asList("like", "commitment");
 	@SuppressWarnings("unused")

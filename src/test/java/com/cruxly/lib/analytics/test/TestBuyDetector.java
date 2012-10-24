@@ -70,7 +70,7 @@ public class TestBuyDetector extends TestDetector {
 	public void test8IWishIHadAMacbookWithKIP() {
 		String content = "Hey there, I wish I had a kindlefire That would be so cool";
 		Kip kip = KINDLEFIRE;
-		List<String> expectedIntentRules = BUY;
+		List<String> expectedIntentRules = BUY_LIKE;
 		check(content, kip, expectedIntentRules);
 	}
 	

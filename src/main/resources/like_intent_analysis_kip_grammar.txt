@@ -1,5 +1,5 @@
 # Like Intent (Like) with KIP-awareness
-# vers 0.5
+# vers 0.7
 # Author: A. Guha
 
 # Suffixes/prefixes:
@@ -39,7 +39,8 @@
 
 :Punc=,|!|;|.|?|-|(|)|:
 # remove ? in SentEndPunc
-:EndPunc=,|.|;|#|&|!|/|eom
+## remove # from EndPunc
+:EndPunc=,|.|;|&|!|/|eom
 :SentEndPunc=.|!|eom 
 :MidSentPunc=-|,|;|:|)|(
 
@@ -56,8 +57,9 @@
 :AmAre=am|are|is
 :IsAreWasWere=is|was|are|were
 
-# It
-:It=it|this|they|those|that
+## It - add them. merge w/One
+:It=it|this|they|those|that|them|another|one
+:One=one|it|another|that|they
 :Ready=ready|available|finished
 
 #:Articles=a|an|the|this
@@ -114,10 +116,17 @@
 +_IWe _NiceAdverbs* _LikeVerbs _Karticles? _KIP
 +~PHRASE_START _IWe? _NiceAdverbs* _LikeVerbs _Karticles? _KIP
 
+## I love you KIP
++~PHRASE_START _IWe? _NiceAdverbs* _LikeVerbs you _KIP
+
+### I/We miss KIP
++~PHRASE_START _IWe? _NiceAdverbs* miss _MyOur? _KIP
+
 # e.g., <KIP>, I like you => remove end punctuation
+## try 'KIP, I like you'
 #:Comma=,|:|-|#
-# interm punc creates new phrase => simple rule for'KIP I love you'
-#+_KIP _Comma? ~PHRASE_START? IWe? _NiceAdverbs* _LikeVerbs
+## interm punc creates new phrase => simple rule for'KIP I love you'
++_KIP ~PHRASE_START? IWe? _NiceAdverbs* _LikeVerbs you
 +~PHRASE_START _KIP _IWe? _NiceAdverbs* _LikeVerbs
 
 # love|like it
@@ -212,8 +221,9 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 +_IWe _Will? _PreVerbs* _Adverbs* _LikeVerbs _Karticles? _KIP
 +~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* _LikeVerbs _Karticles? _KIP
 # e.g., I will like it - partially redundant with basic 'I like it' 
-+_IWe _Will? _PreVerbs* _Adverbs* _LikeVerbs _It
-+~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* _LikeVerbs _It
+## add EndPunc after _It
++_IWe _Will? _PreVerbs* _Adverbs* _LikeVerbs _It _EndPunc
++~SENT_START _PreVerbs* _Adverbs* _IWe? _Will? _PreVerbs* _Adverbs* _LikeVerbs _It _EndPunc
 
 # neg rules with Liking|Like
 :NeverNeither=never|neither|not|to|a
@@ -246,9 +256,10 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWe _AmAre? _PreVerbs* _Adverbs* _LikeVerbs
 +_IWe _AmAre? _PreVerbs* _Adverbs* _LikeVerbs _Karticles? _KIP
 +~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _LikeVerbs _Karticles? _KIP
-# e.g., I am 'delighted with' it 
-+_IWe _AmAre? _PreVerbs* _Adverbs* _LikeVerbs _It
-+~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _LikeVerbs _It
+# e.g., I am 'delighted with' it
+## add EndPunc after _It 
++_IWe _AmAre? _PreVerbs* _Adverbs* _LikeVerbs _It _EndPunc
++~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _LikeVerbs _It _EndPunc
 
 #GRLike 6P make first person explicit for LikeVerbs|Gerunds
 # e.g., I am liking <KIP>
@@ -257,8 +268,8 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 +_IWe _AmAre? _PreVerbs* _Adverbs* _LikeVerbsGerunds _Karticles? _KIP
 +~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _LikeVerbsGerunds _Karticles? _KIP
 # e.g., I am liking it
-+_IWe _AmAre? _PreVerbs* _Adverbs* _LikeVerbsGerunds _Karticles? _It
-+~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _LikeVerbsGerunds _It
++_IWe _AmAre? _PreVerbs* _Adverbs* _LikeVerbsGerunds _Karticles? _It _EndPunc
++~SENT_START _PreVerbs* _Adverbs* _IWe? _AmAre? _PreVerbs* _Adverbs* _LikeVerbsGerunds _It _EndPunc
 
 #GRLike 7P - redundant
 #+~SENT_START _IWe? _AmAre? _PreVerbs* _LikeVerbsGerunds
@@ -279,9 +290,10 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 
 +_IvWv been _PreVerbs* _Adverbs* _LikeVerbsGerunds _Karticles? _KIP
 +~SENT_START _PreVerbs* _Adverbs* _IvWv? been? _PreVerbs* _Adverbs* _LikeVerbsGerunds _Karticles? _KIP
-# e.g., I having been enjoying <KIP>
-+_IvWv been _PreVerbs* _Adverbs* _LikeVerbsGerunds _It
-+~SENT_START _PreVerbs* _Adverbs* _IvWv? been? _PreVerbs* _Adverbs* _LikeVerbsGerunds _It
+# e.g., I having been enjoying <KIP> 
+## add EndPunc after _It
++_IvWv been _PreVerbs* _Adverbs* _LikeVerbsGerunds _It _EndPunc
++~SENT_START _PreVerbs* _Adverbs* _IvWv? been? _PreVerbs* _Adverbs* _LikeVerbsGerunds _It _EndPunc
 
 # GRLike 10P - add phrase start - redundant
 #+~PHRASE_START _IWe _Will? _PreVerbs* _LikeVerbs
@@ -299,8 +311,9 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 +_IWe _PreVerbs* _Adverbs* _Cant _Wait _ToForUntil _LikeVerbsGerunds? _Karticles? _KIP
 +~SENT_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* _Cant _Wait _ToForUntil _LikeVerbsGerunds? _Karticles? _KIP
 ## e.g., I cant wait for it
-+_IWe _PreVerbs* _Adverbs* _Cant _Wait _ToForUntil _LikeVerbsGerunds? _It
-+~SENT_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* _Cant _Wait _ToForUntil _LikeVerbsGerunds? _It
+## add EndPunc after _It
++_IWe _PreVerbs* _Adverbs* _Cant _Wait _ToForUntil _LikeVerbsGerunds? _It _EndPunc
++~SENT_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* _Cant _Wait _ToForUntil _LikeVerbsGerunds? _It _EndPunc
 
 # add neg rule on cannot wait to <do something> - not needed with <KIP> aware
 #-_Cant _Wait to
@@ -312,16 +325,18 @@ _~PHRASE_START _IWe? _LoveLike _LikeVerbsGerunds
 +_IWe _PreVerbs* _Adverbs* _Look forward to _Karticles? _KIP
 +~SENT_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* _Look forward to _Karticles? _KIP
 ## e.g., I look forward to it
-+_IWe _PreVerbs* _Adverbs* _Look forward to _It
-+~SENT_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* _Look forward to _It
+## add EndPunc after _It
++_IWe _PreVerbs* _Adverbs* _Look forward to _It _EndPunc
++~SENT_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* _Look forward to _It _EndPunc
 
 ## GRLike 17P: look forward to liking <KIP>
 #+~PHRASE_START _PreVerbs* _Adverbs* _IWeSimple? look forward to _LikeVerbsGerunds
 +_IWe _PreVerbs* _Adverbs* _Look forward to _LikeVerbsGerunds _Karticles? _KIP
 +~SENT_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* _Look forward to _LikeVerbsGerunds _Karticles? _KIP
 ## e.g., look forward to liking it
-+_IWe _PreVerbs* _Adverbs* _Look forward to _LikeVerbsGerunds _It
-+~SENT_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* _Look forward to _LikeVerbsGerunds _It
+## add EndPunc after _It
++_IWe _PreVerbs* _Adverbs* _Look forward to _LikeVerbsGerunds _It _EndPunc
++~SENT_START _PreVerbs* _Adverbs* _IWe? _PreVerbs* _Adverbs* _Look forward to _LikeVerbsGerunds _It _EndPunc
 
 # GRLike 18P for Like - redundant with above rule
 #+~PHRASE_START _IWeSimple? looking forward to some? _Articles
@@ -388,7 +403,8 @@ e.g., <KIP> is so nice, removed 'so', since it is in NiceAdverbs
 
 #GRLike 31P
 # e.g., wish I had <KIP>
-#+~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Adverbs? _PreVerbs* wish _IWe had *
+# add phrase, 'I wish I had'
++~PHRASE_START _PreVerbs* _Adverbs* _IWe? _Adverbs? _PreVerbs* wish _IWe had *
 +wish _IWe had _Karticles? _KIP
 
 # added explicit rule for 'would be nice', nothing like - is this Buy?
@@ -433,8 +449,8 @@ e.g., <KIP> is so nice, removed 'so', since it is in NiceAdverbs
 #GRLike 39P - more buying intent
 #+with _MyOur name on it
 
-#GRLike 40PV e.g., KIP: here we come
-#+_KIP _Comma? here _IWe come
+##GRLike 40PV e.g., KIP: here we come
++_KIP ~PHRASE_START? here _IWe come
 # interm punc creates new phrase => simple rule for'KIP here we come'
 +_KIP here _IWe come
 

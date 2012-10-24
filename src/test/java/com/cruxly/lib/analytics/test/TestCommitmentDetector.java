@@ -62,9 +62,10 @@ public class TestCommitmentDetector extends TestDetector {
 	public void test_14_Three_Redbulls_And_A_Large_Coffee_Later_STARBUCKS_MOCHA_LATTE() {
 		String content = "Three Redbulls and a large coffee later... I'm crashing incredibly hard.";
 		Kip kip = STARBUCKS_MOCHA_LATTE;
-		List<String> expectedIntentRules = COMMITMENT;
+		List<String> expectedIntentRules = NOINTENT;
 		check(content, kip, expectedIntentRules);
 	}
+	
 	@Test
 	public void test_15_About_To_Download_STARBUCKS_MOCHA_LATTE() {
 		String content = "About to download starbucks.";
